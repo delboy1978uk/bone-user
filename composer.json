@@ -1,0 +1,19 @@
+{
+  "name": "delboy1978uk/bone-user",
+  "description": "Integration of delboy1978uk/user for BoneMvcFramework",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Derek Stephen McLean",
+      "email": "delboy1978uk@gmail.com"
+    }
+  ],
+  "require": {
+    "delboy1978uk/user": "^3.0.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "BoneMvc\\Module\\BoneMvcUser\\": "src/"
+    }
+  }
+}
