@@ -7,11 +7,13 @@ Simply add the Package to Bone's module config
 
 // use statements here
 use BoneMvc\Module\BoneMvcUser\BoneMvcUserPackage;
+use Del\UserPackage;
 
 return [
     'packages' => [
-        // packages here...,
-        BoneMvc\Module\BoneMvcUser\BoneMvcUserPackage::class,
+        // packages here (order is important)...,
+        UserPackage::class,
+        BoneMvcUserPackage::class,
     ],
     // ...
 ];

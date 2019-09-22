@@ -9,7 +9,8 @@
     }
   ],
   "require": {
-    "delboy1978uk/user": "^3.0.4"
+    "delboy1978uk/bone-mail": "^1.0",
+    "delboy1978uk/user": "^4.0.2"
   },
   "autoload": {
     "psr-4": {
