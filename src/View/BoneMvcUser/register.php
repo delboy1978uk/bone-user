@@ -1,19 +1,18 @@
-<?php use App\View\Helper\AlertBox; ?>
+<?php
 
+use Bone\View\Helper\AlertBox;
+
+$box = new AlertBox();
+?>
 <script type="text/javascript" src="/js/pwstrength.min.js"></script>
 <section class="intro">
     <div class="">
         <br>
         <div class="container">
             <div class="row">
-                <?php if (isset($message)) {
-                    $box = new AlertBox();
-                    echo $box->alertBox($message);
-                }
-                ?>
                 <div class="col-md-8 col-md-offset-2">
-
                     <h1><img src="/img/skull_and_crossbones.png" /> Register</h1>
+                    <?= null !== $message ? $box->alertBox($message) : '' ?>
                     <div class="page-scroll">
                         <div class="well" style="color: black;">
                             <?= $form->render(); ?>

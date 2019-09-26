@@ -2,7 +2,9 @@
 
 namespace BoneMvc\Module\BoneMvcUser\Controller;
 
+use Bone\Mvc\Controller;
 use Bone\Mvc\View\ViewEngine;
+use BoneMvc\Mail\EmailMessage;
 use BoneMvc\Mail\Service\MailService;
 use BoneMvc\Module\BoneMvcUser\Form\RegistrationForm;
 use Del\Exception\UserException;
@@ -12,7 +14,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 
-class BoneMvcUserController
+class BoneMvcUserController extends Controller
 {
     /** @var ViewEngine $view */
     private $view;
@@ -23,6 +25,12 @@ class BoneMvcUserController
     /** @var MailService $mailService */
     private $mailService;
 
+    /**
+     * BoneMvcUserController constructor.
+     * @param ViewEngine $view
+     * @param UserService $userService
+     * @param MailService $mailService
+     */
     public function __construct(ViewEngine $view, UserService $userService, MailService $mailService)
     {
         $this->view = $view;
@@ -52,6 +60,7 @@ class BoneMvcUserController
     public function registerAction(ServerRequestInterface $request, array $args): ResponseInterface
     {
         $form = new RegistrationForm('register');
+        $message = null;
 
         if ($request->getMethod() == 'POST') {
 
@@ -64,38 +73,31 @@ class BoneMvcUserController
                     $user = $this->userService->registerUser($data);
                     $link = $this->userService->generateEmailLink($user);
                     $mail = $this->mailService;
-                    $env = $this->getServerEnvironment();
+
+                    $env = $mail->getSiteConfig()->getEnvironment();
                     $email = $user->getEmail();
                     $token = $link->getToken();
 
-                    $message = $this->getViewEngine()->render('emails/user_registration/user_registration', [
+                    $mail = new EmailMessage();
+                    $mail->setTo($user->getEmail());
+                    $mail->setSubject($this->getTranslator()->translate('email.user.register.thankswith') . ' ' . $this->mailService->getSiteConfig()->getTitle());
+                    $mail->setTemplate('email.user::user_registration/user_registration');
+                    $mail->setViewData([
                         'siteUrl' => $env->getSiteURL(),
-                        'activationLink' => '/' . $this->getParam('locale') . '/activate-user-account/' . $email . '/' . $token,
+                        'activationLink' => '/en_GB/activate-user-account/' . $email . '/' . $token,
                     ]);
+                    $this->mailService->sendEmail($mail);
+                    $body = $this->view->render('bonemvcuser::thanks-for-registering');
 
-                    $mail->setFrom('noreply@' . $env->getServerName())
-                        ->setTo($user->getEmail())
-                        ->setSubject($this->getTranslator()
-                                ->translate('email.user.register.thankswith') . ' ' . Registry::ahoy()->get('site')['name'])
-                        ->setMessage($message)
-                        ->send();
-                    $this->sendJsonObjectResponse($link);
+                    return new HtmlResponse($body);
 
                 } catch (UserException $e) {
-
-                    switch ($e->getMessage()) {
-                        case UserException::USER_EXISTS:
-                        case UserException::WRONG_PASSWORD:
-                            throw new Exception($e->getMessage(), 400);
-                            break;
-                    }
-                    throw $e;
+                    $message = [$e->getMessage(), 'danger'];
                 }
             }
-
         }
 
-        $body = $this->view->render('bonemvcuser::register', ['form' => $form]);
+        $body = $this->view->render('bonemvcuser::register', ['form' => $form, 'message' => $message]);
 
         return new HtmlResponse($body);
     }

@@ -6,6 +6,7 @@ namespace BoneMvc\Module\BoneMvcUser;
 
 use Barnacle\Container;
 use Barnacle\RegistrationInterface;
+use Bone\Mvc\Controller\Init;
 use BoneMvc\Mail\Service\MailService;
 use BoneMvc\Module\BoneMvcUser\Controller\BoneMvcUserApiController;
 use BoneMvc\Module\BoneMvcUser\Controller\BoneMvcUserController;
@@ -28,7 +29,8 @@ class BoneMvcUserPackage implements RegistrationInterface, RouterConfigInterface
         /** @var PlatesEngine $viewEngine */
         $viewEngine = $c->get(PlatesEngine::class);
         $viewEngine->addFolder('bonemvcuser', __DIR__ . '/View/BoneMvcUser/');
-        
+        $viewEngine->addFolder('email.user', __DIR__ . '/View/email/');
+
         if (!$c->has(UserService::class)) {
             $package = new UserPackage();
             $package->addToContainer($c);
@@ -42,11 +44,11 @@ class BoneMvcUserPackage implements RegistrationInterface, RouterConfigInterface
             /** @var UserService $userService */
             $userService = $c->get(UserService::class);
 
-            return new BoneMvcUserController($viewEngine, $userService, $mailService);
+            return  Init::controller(new BoneMvcUserController($viewEngine, $userService, $mailService), $c);
         });
 
         $c[BoneMvcUserApiController::class] = $c->factory(function (Container $c) {
-            return new BoneMvcUserApiController();
+            return Init::controller(new BoneMvcUserApiController(), $c);
         });
     }
 
