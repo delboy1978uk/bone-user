@@ -37,14 +37,12 @@ class BoneMvcUserPackage implements RegistrationInterface, RouterConfigInterface
         }
 
         $c[BoneMvcUserController::class] = $c->factory(function (Container $c) {
-            /** @var PlatesEngine $viewEngine */
-            $viewEngine = $c->get(PlatesEngine::class);
-            /** @var MailService $viewEngine */
+            /** @var MailService $mailService */
             $mailService = $c->get(MailService::class);
             /** @var UserService $userService */
             $userService = $c->get(UserService::class);
 
-            return  Init::controller(new BoneMvcUserController($viewEngine, $userService, $mailService), $c);
+            return  Init::controller(new BoneMvcUserController($userService, $mailService), $c);
         });
 
         $c[BoneMvcUserApiController::class] = $c->factory(function (Container $c) {

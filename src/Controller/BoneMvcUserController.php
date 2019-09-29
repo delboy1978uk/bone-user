@@ -16,9 +16,6 @@ use Zend\Diactoros\Response\HtmlResponse;
 
 class BoneMvcUserController extends Controller
 {
-    /** @var ViewEngine $view */
-    private $view;
-
     /** @var UserService $userService */
     private $userService;
 
@@ -27,13 +24,11 @@ class BoneMvcUserController extends Controller
 
     /**
      * BoneMvcUserController constructor.
-     * @param ViewEngine $view
      * @param UserService $userService
      * @param MailService $mailService
      */
-    public function __construct(ViewEngine $view, UserService $userService, MailService $mailService)
+    public function __construct(UserService $userService, MailService $mailService)
     {
-        $this->view = $view;
         $this->userService = $userService;
         $this->mailService = $mailService;
     }
