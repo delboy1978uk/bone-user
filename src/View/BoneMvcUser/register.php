@@ -4,7 +4,9 @@ use Bone\View\Helper\AlertBox;
 
 $box = new AlertBox();
 ?>
-<script type="text/javascript" src="/js/pwstrength.min.js"></script>
+<script type="text/javascript" src="/bone-mvc-user/js/jquery.pstrength-min.1.2.js"></script>
+<script type="text/javascript" src="/bone-mvc-user/js/register.js"></script>
+<link rel="stylesheet" href="/bone-mvc-user/css/password-strength.css" />
 <section class="intro">
     <div class="">
         <br>
@@ -23,13 +25,3 @@ $box = new AlertBox();
         </div>
     </div>
 </section>
-<script type="text/javascript">
-    $('#regpassword').pwstrength({
-        ui: {
-            showVerdictsInsideProgressBar: true,
-            bootstrap3: true,
-            progressBarEmptyPercentage: 15,
-            progressBarMinPercentage: 15
-        }
-    });
-</script>
