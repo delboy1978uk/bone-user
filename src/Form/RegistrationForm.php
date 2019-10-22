@@ -2,7 +2,7 @@
 
 namespace BoneMvc\Module\BoneMvcUser\Form;
 
-use Del\Form\AbstractForm;
+use Bone\Form;
 use Del\Form\Field\Submit;
 use Del\Form\Field\Text\EmailAddress;
 use Del\Form\Field\Text\Password;
@@ -10,35 +10,46 @@ use Del\Form\Filter\Adapter\FilterAdapterZf;
 use Del\Form\Renderer\HorizontalFormRenderer;
 use Zend\Filter\StringToLower;
 
-class RegistrationForm extends AbstractForm
+class RegistrationForm extends Form
 {
     public function init()
     {
+        $label = $this->getTranslator()->translate('form.email.label', 'user');
+        $error = $this->getTranslator()->translate('form.email.error', 'user');
+        $placeholder = $this->getTranslator()->translate('form.email.placeholder', 'user');
         $email = new EmailAddress('email');
         $email->setRequired(true)
             ->setAttribute('size', 40)
             ->setId('regemail')
-            ->setLabel('Email')
-            ->setCustomErrorMessage('You must input a valid email address.');
+            ->setLabel($label)
+            ->setCustomErrorMessage($error);
 
+
+        $label = $this->getTranslator()->translate('form.password.label', 'user');
+        $error = $this->getTranslator()->translate('form.password.error', 'user');
+        $placeholder = $this->getTranslator()->translate('form.password.placeholder', 'user');
         $password = new Password('password');
         $password->setRequired(true)
             ->setClass('form-control password')
-            ->setLabel('Password')
+            ->setLabel($label)
             ->setId('regpassword')
             ->setAttribute('size', 40)
-            ->setAttribute('placeholder', 'Enter a password')
-            ->setCustomErrorMessage('You must input a password.');
+            ->setAttribute('placeholder', $placeholder)
+            ->setCustomErrorMessage($error);
 
+        $label = $this->getTranslator()->translate('form.confirm.label', 'user');
+        $error = $this->getTranslator()->translate('form.confirm.error', 'user');
+        $placeholder = $this->getTranslator()->translate('form.confirm.placeholder', 'user');
         $confirm = new Password('confirm');
         $confirm->setRequired(true)
-            ->setLabel('Confirm Password')
+            ->setLabel($label)
             ->setAttribute('size', 40)
-            ->setAttribute('placeholder', 'Retype your password')
-            ->setCustomErrorMessage('You must retype your password.');
+            ->setAttribute('placeholder', $placeholder)
+            ->setCustomErrorMessage($error);
 
+        $label = $this->getTranslator()->translate('form.submit.label', 'user');
         $submit = new Submit('submit');
-        $submit->setValue('Register');
+        $submit->setValue($label);
 
         $stringToLower = new StringToLower();
         $email->addFilter(new FilterAdapterZf($stringToLower));

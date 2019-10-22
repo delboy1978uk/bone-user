@@ -6,6 +6,7 @@ namespace BoneMvc\Module\BoneMvcUser;
 
 use Barnacle\Container;
 use Barnacle\RegistrationInterface;
+use Bone\I18n\I18nRegistrationInterface;
 use Bone\Mvc\Controller\Init;
 use BoneMvc\Mail\Service\MailService;
 use BoneMvc\Module\BoneMvcUser\Controller\BoneMvcUserApiController;
@@ -19,7 +20,7 @@ use League\Route\Router;
 use League\Route\Strategy\JsonStrategy;
 use Zend\Diactoros\ResponseFactory;
 
-class BoneMvcUserPackage implements RegistrationInterface, RouterConfigInterface
+class BoneMvcUserPackage implements RegistrationInterface, RouterConfigInterface, I18nRegistrationInterface
 {
     /**
      * @param Container $c
@@ -65,6 +66,15 @@ class BoneMvcUserPackage implements RegistrationInterface, RouterConfigInterface
     {
         return false;
     }
+
+    /**
+     * @return string
+     */
+    public function getTranslationsDirectory(): string
+    {
+        return dirname(__DIR__) . '/data/translations';
+    }
+
 
     /**
      * @param Container $c

@@ -33,6 +33,8 @@ class BoneMvcUserController extends Controller
         $this->mailService = $mailService;
     }
 
+
+
     /**
      * @param ServerRequestInterface $request
      * @param array $args
@@ -41,7 +43,7 @@ class BoneMvcUserController extends Controller
      */
     public function indexAction(ServerRequestInterface $request, array $args): ResponseInterface
     {
-        $body = $this->view->render('bonemvcuser::index', []);
+        $body = $this->getView()->render('bonemvcuser::index', []);
 
         return new HtmlResponse($body);
     }
@@ -54,7 +56,7 @@ class BoneMvcUserController extends Controller
      */
     public function registerAction(ServerRequestInterface $request, array $args): ResponseInterface
     {
-        $form = new RegistrationForm('register');
+        $form = new RegistrationForm('register', $this->getTranslator());
         $message = null;
 
         if ($request->getMethod() == 'POST') {
@@ -82,7 +84,8 @@ class BoneMvcUserController extends Controller
                         'activationLink' => '/en_GB/activate-user-account/' . $email . '/' . $token,
                     ]);
                     $this->mailService->sendEmail($mail);
-                    $body = $this->view->render('bonemvcuser::thanks-for-registering');
+                    \Locale::setDefault('en_PI');
+                    $body = $this->getView()->render('bonemvcuser::thanks-for-registering');
 
                     return new HtmlResponse($body);
 
@@ -92,7 +95,7 @@ class BoneMvcUserController extends Controller
             }
         }
 
-        $body = $this->view->render('bonemvcuser::register', ['form' => $form, 'message' => $message]);
+        $body = $this->getView()->render('bonemvcuser::register', ['form' => $form, 'message' => $message]);
 
         return new HtmlResponse($body);
     }

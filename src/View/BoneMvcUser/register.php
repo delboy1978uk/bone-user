@@ -13,7 +13,7 @@ $box = new AlertBox();
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                    <h1><img src="/img/skull_and_crossbones.png" /> Register</h1>
+                    <h1><img src="/img/skull_and_crossbones.png" /> <?= $this->t('user.register', 'user') ;?></h1>
                     <?= null !== $message ? $box->alertBox($message) : '' ?>
                     <div class="page-scroll">
                         <div class="well" style="color: black;">
