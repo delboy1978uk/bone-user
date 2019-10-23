@@ -77,14 +77,14 @@ class BoneMvcUserController extends Controller
 
                     $mail = new EmailMessage();
                     $mail->setTo($user->getEmail());
-                    $mail->setSubject($this->getTranslator()->translate('email.user.register.thankswith') . ' ' . $this->mailService->getSiteConfig()->getTitle());
+                    $mail->setSubject($this->getTranslator()->translate('email.user.register.thankswith', 'user') . ' ' . $this->mailService->getSiteConfig()->getTitle());
                     $mail->setTemplate('email.user::user_registration/user_registration');
                     $mail->setViewData([
                         'siteUrl' => $env->getSiteURL(),
-                        'activationLink' => '/en_GB/activate-user-account/' . $email . '/' . $token,
+                        'logo' => $this->getSiteConfig()->getEmailLogo(),
+                        'activationLink' => '/activate-user-account/' . $email . '/' . $token,
                     ]);
                     $this->mailService->sendEmail($mail);
-                    \Locale::setDefault('en_PI');
                     $body = $this->getView()->render('bonemvcuser::thanks-for-registering');
 
                     return new HtmlResponse($body);

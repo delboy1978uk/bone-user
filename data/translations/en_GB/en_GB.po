@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BoneMVCUser\n"
 "POT-Creation-Date: 2019-10-22 01:37+0200\n"
-"PO-Revision-Date: 2019-10-22 01:41+0200\n"
+"PO-Revision-Date: 2019-10-23 19:23+0200\n"
 "Last-Translator: Derek McLean <delboy1978uk@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #: src/Controller/BoneMvcUserController.php:80
 msgid "email.user.register.thankswith"
-msgstr ""
+msgstr "Thanks for registering with"
 
 #: src/Form/RegistrationForm.php:17
 msgid "form.email.label"
@@ -66,12 +66,12 @@ msgstr "Register"
 #: src/View/email/user_registration/user_registration.php:1
 #: src/View/email/user_registration/user_registration.php:26
 msgid "email.user.register.thanks"
-msgstr ""
+msgstr "Welcome! Thanks for registering."
 
 #: src/View/email/user_registration/user_registration.php:29
 msgid "email.user.register.body"
-msgstr ""
+msgstr "To activate your account, simply click the button"
 
 #: src/View/email/user_registration/user_registration.php:43
 msgid "email.user.register.button"
-msgstr ""
+msgstr "Activate your account"
