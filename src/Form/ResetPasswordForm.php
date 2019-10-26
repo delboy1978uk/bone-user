@@ -31,7 +31,7 @@ class ResetPasswordForm extends AbstractForm
             ->setCustomErrorMessage('You must retype your password.');
 
         $submit = new Submit('submit');
-        $submit->setValue('Register');
+        $submit->setValue('Reset Password');
 
         $this->addField($password)
             ->addField($confirm)

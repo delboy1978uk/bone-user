@@ -1,25 +1,19 @@
-<?php use App\View\Helper\AlertBox; ?>
-
+<?php use Del\Icon; ?>
 <section class="intro">
-    <div class="intro-body  va-top">
-        <div class="container pt10">
-            <div class="row">
-                <?php
-                if (isset($message)) {
-                    $box = new AlertBox();
-                    echo $box->alertBox($message);
-                }
-                ?>
-            </div>
-        </div>
+    <div class="mt20">
         <div class="container">
             <div class="row">
-                <div class="col-md-6 col-md-offset-3">
-                    <img alt="Logo" src="/img/skull_and_crossbones.png" />
-                    <h1>Oops</h1>
-                    <p class="lead">There was a problem.</p>
+                <div class="col-md-6 col-md-offset-3 mt20">
+                    <img src="/img/skull_and_crossbones.png" />
+                    <?= null !== $message ? $box->alert($message) : '' ?>
+                    <div class="overflow mt20">
+                        <p class="lead"><?= Icon::ENVELOPE; ?> Thanks for (re)registering</p>
+                        <p>An activation email has been sent to your email inbox. Please click on the link to activate
+                            your account and log in to the system.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+

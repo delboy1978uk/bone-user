@@ -13,7 +13,9 @@ use BoneMvc\Module\BoneMvcUser\Controller\BoneMvcUserApiController;
 use BoneMvc\Module\BoneMvcUser\Controller\BoneMvcUserController;
 use Bone\Mvc\Router\RouterConfigInterface;
 use Bone\Mvc\View\PlatesEngine;
+use BoneMvc\Module\BoneMvcUser\Http\Middleware\SessionAuth;
 use Del\Service\UserService;
+use Del\SessionManager;
 use Del\UserPackage;
 use League\Route\RouteGroup;
 use League\Route\Router;
@@ -48,6 +50,16 @@ class BoneMvcUserPackage implements RegistrationInterface, RouterConfigInterface
 
         $c[BoneMvcUserApiController::class] = $c->factory(function (Container $c) {
             return Init::controller(new BoneMvcUserApiController(), $c);
+        });
+
+
+        $c[SessionAuth::class] = $c->factory(function (Container $c) {
+            /** @var SessionManager $session */
+            $session = $c->get(SessionManager::class);
+            /** @var UserService $userService */
+            $userService = $c->get(UserService::class);
+
+            return new SessionAuth($session, $userService);
         });
     }
 
@@ -84,8 +96,24 @@ class BoneMvcUserPackage implements RegistrationInterface, RouterConfigInterface
     public function addRoutes(Container $c, Router $router): Router
     {
         $router->map('GET', '/user', [BoneMvcUserController::class, 'indexAction']);
+        $router->map('GET', '/user/activate/{email}/{token}', [BoneMvcUserController::class, 'activateAction']);
+        $router->map('GET', '/user/change-password', [BoneMvcUserController::class, 'changePasswordAction'])->middleware($c->get(SessionAuth::class));
+        $router->map('POST', '/user/change-password', [BoneMvcUserController::class, 'changePasswordAction'])->middleware($c->get(SessionAuth::class));
+        $router->map('GET', '/user/change-email', [BoneMvcUserController::class, 'changeEmailAction'])->middleware($c->get(SessionAuth::class));
+        $router->map('POST', '/user/change-email', [BoneMvcUserController::class, 'changeEmailAction'])->middleware($c->get(SessionAuth::class));
+        $router->map('GET', '/user/edit-profile', [BoneMvcUserController::class, 'editProfileAction'])->middleware($c->get(SessionAuth::class));
+        $router->map('POST', '/user/edit-profile', [BoneMvcUserController::class, 'editProfileAction'])->middleware($c->get(SessionAuth::class));
+        $router->map('GET', '/user/lost-password/{email}', [BoneMvcUserController::class, 'forgotPasswordAction']);
+        $router->map('GET', '/user/home', [BoneMvcUserController::class, 'homePageAction'])->middleware($c->get(SessionAuth::class));
+        $router->map('GET', '/user/login', [BoneMvcUserController::class, 'loginAction']);
+        $router->map('POST', '/user/login', [BoneMvcUserController::class, 'loginFormAction']);
+        $router->map('GET', '/user/logout', [BoneMvcUserController::class, 'logoutAction']);
         $router->map('GET', '/user/register', [BoneMvcUserController::class, 'registerAction']);
         $router->map('POST', '/user/register', [BoneMvcUserController::class, 'registerAction']);
+        $router->map('GET', '/user/reset-email/{email}/{new-email}/{token}', [BoneMvcUserController::class, 'resetEmailAction']);
+        $router->map('GET', '/user/reset-password/{email}/{token}', [BoneMvcUserController::class, 'resetPasswordAction']);
+        $router->map('POST', '/user/reset-password/{email}/{token}', [BoneMvcUserController::class, 'resetPasswordAction']);
+        $router->map('GET', '/user/resend-activation-mail/{email}', [BoneMvcUserController::class, 'resendActivationEmailAction']);
 
         $factory = new ResponseFactory();
         $strategy = new JsonStrategy($factory);
