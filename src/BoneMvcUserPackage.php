@@ -49,7 +49,10 @@ class BoneMvcUserPackage implements RegistrationInterface, RouterConfigInterface
         });
 
         $c[BoneMvcUserApiController::class] = $c->factory(function (Container $c) {
-            return Init::controller(new BoneMvcUserApiController(), $c);
+            /** @var UserService $userService */
+            $userService = $c->get(UserService::class);
+
+            return Init::controller(new BoneMvcUserApiController($userService), $c);
         });
 
 
@@ -119,8 +122,10 @@ class BoneMvcUserPackage implements RegistrationInterface, RouterConfigInterface
         $strategy = new JsonStrategy($factory);
         $strategy->setContainer($c);
 
-        $router->group('/api', function (RouteGroup $route) {
+        $router->group('/api', function (RouteGroup $route) use ($c) {
             $route->map('GET', '/user', [BoneMvcUserApiController::class, 'indexAction']);
+            $route->map('POST', '/user/choose-avatar', [BoneMvcUserApiController::class, 'chooseAvatarAction'])->middleware($c->get(SessionAuth::class));
+            $route->map('POST', '/user/upload-avatar', [BoneMvcUserApiController::class, 'uploadAvatarAction'])->middleware($c->get(SessionAuth::class));
         })
         ->setStrategy($strategy);
 

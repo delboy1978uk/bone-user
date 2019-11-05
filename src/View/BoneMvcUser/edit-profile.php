@@ -11,24 +11,14 @@ $p = $person;
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                    <img src="/img/skull_and_crossbones.png"/>
                     <h1>Edit your profile</h1>
                     <?= null !== $message ? $this->alert($message) : '' ?>
-                    <p class="lead">You can set your username here, and upload your image <br>(or choose one of ours).</p>
+                    <div id="alert" class="alert alert-info alert-dismissible" role="alert">
+                        You can set your username here, and upload your image (or choose one of ours).
+                    </div>
                     <form action="" method="post">
-
-
-                        <label for="username">Username</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="aka" name="aka" value="<?= $p->getAka(); ?>"/>
-                            <span class="input-group-btn">
-                                <span id="check-aka" class="btn btn-<?= $p->getAka() ? 'success' : 'primary'; ?> group-end disabled"><?= $p->getAka() ? Icon::CHECK_CIRCLE : 'Check..'; ?></span>
-                            </span>
-                        </div>
-
-                        <label for="avatar">Avatar</label>
                         <div id="existing-avatar" class="<?= $p->getImage() ? null : 'hidden'; ?>">
-                            <img id="my-avatar" src="/img/<?= $p->getImage(); ?>" alt="<?= $p->getAka(); ?>"
+                            <img id="my-avatar" src="<?= $p->getImage(); ?>" alt="<?= $p->getAka(); ?>"
                                  class="m20 img-circle"/>
                             <button id="change-avatar" type="button" class="btn btn-primary">Change my avatar</button>
                         </div>
@@ -105,10 +95,13 @@ $p = $person;
 
 
                         <br>
-                        <a id="home-button" href="/"
-                           class="btn btn-lg btn-success <?= ($p->getImage() && $p->getAka()) ? null : 'disabled'; ?> pull-right">Home</a>
+
 
                     </form>
+                    <?= $form ?>
+                    <a id="home-button" href="/"
+                                   class="btn btn-lg btn-success <?= ($p->getImage() && $p->getAka()) ? null : 'disabled'; ?> pull-right">Home</a>
+
                 </div>
             </div>
         </div>
@@ -140,55 +133,10 @@ $p = $person; ?>
             if (input.length) {
                 input.val(log);
                 $('#upload').removeClass('disabled');
-            } else {
-                if (log) alert(log);
+            } else if (log) {
+                alert(log);
             }
 
-        });
-
-
-        // SET USERNAME
-        var set_aka = '<?= $p->getAka();?>';
-        $('#aka').on('keyup', function (e) {
-            var aka = $(this).val();
-            if (aka) {
-                if (aka == set_aka) {
-                    $('#check-aka')
-                        .html('<?= Icon::CHECK_CIRCLE; ?>')
-                        .removeClass('btn-primary')
-                        .addClass('btn-success disabled');
-                } else {
-                    $('#check-aka')
-                        .removeClass('disabled btn-success')
-                        .addClass('btn-primary')
-                        .html('Check..');
-                }
-            } else {
-                $('#check-aka').addClass('disabled btn-primary');
-            }
-        });
-
-        $('#check-aka').click(function () {
-            $(this).html('<?= Icon::custom(Icon::REFRESH, 'fa-spin');?>');
-            var aka = $('#aka').val();
-            $.post('/profile/set-aka', {aka: aka}, function (result) {
-                var alertbox = $('#alert');
-                alertbox.removeClass('alert-danger');
-                alertbox.removeClass('alert-info');
-                alertbox.removeClass('alert-success');
-                alertbox.addClass('alert-' + result.result);
-                alertbox.html(result.message);
-                if (result.result == 'success') {
-                    $('#check-aka')
-                        .html('<?= Icon::CHECK_CIRCLE; ?>')
-                        .removeClass('btn-primary').addClass('btn-success disabled');
-                    $('span#identity').html(aka);
-                    set_aka = aka;
-                    if (set_avatar) {
-                        $('#home-button').removeClass('disabled');
-                    }
-                }
-            });
         });
 
 
@@ -218,10 +166,9 @@ $p = $person; ?>
         // Choose Avatar
         $('img.avatar').click(function () {
             var src = $(this).prop('src');
-            var replace = location.protocol + '//' + location.host + '/img/';
+            var replace = location.protocol + '//' + location.host;
             var avatar = src.replace(replace, '');
-            $.post('/profile/choose-avatar', {avatar: avatar}, function (result) {
-                console.log(result);
+            $.post('/api/user/choose-avatar', {avatar: avatar}, function (result) {
                 var alertbox = $('#alert');
                 alertbox.removeClass('alert-danger');
                 alertbox.removeClass('alert-info');
@@ -230,13 +177,11 @@ $p = $person; ?>
                 alertbox.html(result.message);
                 if (result.result == 'success') {
                     set_avatar = result.avatar;
-                    $('#user-avatar').prop('src', '/img/' + set_avatar);
-                    $('#my-avatar').prop('src', '/img/' + set_avatar);
+                    $('#image').val(set_avatar);
+                    $('#user-avatar').prop('src',  set_avatar);
+                    $('#my-avatar').prop('src',  set_avatar);
                     $('#existing-avatar').removeClass('hidden');
                     $('#change-existing').addClass('hidden');
-                    if (set_aka) {
-                        $('#home-button').removeClass('disabled');
-                    }
                 }
             });
         });
@@ -257,7 +202,6 @@ $p = $person; ?>
                 cache: false,
                 processData: false,
                 success: function (result) {
-                    console.log(result);
                     var alertbox = $('#alert');
                     alertbox.removeClass('alert-danger');
                     alertbox.removeClass('alert-info');
@@ -266,13 +210,11 @@ $p = $person; ?>
                     alertbox.html(result.message);
                     if (result.result == 'success') {
                         set_avatar = result.avatar
+                        $('#image').val(set_avatar);
                         $('#my-avatar').prop('src', '/img/' + set_avatar).addClass('img-circle');
                         $('#user-avatar').prop('src', '/img/' + set_avatar);
                         $('#existing-avatar').removeClass('hidden');
                         $('#change-existing').addClass('hidden');
-                        if (set_aka) {
-                            $('#home-button').removeClass('disabled');
-                        }
                     }
                 },
                 error: function (jqXHR, status, error) {

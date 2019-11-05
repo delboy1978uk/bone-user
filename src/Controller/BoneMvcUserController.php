@@ -8,11 +8,13 @@ use Bone\Mvc\View\ViewEngine;
 use BoneMvc\Mail\EmailMessage;
 use BoneMvc\Mail\Service\MailService;
 use BoneMvc\Module\BoneMvcUser\Form\LoginForm;
+use BoneMvc\Module\BoneMvcUser\Form\PersonForm;
 use BoneMvc\Module\BoneMvcUser\Form\RegistrationForm;
 use BoneMvc\Module\BoneMvcUser\Form\ResetPasswordForm;
 use DateTime;
 use Del\Exception\EmailLinkException;
 use Del\Exception\UserException;
+use Del\Factory\CountryFactory;
 use Del\Form\Field\Text\EmailAddress;
 use Del\Service\UserService;
 use Del\SessionManager;
@@ -516,7 +518,25 @@ class BoneMvcUserController extends Controller
     {
         $user = $request->getAttribute('user');
         $person = $user->getPerson();
-        $body = $this->getView()->render('bonemvcuser::edit-profile', ['person' => $person]);
+        $form = new PersonForm('profile', $this->getTranslator());
+        $array = $this->userService->getPersonSvc()->toArray($person);
+
+        $form->populate($array);
+        
+        if ($request->getMethod() === 'POST') {
+            $post = $request->getParsedBody();
+            $form->populate($post);
+            if ($form->isValid()) {
+                $data = $form->getValues();
+                $dateFormat = $this->getSiteConfig()->getAttribute('i18n')['date_format'];
+                $data['dob'] = DateTime::createFromFormat($dateFormat, $data['dob']);
+                $data['country'] = CountryFactory::generate($data['country']);
+                $this->userService->getPersonSvc()->populateFromArray($person, $data);
+                $this->userService->saveUser($user);
+            }
+        }
+        
+        $body = $this->getView()->render('bonemvcuser::edit-profile', ['person' => $person, 'form' => $form->render()]);
 
         return new HtmlResponse($body);
     }
@@ -548,8 +568,6 @@ class BoneMvcUserController extends Controller
         } catch (Exception $e) {
             throw $e;
         }
-
-
 
         $body = $this->getView()->render('bonemvcuser::reset-email', ['message' => null]);
 

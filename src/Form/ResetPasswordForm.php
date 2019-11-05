@@ -15,27 +15,27 @@ class ResetPasswordForm extends AbstractForm
     public function init()
     {
         $password = new Password('password');
-        $password->setRequired(true)
-            ->setClass('form-control password')
-            ->setLabel('Password')
-            ->setId('password')
-            ->setAttribute('size', 40)
-            ->setAttribute('placeholder', 'Enter a password')
-            ->setCustomErrorMessage('You must input a password.');
+        $password->setRequired(true);
+        $password->setClass('form-control password');
+        $password->setLabel('Password');
+        $password->setId('password');
+        $password->setAttribute('size', 40);
+        $password->setAttribute('placeholder', 'Enter a password');
+        $password->setCustomErrorMessage('You must input a password.');
 
         $confirm = new Password('confirm');
-        $confirm->setRequired(true)
-            ->setLabel('Confirm Password')
-            ->setAttribute('size', 40)
-            ->setAttribute('placeholder', 'Retype your password')
-            ->setCustomErrorMessage('You must retype your password.');
+        $confirm->setRequired(true);
+        $confirm->setLabel('Confirm Password');
+        $confirm->setAttribute('size', 40);
+        $confirm->setAttribute('placeholder', 'Retype your password');
+        $confirm->setCustomErrorMessage('You must retype your password.');
 
         $submit = new Submit('submit');
         $submit->setValue('Reset Password');
 
-        $this->addField($password)
-            ->addField($confirm)
-            ->addField($submit);
+        $this->addField($password);
+        $this->addField($confirm);
+        $this->addField($submit);
     }
 
 }
