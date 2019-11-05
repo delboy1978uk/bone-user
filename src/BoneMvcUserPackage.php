@@ -51,8 +51,11 @@ class BoneMvcUserPackage implements RegistrationInterface, RouterConfigInterface
         $c[BoneMvcUserApiController::class] = $c->factory(function (Container $c) {
             /** @var UserService $userService */
             $userService = $c->get(UserService::class);
+            $dir = $c->get('uploads_dir');
+            $img = $c->get('image_dir');
+            $tmp = $c->get('temp_dir');
 
-            return new BoneMvcUserApiController($userService);
+            return new BoneMvcUserApiController($userService, $dir, $img, $tmp);
         });
 
 

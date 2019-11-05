@@ -12,7 +12,7 @@ $p = $person;
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <h1>Edit your profile</h1>
-                    <?= null !== $message ? $this->alert($message) : '' ?>
+                    <?= isset($message) ? $this->alert($message) : '' ?>
                     <div id="alert" class="alert alert-info alert-dismissible" role="alert">
                         You can set your username here, and upload your image (or choose one of ours).
                     </div>
@@ -211,7 +211,7 @@ $p = $person; ?>
                     if (result.result == 'success') {
                         set_avatar = result.avatar
                         $('#image').val(set_avatar);
-                        $('#my-avatar').prop('src', '/img/' + set_avatar).addClass('img-circle');
+                        $('#my-avatar').prop('src', '/download?file=' + set_avatar).addClass('img-circle');
                         $('#user-avatar').prop('src', '/img/' + set_avatar);
                         $('#existing-avatar').removeClass('hidden');
                         $('#change-existing').addClass('hidden');

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace BoneMvc\Module\BoneMvcUser\Controller;
 
+use Bone\Server\SiteConfig;
 use Del\Form\Form;
 use Bone\Mvc\Controller;
 use BoneMvc\Mail\Service\MailService;
@@ -21,13 +22,25 @@ class BoneMvcUserApiController
     /** @var UserService $userService */
     private $userService;
 
+    /** @var string $uploadsDirectory */
+    private $uploadsDirectory;
+
+    /** @var string $tempDirectory */
+    private $tempDirectory;
+
+    /** @var string $imgDirectory */
+    private $imgDirectory;
+
     /**
      * BoneMvcUserController constructor.
      * @param UserService $userService
      */
-    public function __construct(UserService $userService)
+    public function __construct(UserService $userService, string $uploadsDirectory, string $imgSubDir, string $tempDirectory)
     {
         $this->userService = $userService;
+        $this->uploadsDirectory = $uploadsDirectory;
+        $this->tempDirectory = $tempDirectory;
+        $this->imgDirectory = $imgSubDir;
     }
     
     /**
@@ -61,45 +74,41 @@ class BoneMvcUserApiController
         $data = $request->getParsedBody();
         $form = new Form('upload');
         $file = new FileUpload('avatar');
-        $file->setUploadDirectory('/tmp');
+        $file->setUploadDirectory($this->tempDirectory);
         $form->addField($file);
 
         if ($form->isValid($data)) {
 
             try {
                 $data = $form->getValues();
-                /** @var Zend_Form_Element_File $file */
                 $file = $data['avatar'];
-                $src = '/tmp/' . $file;
-                $destinationFileName = $this->getFilename($file);
-
-                $fullPath = 'data/uploads/img' . DIRECTORY_SEPARATOR . $destinationFileName;
-                $contents = file_get_contents($src);
-                file_put_contents($fullPath, $contents);
-                chmod($fullPath, 0775);
-
-                $image = new Image($fullPath);
+                $sourceFileName = $this->tempDirectory . $file;
+                $newFileName = $this->imgDirectory . $this->getFilename($file);
+                $destinationFileName = $this->uploadsDirectory . $newFileName;
+                $image = new Image($sourceFileName);
+                
                 if ($image->getHeight() > $image->getWidth()) { //portrait
 
-                    $image->resizeToWidth(75);
-                    $image->crop(75, 75);
+                    $image->resizeToWidth(100);
+                    $image->crop(100, 100);
 
                 } elseif ($image->getHeight() < $image->getWidth()) { //landscape
 
-                    $image->resizeToHeight(75);
-                    $image->crop(75, 75);
+                    $image->resizeToHeight(100);
+                    $image->crop(100, 100);
 
                 } else { //square
 
-                    $image->resize(75, 75);
+                    $image->resize(100, 100);
 
                 }
-                $image->save();
+                $image->save($destinationFileName, 0775);
+                unlink($sourceFileName);
 
                 /** @var User $user */
                 $user = $request->getAttribute('user');
                 $person = $user->getPerson();
-                $person->setImage($destinationFileName);
+                $person->setImage($newFileName);
                 $this->userService->getPersonSvc()->savePerson($person);
 
                 return new JsonResponse([
