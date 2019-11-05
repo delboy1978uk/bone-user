@@ -193,7 +193,7 @@ $p = $person; ?>
             jform.append('avatar', $('#avatar').get(0).files[0]);
 
             $.ajax({
-                url: '/profile/upload-avatar',
+                url: '/api/user/upload-avatar',
                 type: 'POST',
                 data: jform,
                 dataType: 'json',

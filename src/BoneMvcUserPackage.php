@@ -52,7 +52,7 @@ class BoneMvcUserPackage implements RegistrationInterface, RouterConfigInterface
             /** @var UserService $userService */
             $userService = $c->get(UserService::class);
 
-            return Init::controller(new BoneMvcUserApiController($userService), $c);
+            return new BoneMvcUserApiController($userService);
         });
 
 
