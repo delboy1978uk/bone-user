@@ -18,7 +18,7 @@ $p = $person;
                     </div>
                     <form action="" method="post">
                         <div id="existing-avatar" class="<?= $p->getImage() ? null : 'hidden'; ?>">
-                            <img id="my-avatar" src="<?= $p->getImage(); ?>" alt="<?= $p->getAka(); ?>"
+                            <img id="my-avatar" src="/download?file=<?= $p->getImage() ?>" alt="<?= $p->getAka(); ?>"
                                  class="m20 img-circle"/>
                             <button id="change-avatar" type="button" class="btn btn-primary">Change my avatar</button>
                         </div>

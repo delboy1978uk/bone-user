@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: BoneMVCUser\n"
-"POT-Creation-Date: 2019-10-22 01:37+0200\n"
-"PO-Revision-Date: 2019-10-23 19:23+0200\n"
+"POT-Creation-Date: 2019-11-05 20:26+0100\n"
+"PO-Revision-Date: 2019-11-05 21:17+0100\n"
 "Last-Translator: Derek McLean <delboy1978uk@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_GB\n"
@@ -15,7 +15,8 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: src\n"
 
-#: src/Controller/BoneMvcUserController.php:80
+#: src/Controller/BoneMvcUserController.php:91
+#: src/Controller/BoneMvcUserController.php:278
 msgid "email.user.register.thankswith"
 msgstr "Thanks for registering with"
 
@@ -59,7 +60,15 @@ msgstr "Retype your password.."
 msgid "form.submit.label"
 msgstr "Register"
 
-#: src/View/BoneMvcUser/register.php:16
+#: src/View/BoneMvcUser/index.php:9
+msgid "user.welcome"
+msgstr "Welcome To Website"
+
+#: src/View/BoneMvcUser/index.php:10
+msgid "user.login"
+msgstr "Login"
+
+#: src/View/BoneMvcUser/index.php:11 src/View/BoneMvcUser/register.php:10
 msgid "user.register"
 msgstr "Register"
 
