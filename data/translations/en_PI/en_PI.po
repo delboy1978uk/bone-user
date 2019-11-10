@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Bone\n"
-"POT-Creation-Date: 2019-10-22 02:07+0200\n"
-"PO-Revision-Date: 2019-10-23 18:39+0200\n"
+"POT-Creation-Date: 2019-11-10 12:52+0100\n"
+"PO-Revision-Date: 2019-11-10 13:17+0100\n"
 "Last-Translator: Derek McLean <delboy1978uk@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_PI\n"
@@ -15,33 +15,118 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: src\n"
 
-#: src/Controller/BoneMvcUserController.php:80
+#: src/Controller/BoneMvcUserController.php:91
+#: src/Controller/BoneMvcUserController.php:281
 msgid "email.user.register.thankswith"
 msgstr "Thanks fer registerin’ wit’ "
 
-#: src/Form/RegistrationForm.php:17
+#: src/Controller/BoneMvcUserController.php:142
+msgid "login.activation.expired"
+msgstr ""
+"Th’ activation link has perished. Ye can send a new activation link by "
+"clickin’ "
+
+#: src/Controller/BoneMvcUserController.php:142
+msgid "login.activation.expired2"
+msgstr "here."
+
+#: src/Controller/BoneMvcUserController.php:200
+msgid "login.error.password"
+msgstr "That be th’ wrong user name or password. Did ye "
+
+#: src/Controller/BoneMvcUserController.php:200
+msgid "login.error.password2"
+msgstr "forget yer password?"
+
+#: src/Controller/BoneMvcUserController.php:203
+msgid "login.unactivated"
+msgstr "This email address be unactivated. Resend an "
+
+#: src/Controller/BoneMvcUserController.php:203
+msgid "login.unactivated2"
+msgstr "activation email?"
+
+#: src/Controller/BoneMvcUserController.php:207
+msgid "login.activation.banned"
+msgstr "This use be tied up below th’ deck,  disabled or banned"
+
+#: src/Controller/BoneMvcUserController.php:232
+msgid "home.loggedin"
+msgstr "Ye be logged in."
+
+#: src/Controller/BoneMvcUserController.php:291
+msgid "login.resendactivation.error"
+msgstr "Garr! We were unable to send yer confirmation e-mail. Please contact "
+
+#: src/Controller/BoneMvcUserController.php:329
+msgid "email.forgotpass.subject"
+msgstr "Reset your password on "
+
+#: src/Controller/BoneMvcUserController.php:381
+#: src/Controller/BoneMvcUserController.php:428
+msgid "email.resetpass.success"
+msgstr " Ye have successfully changed yer password."
+
+#: src/Controller/BoneMvcUserController.php:385
+#: src/Controller/BoneMvcUserController.php:431
+msgid "email.resetpass.nomatch"
+msgstr "Passwords did not match, please try again."
+
+#: src/Controller/BoneMvcUserController.php:477
+msgid "email.changeemail.registered"
+msgstr "This email be already  registered with "
+
+#: src/Controller/BoneMvcUserController.php:491
+msgid "email.changeemail.subject"
+msgstr "Change your email address on  "
+
+#: src/Controller/BoneMvcUserController.php:499
+msgid "email.changeemail.sent"
+msgstr "Please check yer email for a link to activate yer new address."
+
+#: src/Controller/BoneMvcUserController.php:503
+msgid "email.changeemail.notsent"
+msgstr "We be unable t’ send yer e-mail confirmation. Please contact "
+
+#: src/Controller/BoneMvcUserController.php:507
+msgid "email.changeemail.wrongpass"
+msgstr "Yer password be nay good"
+
+#: src/Controller/BoneMvcUserController.php:571
+msgid "email.changeemail.success"
+msgstr "Ye have switched yer email address. Please log in wit’ "
+
+#: src/Controller/BoneMvcUserController.php:571
+msgid "email.changeemail.success2"
+msgstr " from now on."
+
+#: src/Form/LoginForm.php:23 src/Form/RegistrationForm.php:17
 msgid "form.email.label"
 msgstr "Email"
 
-#: src/Form/RegistrationForm.php:18
+#: src/Form/LoginForm.php:24 src/Form/RegistrationForm.php:18
 msgid "form.email.error"
 msgstr "Gaaaarrr! Ye must add yer email!"
+
+#: src/Form/LoginForm.php:29 src/Form/RegistrationForm.php:28
+msgid "form.password.label"
+msgstr "Password"
+
+#: src/Form/LoginForm.php:32 src/Form/RegistrationForm.php:30
+msgid "form.password.placeholder"
+msgstr "Choose a secret password!"
+
+#: src/Form/LoginForm.php:33 src/Form/RegistrationForm.php:29
+msgid "form.password.error"
+msgstr "Ye must choose a secret password."
+
+#: src/Form/LoginForm.php:36 src/View/BoneMvcUser/index.php:10
+msgid "user.login"
+msgstr "Login"
 
 #: src/Form/RegistrationForm.php:19
 msgid "form.email.placeholder"
 msgstr "Type in yer email.."
-
-#: src/Form/RegistrationForm.php:28
-msgid "form.password.label"
-msgstr "Password"
-
-#: src/Form/RegistrationForm.php:29
-msgid "form.password.error"
-msgstr "Ye must choose a secret password."
-
-#: src/Form/RegistrationForm.php:30
-msgid "form.password.placeholder"
-msgstr "Choose a secret password!"
 
 #: src/Form/RegistrationForm.php:40
 msgid "form.confirm.label"
@@ -59,9 +144,195 @@ msgstr "Retype yer password here!"
 msgid "form.submit.label"
 msgstr "Embark"
 
-#: src/View/BoneMvcUser/register.php:16
+#: src/View/BoneMvcUser/activate-user-account.php:13
+msgid "activate.h1"
+msgstr "Avast ye, pirate!"
+
+#: src/View/BoneMvcUser/activate-user-account.php:14
+msgid "activate.p"
+msgstr "Yer user account be activated an’ ye have been logged in!"
+
+#: src/View/BoneMvcUser/activate-user-account.php:15
+msgid "activate.start"
+msgstr "Get crackin’"
+
+#: src/View/BoneMvcUser/activate-user-account.php:17
+msgid "oops"
+msgstr "Gaarrrr!"
+
+#: src/View/BoneMvcUser/activate-user-account.php:18
+msgid "problem"
+msgstr "There be a problem"
+
+#: src/View/BoneMvcUser/activate-user-account.php:20
+msgid "activate.resend"
+msgstr "Resend activation link"
+
+#: src/View/BoneMvcUser/change-email.php:9
+#: src/View/BoneMvcUser/reset-email.php:8
+msgid "changeemail.h1"
+msgstr "Change yer email"
+
+#: src/View/BoneMvcUser/change-email.php:17
+msgid "changeemail.p"
+msgstr "A confirmation email will be sent to yer old email address."
+
+#: src/View/BoneMvcUser/change-email.php:20
+msgid "changeemail.check"
+msgstr "Check yer email"
+
+#: src/View/BoneMvcUser/change-pass.php:11
+msgid "changepass.h1"
+msgstr "Change yer password"
+
+#: src/View/BoneMvcUser/change-pass.php:17
+msgid "changepass.p"
+msgstr "Yer password be successfully changed."
+
+#: src/View/BoneMvcUser/change-pass.php:18
+msgid "changepass.continue"
+msgstr "Continue"
+
+#: src/View/BoneMvcUser/change-pass.php:20
+#: src/View/BoneMvcUser/reset-pass.php:20
+msgid "changepass.choose"
+msgstr ""
+"Be choosin’ a good password. A combination of upper and lower case "
+"characters, symbols, an’ numbers makes fer a strong password."
+
+#: src/View/BoneMvcUser/edit-profile.php:14
+msgid "editprofile.h1"
+msgstr "Edit yer profile"
+
+#: src/View/BoneMvcUser/edit-profile.php:17
+msgid "editprofile.alert"
+msgstr ""
+"Ye can set yer username here, an’ upload yer likeness (or choose one of "
+"ours)."
+
+#: src/View/BoneMvcUser/edit-profile.php:23
+msgid "avatar.change"
+msgstr "Change my avatar"
+
+#: src/View/BoneMvcUser/edit-profile.php:28
+msgid "avatar.choose"
+msgstr "Choose an avatar"
+
+#: src/View/BoneMvcUser/edit-profile.php:29
+msgid "avatar.upload"
+msgstr "Upload my own"
+
+#: src/View/BoneMvcUser/edit-profile.php:34
+msgid "picture.choose"
+msgstr "Choose a picture"
+
+#: src/View/BoneMvcUser/edit-profile.php:71
+msgid "avatar.freepik"
+msgstr "These crackin’ animal avatars were provided by Freepik"
+
+#: src/View/BoneMvcUser/edit-profile.php:72
+msgid "avatar.design"
+msgstr "Design vector designed by Freepik"
+
+#: src/View/BoneMvcUser/edit-profile.php:77
+msgid "avatar.select"
+msgstr "Select an’ upload a picture"
+
+#: src/View/BoneMvcUser/edit-profile.php:81
+msgid "avatar.browse"
+msgstr "Browse"
+
+#: src/View/BoneMvcUser/edit-profile.php:86
+msgid "avatar.uploadbtn"
+msgstr "Upload.."
+
+#: src/View/BoneMvcUser/edit-profile.php:99
+msgid "home"
+msgstr "Home"
+
+#: src/View/BoneMvcUser/forgot-password.php:10
+#: src/View/BoneMvcUser/reset-pass.php:11
+msgid "resetpass.h1"
+msgstr "Reset yer password"
+
+#: src/View/BoneMvcUser/forgot-password.php:16
+msgid "resetpass.lead"
+msgstr "If an account be found, an email will be sent to it."
+
+#: src/View/BoneMvcUser/forgot-password.php:17
+msgid "resetpass.p"
+msgstr "Check yer inbox an’ click on th’ secure link t’ reset yer password."
+
+#: src/View/BoneMvcUser/home.php:8
+msgid "home.welcome"
+msgstr "Avast ye, "
+
+#: src/View/BoneMvcUser/home.php:9
+msgid "home.placeholder"
+msgstr "This be th’ logged in user’s home page."
+
+#: src/View/BoneMvcUser/home.php:10
+msgid "home.editprofile"
+msgstr "Edit profile"
+
+#: src/View/BoneMvcUser/home.php:11
+msgid "home.changeemail"
+msgstr "Change Email"
+
+#: src/View/BoneMvcUser/home.php:12
+msgid "home.changepass"
+msgstr "Change Password"
+
+#: src/View/BoneMvcUser/home.php:13
+msgid "home.logout"
+msgstr "Logout"
+
+#: src/View/BoneMvcUser/index.php:9
+msgid "user.welcome"
+msgstr "Welcome T’ Website"
+
+#: src/View/BoneMvcUser/index.php:11 src/View/BoneMvcUser/register.php:10
 msgid "user.register"
 msgstr "Embark"
+
+#: src/View/BoneMvcUser/login.php:9
+msgid "login.h1"
+msgstr "Login"
+
+#: src/View/BoneMvcUser/login.php:14
+msgid "login.a"
+msgstr "Forgot yer password?"
+
+#: src/View/BoneMvcUser/resend-activation.php:10
+msgid "resend.lead"
+msgstr "Thanks fer (re)registering"
+
+#: src/View/BoneMvcUser/resend-activation.php:11
+msgid "resend.p"
+msgstr ""
+"An activation email be sent t’ yer inbox. Click on th’ link to activate yer "
+"account an’ log in t’ th’ system."
+
+#: src/View/BoneMvcUser/reset-email.php:12
+msgid "changeemail.success"
+msgstr "Email address changed."
+
+#: src/View/BoneMvcUser/reset-email.php:13
+#: src/View/BoneMvcUser/reset-pass.php:18
+msgid "continue"
+msgstr "Continue"
+
+#: src/View/BoneMvcUser/reset-pass.php:17
+msgid "resetpass.success"
+msgstr "Yer password be successfully changed."
+
+#: src/View/BoneMvcUser/thanks-for-registering.php:7
+msgid "register.thanks"
+msgstr "Thanks fer Registerin’."
+
+#: src/View/BoneMvcUser/thanks-for-registering.php:8
+msgid "register.check"
+msgstr "Check yer email for your activation link."
 
 #: src/View/email/user_registration/user_registration.php:1
 #: src/View/email/user_registration/user_registration.php:26
@@ -82,23 +353,21 @@ msgstr "Activate yer account"
 #~ msgid "download"
 #~ msgstr "Loot"
 
-#~ msgid "contribute"
-#~ msgstr "Contribute"
-
 #~ msgid "learn"
 #~ msgstr "Learn Bone MVC Framework"
 
 #~ msgid "language"
 #~ msgstr "Lingo"
 
-#~ msgid "home.intro"
-#~ msgstr "It be yet another PHP framework swashbucklin' ont' th' scene!"
-
 #~ msgid "index.intro"
-#~ msgstr "Be ye wantin an MVC framework peppered with local pirate lingo? It be the most bare bones framework in the seven seas! Garr!"
+#~ msgstr ""
+#~ "Be ye wantin an MVC framework peppered with local pirate lingo? It be the "
+#~ "most bare bones framework in the seven seas! Garr!"
 
 #~ msgid "index.install"
-#~ msgstr "Ye can download th' Bone MVC source code by sailin' over t' Github. But the Cap'n recommends ye install "
+#~ msgstr ""
+#~ "Ye can download th' Bone MVC source code by sailin' over t' Github. But "
+#~ "the Cap'n recommends ye install "
 
 #~ msgid "index.install2"
 #~ msgstr "'n' do it that way."
@@ -113,7 +382,9 @@ msgstr "Activate yer account"
 #~ msgstr "t' sail th' ship t' th' fabled Monkey Island."
 
 #~ msgid "index.crew3"
-#~ msgstr "If ye like Bone an' want t' help conquer the seven seas, fork it and get aboard!"
+#~ msgstr ""
+#~ "If ye like Bone an' want t' help conquer the seven seas, fork it and get "
+#~ "aboard!"
 
 #~ msgid "learn.learn"
 #~ msgstr "Learn Bone MVC Framework"
@@ -137,43 +408,63 @@ msgstr "Activate yer account"
 #~ msgstr "Docker Dev Box"
 
 #~ msgid "docker.about"
-#~ msgstr "Bone comes wit' a docker-compose.yml in th' project, so ye can instantly get a dev server runnin' if ye use Docker (Tested usin' a default VirtualBox VM). Jus' add this t' yer hosts file"
-
-#~ msgid "docker.browse"
-#~ msgstr "Then ye can access th' site at https://awesome.scot in yer browser. O' course if ye don't use docker ye can add it t' yer LAMP stack in th' usual way."
+#~ msgstr ""
+#~ "Bone comes wit' a docker-compose.yml in th' project, so ye can instantly "
+#~ "get a dev server runnin' if ye use Docker (Tested usin' a default "
+#~ "VirtualBox VM). Jus' add this t' yer hosts file"
 
 #~ msgid "configure"
 #~ msgstr "Cap'n's Logs"
 
 #~ msgid "learn.folders"
-#~ msgstr "Ye can see ye have a config, data, public, and src folder. Dinnae be touchin' th' vendor folder or th' Cap'n will make ye walk the plank!"
+#~ msgstr ""
+#~ "Ye can see ye have a config, data, public, and src folder. Dinnae be "
+#~ "touchin' th' vendor folder or th' Cap'n will make ye walk the plank!"
 
 #~ msgid "learn.777"
-#~ msgstr "Make th' data folder writable. 777 be lettin' every landlubber have write access, so if ye can we prefer 775 with yer Apache user in th' group."
+#~ msgstr ""
+#~ "Make th' data folder writable. 777 be lettin' every landlubber have write "
+#~ "access, so if ye can we prefer 775 with yer Apache user in th' group."
 
 #~ msgid "learn.vhosts"
-#~ msgstr "In yer apache virtual hosts, set the document root as th' public folder"
+#~ msgstr ""
+#~ "In yer apache virtual hosts, set the document root as th' public folder"
 
 #~ msgid "learn.config"
 #~ msgstr "Th' config folder"
 
 #~ msgid "learn.config.drop"
-#~ msgstr "Ye can drop in any number o' <span class=\"label label-success\">.php</span> files into th'    <span class=\"label label-success\">config/</span> folder. Make sure they return an array wit' th' config    . Ye can o'erride configuration based on environment var    <span class=\"label label-success\">APPLICATION_ENV</span>, so fer instance if th' environment was productionit would load th' additional config th' production subdirectory.</p><p>Thar are several config files by default:"
+#~ msgstr ""
+#~ "Ye can drop in any number o' <span class=\"label label-success\">.php</"
+#~ "span> files into th'    <span class=\"label label-success\">config/</"
+#~ "span> folder. Make sure they return an array wit' th' config    . Ye can "
+#~ "o'erride configuration based on environment var    <span class=\"label "
+#~ "label-success\">APPLICATION_ENV</span>, so fer instance if th' "
+#~ "environment was productionit would load th' additional config th' "
+#~ "production subdirectory.</p><p>Thar are several config files by default:"
 
 #~ msgid "learn.config.registry"
-#~ msgstr "In yer config files, ye can add anythin' ye wants. It gets stored in th' Bone\\Mvc\\Registry."
+#~ msgstr ""
+#~ "In yer config files, ye can add anythin' ye wants. It gets stored in th' "
+#~ "Bone\\Mvc\\Registry."
 
 #~ msgid "database"
 #~ msgstr "Database"
 
 #~ msgid "learn.db"
-#~ msgstr "Set yer default db credentials in th' main config/db.php, 'n any environment specific configs in a subdirectory"
+#~ msgstr ""
+#~ "Set yer default db credentials in th' main config/db.php, 'n any "
+#~ "environment specific configs in a subdirectory"
 
 #~ msgid "i18n"
 #~ msgstr "Lingo"
 
 #~ msgid "learn.i18n.about"
-#~ msgstr "Bone supports translation into different locales. Translation files (gettext .po 'n .mo) best be placed in data/translations, under a subdirectory o' th' locale, eg data/translations/en_GB/en_GB.po. Ye can set th' default locale 'n an array o' supported locales."
+#~ msgstr ""
+#~ "Bone supports translation into different locales. Translation files "
+#~ "(gettext .po 'n .mo) best be placed in data/translations, under a "
+#~ "subdirectory o' th' locale, eg data/translations/en_GB/en_GB.po. Ye can "
+#~ "set th' default locale 'n an array o' supported locales."
 
 #~ msgid "learn.i18n.usage"
 #~ msgstr "T' use th' translator, ye can simply call:"
@@ -182,7 +473,10 @@ msgstr "Activate yer account"
 #~ msgstr "Cap'n's Logs"
 
 #~ msgid "learn.logs"
-#~ msgstr "Bone uses monolog/monolog, 'n logs can be found in <span crew=\"label label-success\">data/logs</span>.            Currently we only support writin' t' files, but ye can add as many channels as ye like:"
+#~ msgstr ""
+#~ "Bone uses monolog/monolog, 'n logs can be found in <span crew=\"label "
+#~ "label-success\">data/logs</span>.            Currently we only support "
+#~ "writin' t' files, but ye can add as many channels as ye like:"
 
 #~ msgid "learn.logs.usage"
 #~ msgstr "T' use th' logger in a controller:"
@@ -191,19 +485,30 @@ msgstr "Activate yer account"
 #~ msgstr "Messages in bottles"
 
 #~ msgid "learn.mail"
-#~ msgstr "Bone uses Zend Mail. T' configure th' mail client, jus' drop in yer config (see zend mail docs)"
+#~ msgstr ""
+#~ "Bone uses Zend Mail. T' configure th' mail client, jus' drop in yer "
+#~ "config (see zend mail docs)"
 
 #~ msgid "learn.mail.hog"
-#~ msgstr "If ye be usin' th' Docker Box provided by bone, ye also 'ave th' awesome MailHog at yer disposal. Browse t' awesome.scot:8025 'n ye'll see a catch all email inbox, so ye ne'er needs t' worry about development emails reachin' th' real world."
+#~ msgstr ""
+#~ "If ye be usin' th' Docker Box provided by bone, ye also 'ave th' awesome "
+#~ "MailHog at yer disposal. Browse t' awesome.scot:8025 'n ye'll see a catch "
+#~ "all email inbox, so ye ne'er needs t' worry about development emails "
+#~ "reachin' th' real world."
 
 #~ msgid "routes"
 #~ msgstr "Voyages"
 
 #~ msgid "learn.routes"
-#~ msgstr "Routes follow a default pattern o' /controller/action/param/value/nextparam/nextvalue/etc/etc<br>Ye can also o'erride routes by definin' them in th' config array:"
+#~ msgstr ""
+#~ "Routes follow a default pattern o' /controller/action/param/value/"
+#~ "nextparam/nextvalue/etc/etc<br>Ye can also o'erride routes by definin' "
+#~ "them in th' config array:"
 
 #~ msgid "learn.routes.params"
-#~ msgstr "When definin' routes, mandatory variables in th' uri 'ave a colon like :id<br /> Optional uri vars 'ave [ ] surroundin' them like [:id]"
+#~ msgstr ""
+#~ "When definin' routes, mandatory variables in th' uri 'ave a colon like :"
+#~ "id<br /> Optional uri vars 'ave [ ] surroundin' them like [:id]"
 
 #~ msgid "layouts"
 #~ msgstr "Layouts"

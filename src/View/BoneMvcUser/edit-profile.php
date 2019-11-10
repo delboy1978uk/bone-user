@@ -11,29 +11,27 @@ $p = $person;
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                    <h1>Edit your profile</h1>
+                    <h1><?= $this->t('editprofile.h1', 'user') ?></h1>
                     <?= isset($message) ? $this->alert($message) : '' ?>
                     <div id="alert" class="alert alert-info alert-dismissible" role="alert">
-                        You can set your username here, and upload your image (or choose one of ours).
+                        <?= $this->t('editprofile.alert', 'user') ?>
                     </div>
                     <form action="" method="post">
                         <div id="existing-avatar" class="<?= $p->getImage() ? null : 'hidden'; ?>">
                             <img id="my-avatar" src="/download?file=<?= $p->getImage() ?>" alt="<?= $p->getAka(); ?>"
                                  class="m20 img-circle"/>
-                            <button id="change-avatar" type="button" class="btn btn-primary">Change my avatar</button>
+                            <button id="change-avatar" type="button" class="btn btn-primary"><?= $this->t('avatar.change', 'user') ?></button>
                         </div>
 
                         <div id="change-existing" class="<?= $p->getImage() ? 'hidden' : null; ?>">
                             <div class="btn-group btn-block nav" role="group" aria-label="...">
-                                <button id="choose-pic" type="button" class="btn btn-default disabled">Choose an
-                                    avatar
-                                </button>
-                                <button id="upload-pic" type="button" class="btn btn-primary">Upload my own</button>
+                                <button id="choose-pic" type="button" class="btn btn-default disabled"><?= $this->t('avatar.choose', 'user') ?></button>
+                                <button id="upload-pic" type="button" class="btn btn-primary"><?= $this->t('avatar.upload', 'user') ?></button>
                             </div>
 
 
                             <div id="choose-avatar">
-                                <p class="lead tc mt20">Choose a picture</p>
+                                <p class="lead tc mt20"><?= $this->t('picture.choose', 'user') ?></p>
                                 <div class="row">
                                     <div class="col-md-3 tc mb20">
                                         <img src="/bone-mvc-user/img/avatars/dog.png" alt="Dog"
@@ -70,24 +68,22 @@ $p = $person;
                                              class="img-responsive centered avatar"/>
                                     </div>
                                 </div>
-                                <p><small>These great animal avatars were provided by Freepik(<a
-                                                target="_blank"
-                                                href="//www.freepik.com/free-photos-vectors/design">Design
-                                            vector designed by Freepik</a>)</small></p>
+                                <p><small><?= $this->t('avatar.freepik', 'user') ?>(<a target="_blank"
+                                                href="//www.freepik.com/free-photos-vectors/design"><?= $this->t('avatar.design', 'user') ?></a>)</small></p>
                             </div>
 
 
                             <div id="upload-my-own" class="hidden mt20">
-                                <p class="lead tc mt20">Select and upload a picture</p>
+                                <p class="lead tc mt20"><?= $this->t('avatar.select', 'user') ?></p>
                                 <div class="input-group">
                                     <span class="input-group-btn">
                                         <span class="btn btn-primary btn-file">
-                                            Browse  <input type="file" name="avatar" id="avatar"/>
+                                            <?= $this->t('avatar.browse', 'user') ?>  <input type="file" name="avatar" id="avatar"/>
                                         </span>
                                     </span>
                                     <input type="text" class="form-control" readonly/>
                                     <span class="input-group-btn">
-                                        <span id="upload" class="btn btn-primary group-end disabled">Upload..</span>
+                                        <span id="upload" class="btn btn-primary group-end disabled"><?= $this->t('avatar.uploadbtn', 'user') ?>Upload..</span>
                                     </span>
                                 </div>
                             </div>
@@ -100,7 +96,7 @@ $p = $person;
                     </form>
                     <?= $form ?>
                     <a id="home-button" href="/"
-                                   class="btn btn-lg btn-success <?= ($p->getImage() && $p->getAka()) ? null : 'disabled'; ?> pull-right">Home</a>
+                                   class="btn btn-lg btn-success <?= ($p->getImage() && $p->getAka()) ? null : 'disabled'; ?> pull-right"><?= $this->t('home', 'user') ?></a>
 
                 </div>
             </div>
@@ -219,9 +215,6 @@ $p = $person; ?>
                 },
                 error: function (jqXHR, status, error) {
                     // Hopefully we should never reach here
-                    console.log(jqXHR);
-                    console.log(status);
-                    console.log(error);
                 }
             });
         });

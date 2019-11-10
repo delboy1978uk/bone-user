@@ -8,17 +8,16 @@
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
                     <img src="/img/skull_and_crossbones.png" />
-                    <h1>Reset your password</h1>
+                    <h1><?= $this->t('resetpass.h1', 'user') ?></h1>
                     <?= null !== $message ? $this->alert($message) : '' ?>
                     <div class="page-scroll">
                         <div class="well" style="color: black;">
                             <?php
                             if ($success) {?>
-                                <p class="lead">Your password has been successfully changed.</p>
-                                <a class="btn btn-success" href="/user/home">Continue</a>
+                                <p class="lead"><?= $this->t('resetpass.success', 'user') ?></p>
+                                <a class="btn btn-success" href="/user/home"><?= $this->t('continue', 'user') ?><</a>
                             <?php } else { ?>
-                                <p class="lead">Please choose a good password. A combination of upper and lower case
-                                    characters, symbols, and numbers makes for a strong password.</p>
+                                <p class="lead"><?= $this->t('changepass.choose', 'user') ?></p>
                                 <?= $form->render();
                             }
                             ?>

@@ -10,14 +10,14 @@
             <div class="col-md-6 col-md-offset-3">
                 <img alt="Logo" src="/img/skull_and_crossbones.png"/>
                 <?php if (!$message) { ?>
-                <h1>Welcome, user.</h1>
-                <p class="lead">Your user account is activated and you have been logged in!</p>
-                <a href="/user/home" class="btn btn-primary">Get started</a>
+                <h1><?= $this->t('activate.h1', 'user') ?></h1>
+                <p class="lead"><?= $this->t('activate.p', 'user') ?></p>
+                <a href="/user/home" class="btn btn-primary"><?= $this->t('activate.start', 'user') ?></a>
                 <?php } else { ?>
-                    <h1>Oops.</h1>
-                    <p class="lead">There was a problem</p>
+                    <h1><?= $this->t('oops', 'user') ?></h1>
+                    <p class="lead"><?= $this->t('problem', 'user') ?></p>
                 <?php } if (isset($resendLink)) { ?>
-                    <a class="btn btn-warning" href="<?= $resendLink ;?>">Resend activation link</a>
+                    <a class="btn btn-warning" href="<?= $resendLink ;?>"><?= $this->t('activate.resend', 'user') ?></a>
                 <?php } ?>
             </div>
         </div>

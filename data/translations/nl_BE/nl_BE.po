@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: BoneMVC\n"
-"POT-Creation-Date: 2019-10-22 02:31+0200\n"
-"PO-Revision-Date: 2019-10-23 19:35+0200\n"
+"POT-Creation-Date: 2019-11-10 13:17+0100\n"
+"PO-Revision-Date: 2019-11-10 13:41+0100\n"
 "Last-Translator: Derek McLean <delboy1978uk@gmail.com>\n"
 "Language-Team: \n"
 "Language: nl_BE\n"
@@ -15,33 +15,120 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: src\n"
 
-#: src/Controller/BoneMvcUserController.php:80
+#: src/Controller/BoneMvcUserController.php:91
+#: src/Controller/BoneMvcUserController.php:281
 msgid "email.user.register.thankswith"
 msgstr "Bedankt voor uw aanmelding"
 
-#: src/Form/RegistrationForm.php:17
-msgid "form.email.label"
-msgstr "Email"
+#: src/Controller/BoneMvcUserController.php:142
+msgid "login.activation.expired"
+msgstr ""
+"De activeringslink is verlopen. U kunt een nieuwe activeringslink verzenden "
+"door "
 
-#: src/Form/RegistrationForm.php:18
+#: src/Controller/BoneMvcUserController.php:142
+msgid "login.activation.expired2"
+msgstr "hier te klikken"
+
+#: src/Controller/BoneMvcUserController.php:200
+msgid "login.error.password"
+msgstr "Verkeerde gebruikersnaam of wachtwoord. Ben je je "
+
+#: src/Controller/BoneMvcUserController.php:200
+msgid "login.error.password2"
+msgstr "wachtwoord vergeten?"
+
+#: src/Controller/BoneMvcUserController.php:203
+msgid "login.unactivated"
+msgstr "Dit e-mailadres is nog niet geactiveerd. Activerings-e-mail "
+
+#: src/Controller/BoneMvcUserController.php:203
+msgid "login.unactivated2"
+msgstr "opnieuw verzenden?"
+
+#: src/Controller/BoneMvcUserController.php:207
+msgid "login.activation.banned"
+msgstr "Deze gebruiker is uitgeschakeld of verbannen"
+
+#: src/Controller/BoneMvcUserController.php:232
+msgid "home.loggedin"
+msgstr "Je bent ingelogd."
+
+#: src/Controller/BoneMvcUserController.php:291
+msgid "login.resendactivation.error"
+msgstr "We konden uw bevestigingsmail niet verzenden. Neem contact op met "
+
+#: src/Controller/BoneMvcUserController.php:329
+msgid "email.forgotpass.subject"
+msgstr "Reset uw wachtwoord op "
+
+#: src/Controller/BoneMvcUserController.php:381
+#: src/Controller/BoneMvcUserController.php:428
+msgid "email.resetpass.success"
+msgstr "Je hebt met succes je wachtwoord veranderd."
+
+#: src/Controller/BoneMvcUserController.php:385
+#: src/Controller/BoneMvcUserController.php:431
+msgid "email.resetpass.nomatch"
+msgstr "Wachtwoorden komen niet overeen, probeer het opnieuw."
+
+#: src/Controller/BoneMvcUserController.php:477
+msgid "email.changeemail.registered"
+msgstr "Deze e-mail heeft al een geregistreerd account bij "
+
+#: src/Controller/BoneMvcUserController.php:491
+msgid "email.changeemail.subject"
+msgstr "Wijzig uw e-mailadres op "
+
+#: src/Controller/BoneMvcUserController.php:499
+msgid "email.changeemail.sent"
+msgstr "Controleer uw e-mail voor een link om uw nieuwe adres te activeren."
+
+#: src/Controller/BoneMvcUserController.php:503
+msgid "email.changeemail.notsent"
+msgstr "We konden uw e-mailbevestiging niet verzenden. Neem contact op met"
+
+#: src/Controller/BoneMvcUserController.php:507
+msgid "email.changeemail.wrongpass"
+msgstr "Je wachtwoord was fout"
+
+#: src/Controller/BoneMvcUserController.php:571
+msgid "email.changeemail.success"
+msgstr "U heeft uw e-mailadres gewijzigd. Log in met"
+
+#: src/Controller/BoneMvcUserController.php:571
+msgid "email.changeemail.success2"
+msgstr " van nu af aan."
+
+#: src/Form/LoginForm.php:23 src/Form/RegistrationForm.php:17
+msgid "form.email.label"
+msgstr "Emailadres"
+
+#: src/Form/LoginForm.php:24 src/Form/RegistrationForm.php:18
 msgid "form.email.error"
-msgstr "U moet een e-mailadres invoeren"
+msgstr "U moet een geldig e-mailadres invoeren."
+
+#: src/Form/LoginForm.php:29 src/Form/RegistrationForm.php:28
+msgid "form.password.label"
+msgstr "Wachtwoord"
+
+#: src/Form/LoginForm.php:32 src/Form/RegistrationForm.php:30
+msgid "form.password.placeholder"
+msgstr "Kies een wachtwoord"
+
+#: src/Form/LoginForm.php:33 src/Form/RegistrationForm.php:29
+msgid "form.password.error"
+msgstr "U moet een wachtwoord invoeren"
+
+#: src/Form/LoginForm.php:36 src/View/BoneMvcUser/index.php:10
+#, fuzzy
+#| msgid "user.register"
+msgid "user.login"
+msgstr "Registreren"
 
 #: src/Form/RegistrationForm.php:19
 msgid "form.email.placeholder"
 msgstr "Typ een e-mailadres"
-
-#: src/Form/RegistrationForm.php:28
-msgid "form.password.label"
-msgstr "Wachtwoord"
-
-#: src/Form/RegistrationForm.php:29
-msgid "form.password.error"
-msgstr "U moet een wachtwoord invoeren"
-
-#: src/Form/RegistrationForm.php:30
-msgid "form.password.placeholder"
-msgstr "Kies een wachtwoord"
 
 #: src/Form/RegistrationForm.php:40
 msgid "form.confirm.label"
@@ -59,9 +146,197 @@ msgstr "Typ je wachtwoord opnieuw"
 msgid "form.submit.label"
 msgstr "Registreren"
 
-#: src/View/BoneMvcUser/register.php:16
+#: src/View/BoneMvcUser/activate-user-account.php:13
+msgid "activate.h1"
+msgstr "Welkom, gebruiker"
+
+#: src/View/BoneMvcUser/activate-user-account.php:14
+msgid "activate.p"
+msgstr "Uw gebruikersaccount is geactiveerd en u bent ingelogd!"
+
+#: src/View/BoneMvcUser/activate-user-account.php:15
+msgid "activate.start"
+msgstr "Begin"
+
+#: src/View/BoneMvcUser/activate-user-account.php:17
+msgid "oops"
+msgstr "Oeps"
+
+#: src/View/BoneMvcUser/activate-user-account.php:18
+msgid "problem"
+msgstr "Er was een probleem"
+
+#: src/View/BoneMvcUser/activate-user-account.php:20
+msgid "activate.resend"
+msgstr "Activeringslink opnieuw verzenden"
+
+#: src/View/BoneMvcUser/change-email.php:9
+#: src/View/BoneMvcUser/reset-email.php:8
+msgid "changeemail.h1"
+msgstr "Verander je e-mailadres"
+
+#: src/View/BoneMvcUser/change-email.php:17
+msgid "changeemail.p"
+msgstr "Een bevestigingse-mail wordt naar uw oude e-mailadres verzonden."
+
+#: src/View/BoneMvcUser/change-email.php:20
+msgid "changeemail.check"
+msgstr "Controleer je e-mail"
+
+#: src/View/BoneMvcUser/change-pass.php:11
+msgid "changepass.h1"
+msgstr "Verander uw wachtwoord"
+
+#: src/View/BoneMvcUser/change-pass.php:17
+msgid "changepass.p"
+msgstr "Uw wachtwoord is succesvol gewijzigd."
+
+#: src/View/BoneMvcUser/change-pass.php:18
+msgid "changepass.continue"
+msgstr "Doorgaan"
+
+#: src/View/BoneMvcUser/change-pass.php:20
+#: src/View/BoneMvcUser/reset-pass.php:20
+msgid "changepass.choose"
+msgstr ""
+"Kies alstublieft een goed wachtwoord. Een combinatie van hoofdletters en "
+"kleine letters, symbolen en cijfers zorgt voor een sterk wachtwoord."
+
+#: src/View/BoneMvcUser/edit-profile.php:14
+msgid "editprofile.h1"
+msgstr "Pas je profiel aan"
+
+#: src/View/BoneMvcUser/edit-profile.php:17
+msgid "editprofile.alert"
+msgstr ""
+"Je kunt hier je gebruikersnaam instellen en je afbeelding uploaden (of een "
+"van de onze kiezen)."
+
+#: src/View/BoneMvcUser/edit-profile.php:23
+msgid "avatar.change"
+msgstr "Verander mijn avatar"
+
+#: src/View/BoneMvcUser/edit-profile.php:28
+msgid "avatar.choose"
+msgstr "Kies een avatar"
+
+#: src/View/BoneMvcUser/edit-profile.php:29
+msgid "avatar.upload"
+msgstr "Upload mijn eigen"
+
+#: src/View/BoneMvcUser/edit-profile.php:34
+msgid "picture.choose"
+msgstr "Kies een foto"
+
+#: src/View/BoneMvcUser/edit-profile.php:71
+msgid "avatar.freepik"
+msgstr "Deze geweldige dierenavatars werden geleverd door Freepik"
+
+#: src/View/BoneMvcUser/edit-profile.php:72
+msgid "avatar.design"
+msgstr "Ontwerp vector ontworpen door Freepik"
+
+#: src/View/BoneMvcUser/edit-profile.php:77
+msgid "avatar.select"
+msgstr "Selecteer en upload een foto"
+
+#: src/View/BoneMvcUser/edit-profile.php:81
+msgid "avatar.browse"
+msgstr "Bladeren"
+
+#: src/View/BoneMvcUser/edit-profile.php:86
+msgid "avatar.uploadbtn"
+msgstr "Uploaden.."
+
+#: src/View/BoneMvcUser/edit-profile.php:99
+msgid "home"
+msgstr "Huis"
+
+#: src/View/BoneMvcUser/forgot-password.php:10
+#: src/View/BoneMvcUser/reset-pass.php:11
+msgid "resetpass.h1"
+msgstr "Stel je wachtwoord opnieuw in"
+
+#: src/View/BoneMvcUser/forgot-password.php:16
+msgid "resetpass.lead"
+msgstr "Als een account is gevonden, is er een e-mail naar verzonden."
+
+#: src/View/BoneMvcUser/forgot-password.php:17
+msgid "resetpass.p"
+msgstr ""
+"Controleer uw inbox en klik op de beveiligde link om uw wachtwoord opnieuw "
+"in te stellen."
+
+#: src/View/BoneMvcUser/home.php:8
+msgid "home.welcome"
+msgstr "Welkom, "
+
+#: src/View/BoneMvcUser/home.php:9
+msgid "home.placeholder"
+msgstr "Dit is de startpagina van de ingelogde gebruiker."
+
+#: src/View/BoneMvcUser/home.php:10
+msgid "home.editprofile"
+msgstr "Bewerk profiel"
+
+#: src/View/BoneMvcUser/home.php:11
+msgid "home.changeemail"
+msgstr "Verander e-mailadres"
+
+#: src/View/BoneMvcUser/home.php:12
+msgid "home.changepass"
+msgstr "Verander wachtwoord"
+
+#: src/View/BoneMvcUser/home.php:13
+msgid "home.logout"
+msgstr "Uitloggen"
+
+#: src/View/BoneMvcUser/index.php:9
+msgid "user.welcome"
+msgstr "Welkom bij de website"
+
+#: src/View/BoneMvcUser/index.php:11 src/View/BoneMvcUser/register.php:10
 msgid "user.register"
 msgstr "Registreren"
+
+#: src/View/BoneMvcUser/login.php:9
+msgid "login.h1"
+msgstr "Log in"
+
+#: src/View/BoneMvcUser/login.php:14
+msgid "login.a"
+msgstr "Uw wachtwoord vergeten?"
+
+#: src/View/BoneMvcUser/resend-activation.php:10
+msgid "resend.lead"
+msgstr "Bedankt voor het opnieuw registreren"
+
+#: src/View/BoneMvcUser/resend-activation.php:11
+msgid "resend.p"
+msgstr ""
+"Er is een activerings-e-mail verzonden naar uw e-mailinbox. Klik op de link "
+"om uw account te activeren en in te loggen op het systeem."
+
+#: src/View/BoneMvcUser/reset-email.php:12
+msgid "changeemail.success"
+msgstr "E-mailadres gewijzigd."
+
+#: src/View/BoneMvcUser/reset-email.php:13
+#: src/View/BoneMvcUser/reset-pass.php:18
+msgid "continue"
+msgstr "Bijdragen"
+
+#: src/View/BoneMvcUser/reset-pass.php:17
+msgid "resetpass.success"
+msgstr "Uw wachtwoord is succesvol gewijzigd."
+
+#: src/View/BoneMvcUser/thanks-for-registering.php:7
+msgid "register.thanks"
+msgstr "Bedankt voor het registreren"
+
+#: src/View/BoneMvcUser/thanks-for-registering.php:8
+msgid "register.check"
+msgstr "Controleer uw e-mail voor uw activeringslink."
 
 #: src/View/email/user_registration/user_registration.php:1
 #: src/View/email/user_registration/user_registration.php:26
@@ -82,23 +357,19 @@ msgstr "Activeren"
 #~ msgid "download"
 #~ msgstr "Downloaden"
 
-#~ msgid "contribute"
-#~ msgstr "Bijdragen"
-
 #~ msgid "learn"
 #~ msgstr "Leer Bone MVC Framework"
 
 #~ msgid "language"
 #~ msgstr "Taal"
 
-#~ msgid "home.intro"
-#~ msgstr "Een PHP-raamwerk voor piraten"
-
 #~ msgid "index.intro"
 #~ msgstr "Een PHP-raamwerk voor piraten"
 
 #~ msgid "index.install"
-#~ msgstr "Je kunt de Bone MVC-broncode downloaden door naar Github te bladeren. Maar we raden aan om"
+#~ msgstr ""
+#~ "Je kunt de Bone MVC-broncode downloaden door naar Github te bladeren. "
+#~ "Maar we raden aan om"
 
 #~ msgid "index.install2"
 #~ msgstr "te installeren, en doe het op die manier"
@@ -113,7 +384,9 @@ msgstr "Activeren"
 #~ msgstr "om Bone MVC nog beter te maken."
 
 #~ msgid "index.crew3"
-#~ msgstr "Als je van Bone houdt en zou willen bijdragen aan de ontwikkeling ervan, ervoor en aan boord gaan!"
+#~ msgstr ""
+#~ "Als je van Bone houdt en zou willen bijdragen aan de ontwikkeling ervan, "
+#~ "ervoor en aan boord gaan!"
 
 #~ msgid "learn.learn"
 #~ msgstr "Leren"
@@ -137,43 +410,64 @@ msgstr "Activeren"
 #~ msgstr "Docker development box"
 
 #~ msgid "docker.about"
-#~ msgstr "Bot wordt geleverd met een docker-compose.yml in het project, dus u kunt het meteen een dev-server laten draaien als je Docker gebruikt (Getest met een standaard VirtualBox VM). Voeg dit gewoon toe aan uwhosts bestand"
-
-#~ msgid "docker.browse"
-#~ msgstr "Vervolgens hebt u toegang tot de site op https://awesome.scot in uw browser. Als u docker niet gebruikt, kunt u dit natuurlijk op de gebruikelijke manier aan uw LAMP-stack toevoegen."
+#~ msgstr ""
+#~ "Bot wordt geleverd met een docker-compose.yml in het project, dus u kunt "
+#~ "het meteen een dev-server laten draaien als je Docker gebruikt (Getest "
+#~ "met een standaard VirtualBox VM). Voeg dit gewoon toe aan uwhosts bestand"
 
 #~ msgid "configure"
 #~ msgstr "Configureren"
 
 #~ msgid "learn.folders"
-#~ msgstr "U ziet een map config, data, public en src. Laat de leveranciersmap staan, dat is waar Composer projectafhankelijkheden installeert."
+#~ msgstr ""
+#~ "U ziet een map config, data, public en src. Laat de leveranciersmap "
+#~ "staan, dat is waar Composer projectafhankelijkheden installeert."
 
 #~ msgid "learn.777"
-#~ msgstr "Maak de datamap schrijfbaar. 777 geeft iedereen schrijftoegang, dus plaats het in 775 met uw Apache-gebruiker in de groep."
+#~ msgstr ""
+#~ "Maak de datamap schrijfbaar. 777 geeft iedereen schrijftoegang, dus "
+#~ "plaats het in 775 met uw Apache-gebruiker in de groep."
 
 #~ msgid "learn.vhosts"
-#~ msgstr "Stel in uw Apache virtuele hosts de documentroot in als de openbare map"
+#~ msgstr ""
+#~ "Stel in uw Apache virtuele hosts de documentroot in als de openbare map"
 
 #~ msgid "learn.config"
 #~ msgstr "De configuratiemap"
 
 #~ msgid "learn.config.drop"
-#~ msgstr "U kunt een willekeurig aantal <span class=\"label label-success\">.php</span> bestanden in de <span class=\"label label-success\">config/</span> map. Zorg ervoor dat ze een array retourneren met de config. U kunt configuratie overschrijven op basis van omgevingsvariabelen <span class=\"label label-success\"> APPLICATION_ENV</span>, dus bijvoorbeeld als de omgeving productie was het zou de extra config de productiesubdirectory laden. </p><p>Er zijn standaard verschillende configuratiebestanden:"
+#~ msgstr ""
+#~ "U kunt een willekeurig aantal <span class=\"label label-success\">.php</"
+#~ "span> bestanden in de <span class=\"label label-success\">config/</span> "
+#~ "map. Zorg ervoor dat ze een array retourneren met de config. U kunt "
+#~ "configuratie overschrijven op basis van omgevingsvariabelen <span class="
+#~ "\"label label-success\"> APPLICATION_ENV</span>, dus bijvoorbeeld als de "
+#~ "omgeving productie was het zou de extra config de productiesubdirectory "
+#~ "laden. </p><p>Er zijn standaard verschillende configuratiebestanden:"
 
 #~ msgid "learn.config.registry"
-#~ msgstr "In uw configuratiebestanden kunt u alles toevoegen wat u maar wilt. Het wordt opgeslagen in het Bone\\Mvc\\Registry."
+#~ msgstr ""
+#~ "In uw configuratiebestanden kunt u alles toevoegen wat u maar wilt. Het "
+#~ "wordt opgeslagen in het Bone\\Mvc\\Registry."
 
 #~ msgid "database"
 #~ msgstr "Databank"
 
 #~ msgid "learn.db"
-#~ msgstr "Stel uw standaard db-referenties in de hoofdconfiguratie / db.php en eventuele omgevingsspecifieke configs in een submap in"
+#~ msgstr ""
+#~ "Stel uw standaard db-referenties in de hoofdconfiguratie / db.php en "
+#~ "eventuele omgevingsspecifieke configs in een submap in"
 
 #~ msgid "i18n"
 #~ msgstr "Internationalisering"
 
 #~ msgid "learn.i18n.about"
-#~ msgstr "Bone ondersteunt vertaling naar verschillende landinstellingen. Vertaalbestanden (gettext .po en .mo) moeten in gegevens / vertalingen worden geplaatst, onder een subdirectory van de landinstelling, bijv. Data / translations / en_GB / en_GB.po. U kunt de standaard locale en een array met ondersteunde landinstellingen instellen."
+#~ msgstr ""
+#~ "Bone ondersteunt vertaling naar verschillende landinstellingen. "
+#~ "Vertaalbestanden (gettext .po en .mo) moeten in gegevens / vertalingen "
+#~ "worden geplaatst, onder een subdirectory van de landinstelling, bijv. "
+#~ "Data / translations / en_GB / en_GB.po. U kunt de standaard locale en een "
+#~ "array met ondersteunde landinstellingen instellen."
 
 #~ msgid "learn.i18n.usage"
 #~ msgstr "Om de vertaler te gebruiken, kunt u eenvoudig bellen:"
@@ -182,7 +476,11 @@ msgstr "Activeren"
 #~ msgstr "Logs"
 
 #~ msgid "learn.logs"
-#~ msgstr "Bone gebruikt monoloog/monoloog, 'n logs zijn te vinden in <span crew=\"label label-success\">data/logs</span>. Momenteel ondersteunen we alleen het schrijven van 't'-bestanden, maar je kunt zoveel kanalen toevoegen als je wilt:"
+#~ msgstr ""
+#~ "Bone gebruikt monoloog/monoloog, 'n logs zijn te vinden in <span crew="
+#~ "\"label label-success\">data/logs</span>. Momenteel ondersteunen we "
+#~ "alleen het schrijven van 't'-bestanden, maar je kunt zoveel kanalen "
+#~ "toevoegen als je wilt:"
 
 #~ msgid "learn.logs.usage"
 #~ msgstr "Om de logger in een controller te gebruiken:"
@@ -191,19 +489,31 @@ msgstr "Activeren"
 #~ msgstr "Mail"
 
 #~ msgid "learn.mail"
-#~ msgstr "Bone gebruikt Zend Mail. Om de e-mailclient te configureren, hoeft u alleen uw configuratie in te voeren (zie zend mail docs)"
+#~ msgstr ""
+#~ "Bone gebruikt Zend Mail. Om de e-mailclient te configureren, hoeft u "
+#~ "alleen uw configuratie in te voeren (zie zend mail docs)"
 
 #~ msgid "learn.mail.hog"
-#~ msgstr "Als u de door bot geleverde dock-box gebruikt, heeft u ook de geweldige MailHog tot uw beschikking. Blader naar awesome.scot:8025 en je ziet een e-mailinbox voor e-mails, dus je hoeft je nooit zorgen te maken dat ontwikkelingsmails de echte wereld bereiken."
+#~ msgstr ""
+#~ "Als u de door bot geleverde dock-box gebruikt, heeft u ook de geweldige "
+#~ "MailHog tot uw beschikking. Blader naar awesome.scot:8025 en je ziet een "
+#~ "e-mailinbox voor e-mails, dus je hoeft je nooit zorgen te maken dat "
+#~ "ontwikkelingsmails de echte wereld bereiken."
 
 #~ msgid "routes"
 #~ msgstr "Routes"
 
 #~ msgid "learn.routes"
-#~ msgstr "Routes volgen een standaardpatroon van /controller/actie/param/waarde/nextparam/volgendewaarde/etc/etc<br> U kunt ook routes overschrijven door ze in de configuratiearray te definiëren:"
+#~ msgstr ""
+#~ "Routes volgen een standaardpatroon van /controller/actie/param/waarde/"
+#~ "nextparam/volgendewaarde/etc/etc<br> U kunt ook routes overschrijven door "
+#~ "ze in de configuratiearray te definiëren:"
 
 #~ msgid "learn.routes.params"
-#~ msgstr "Bij het definiëren van routes hebben verplichte variabelen in de uri een dubbele punt zoals: id <br /> Optionele uri-vars hebben [] eromheen als [: id]"
+#~ msgstr ""
+#~ "Bij het definiëren van routes hebben verplichte variabelen in de uri een "
+#~ "dubbele punt zoals: id <br /> Optionele uri-vars hebben [] eromheen als "
+#~ "[: id]"
 
 #~ msgid "layouts"
 #~ msgstr "Lay-outs"

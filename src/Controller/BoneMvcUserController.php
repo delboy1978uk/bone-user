@@ -122,7 +122,7 @@ class BoneMvcUserController extends Controller
     {
         $email = $args['email'];
         $token = $args['token'];
-
+        $translator = $this->getTranslator();
         $userService = $this->userService;
         $message = null;
 
@@ -139,7 +139,7 @@ class BoneMvcUserController extends Controller
         } catch (EmailLinkException $e) {
             switch ($e->getMessage()) {
                 case EmailLinkException::LINK_EXPIRED:
-                    $message = ['The activation link has expired. You can send a new activation link by clicking <a href="/resend-activation-mail/' . $email . '">here.</a>', 'danger'];
+                    $message = [$translator->translate('login.activation.expired') . '<a href="/resend-activation-mail/' . $email . '">' . $translator->translate('login.activation.expired2') . '</a>', 'danger'];
                     break;
                 default:
                     $message = [$e->getMessage(), 'danger'];
@@ -160,7 +160,7 @@ class BoneMvcUserController extends Controller
      */
     public function loginAction(ServerRequestInterface $request, array $args): ResponseInterface
     {
-        $form = new LoginForm('userlogin');
+        $form = new LoginForm('userlogin', $this->getTranslator());
 
         $body = $this->getView()->render('bonemvcuser::login', ['form' => $form]);
 
@@ -175,7 +175,7 @@ class BoneMvcUserController extends Controller
      */
     public function loginFormAction(ServerRequestInterface $request, array $args): ResponseInterface
     {
-        $form = new LoginForm('userlogin');
+        $form = new LoginForm('userlogin', $this->getTranslator());
         $post = $request->getParsedBody();
         $form->populate($post);
         $params = ['form' => $form];
@@ -187,22 +187,24 @@ class BoneMvcUserController extends Controller
                 $email = $data['email'];
                 $pass = $data['password'];
                 $userId = $this->userService->authenticate($email, $pass);
+                $locale = $this->getTranslator()->getLocale();
                 SessionManager::set('user', $userId);
+                SessionManager::set('locale', $locale);
 
-                return new RedirectResponse('/user/home');
+                return new RedirectResponse('/' . $locale . '/user/home');
             }
         } catch (UserException $e) {
             switch ($e->getMessage()) {
                 case UserException::USER_NOT_FOUND:
                 case UserException::WRONG_PASSWORD:
-                    $message = ['Wrong user name or password. Did you <a href="/user/lost-password/' . $email . '">forget your password?</a>', 'danger'];
+                    $message = [$translator->translate('login.error.password', 'user') . '<a href="/user/lost-password/' . $email . '">' . $translator->translate('login.error.password2', 'user') . '</a>', 'danger'];
                     break;
                 case UserException::USER_UNACTIVATED:
-                    $message = ['This email address has not been activated yet. Resend an <a href="/user/resend-activation-mail/' . $email . '">Activation Email?</a>', 'danger'];
+                    $message = [$translator->translate('login.unactivated', 'user') . '<a href="/user/resend-activation-mail/' . $email . '">' . $translator->translate('login.unactivated2', 'user') . '</a>', 'danger'];
                     break;
                 case UserException::USER_DISABLED:
                 case UserException::USER_BANNED:
-                    $message = ['This user has been disabled or banned', 'danger'];
+                    $message = [$translator->translate('login.activation.banned', 'user'), 'danger'];
                     break;
                 default:
                     $message = $e->getMessage();
@@ -227,7 +229,7 @@ class BoneMvcUserController extends Controller
     {
         $user = $request->getAttribute('user');
         $body = $this->getView()->render('bonemvcuser::home', [
-            'message' => ['You are logged in', 'success'],
+            'message' => [$this->getTranslator()->translate('home.loggedin', 'user'), 'success'],
             'user' => $user,
         ]);
 
@@ -257,6 +259,7 @@ class BoneMvcUserController extends Controller
         $email = $request->getAttribute('email');
         $user = $this->userService->findUserByEmail($email);
         $message = [];
+        $translator = $this->getTranslator();
 
         if (!$user) {
             throw new Exception(UserException::USER_NOT_FOUND, 404);
@@ -275,7 +278,7 @@ class BoneMvcUserController extends Controller
 
                 $mail = new EmailMessage();
                 $mail->setTo($user->getEmail());
-                $mail->setSubject($this->getTranslator()->translate('email.user.register.thankswith', 'user') . ' ' . $this->mailService->getSiteConfig()->getTitle());
+                $mail->setSubject($translator->translate('email.user.register.thankswith', 'user') . ' ' . $this->mailService->getSiteConfig()->getTitle());
                 $mail->setTemplate('email.user::user_registration/user_registration');
                 $mail->setViewData([
                     'siteUrl' => $env->getSiteURL(),
@@ -285,7 +288,8 @@ class BoneMvcUserController extends Controller
                 $this->mailService->sendEmail($mail);
 
             } catch (Exception $e) {
-                $message = ["We were unable to send your confirmation e-mail. Please contact {$this->getSiteConfig()->getContactEmail()}.", 'danger'];
+                $message = [$translator->translate('login.resendactivation.error', 'user')
+                    . $this->getSiteConfig()->getContactEmail() . '', 'danger'];
             }
         }
 
@@ -322,7 +326,7 @@ class BoneMvcUserController extends Controller
             $env = $this->getSiteConfig()->getEnvironment();
             $mail = new EmailMessage();
             $mail->setTo($email);
-            $mail->setSubject('Reset your password on ' . ' ' . $this->mailService->getSiteConfig()->getTitle() . '.');
+            $mail->setSubject($this->getTranslator()->translate('email.forgotpass.subject', 'user') . $this->mailService->getSiteConfig()->getTitle() . '.');
             $mail->setTemplate('email.user::user_registration/reset_password');
             $mail->setViewData([
                 'siteUrl' => $env->getSiteURL(),
@@ -352,6 +356,7 @@ class BoneMvcUserController extends Controller
         $email = $request->getAttribute('email');
         $token = $request->getAttribute('token');
         $form = new ResetPasswordForm('resetpass');
+        $translator = $translator->getTranslator();
         $params = [];
         $success = false;
 
@@ -373,11 +378,11 @@ class BoneMvcUserController extends Controller
                     if ($data['password'] === $data['confirm']) {
                         $this->userService->changePassword($user, $data['password']);
                         $this->userService->deleteEmailLink($link);
-                        $message = [' You have successfully changed your password.', 'success'];
+                        $message = [$translator > translate('email.resetpass.success', 'user'), 'success'];
                         $success = true;
                         SessionManager::set('user', $user->getId());
                     } else {
-                        $message = ['Passwords did not match, please try again.', 'danger'];
+                        $message = [$translator > translate('email.resetpass.nomatch', 'user'), 'danger'];
                         $form = new ResetPasswordForm('resetpass');
                     }
                 }
@@ -407,6 +412,7 @@ class BoneMvcUserController extends Controller
     {
         $user = $request->getAttribute('user');
         $form = new ResetPasswordForm('resetpass');
+        $translator = $translator->getTranslator();
         $params = [];
         $success = false;
 
@@ -419,10 +425,10 @@ class BoneMvcUserController extends Controller
                 $data = $form->getValues();
                 if ($data['password'] === $data['confirm']) {
                     $this->userService->changePassword($user, $data['password']);
-                    $message = [' You have successfully changed your password.', 'success'];
+                    $message = [$translator > translate('email.resetpass.success', 'user'), 'success'];
                     $success = true;
                 } else {
-                    $message = ['Passwords did not match, please try again.', 'danger'];
+                    $message = [$translator > translate('email.resetpass.nomatch', 'user') , 'danger'];
                     $form = new ResetPasswordForm('resetpass');
                 }
             }
@@ -447,9 +453,10 @@ class BoneMvcUserController extends Controller
     public function changeEmailAction(ServerRequestInterface $request, array $args): ResponseInterface
     {
         $user = $request->getAttribute('user');
-        $form = new LoginForm('changeemail');
+        $form = new LoginForm('changeemail', $this->getTranslator());
         $form->getField('email')->setLabel('New email');
         $form->getField('submit')->setValue('Submit');
+        $translator = $this->getTranslator();
         $params = [
             'form' => $form
         ];
@@ -466,8 +473,8 @@ class BoneMvcUserController extends Controller
 
                 $existing = $this->userService->findUserByEmail($newEmail);
 
-                if($existing) {
-                    $message = ['This email is already registered with a Cloud Tax Return account.','danger'];
+                if ($existing) {
+                    $message = [$translator > translate('email.changeemail.registered', 'user') . 'This email already has a registered account with ' . $this->getSiteConfig()->getTitle() . '.', 'danger'];
                 } else {
                     if ($this->userService->checkPassword($user, $password)) {
 
@@ -481,7 +488,7 @@ class BoneMvcUserController extends Controller
                             $env = $this->getSiteConfig()->getEnvironment();
                             $mail = new EmailMessage();
                             $mail->setTo($email);
-                            $mail->setSubject('Change your email address on  ' . ' ' . $this->mailService->getSiteConfig()->getTitle() . '.');
+                            $mail->setSubject($translator > translate('email.changeemail.subject', 'user') . $this->mailService->getSiteConfig()->getTitle() . '.');
                             $mail->setTemplate('email.user::user_registration/change_email');
                             $mail->setViewData([
                                 'siteUrl' => $env->getSiteURL(),
@@ -489,15 +496,15 @@ class BoneMvcUserController extends Controller
                                 'resetLink' => '/user/reset-email/' . $email . '/' . $newEmail . '/' . $token,
                             ]);
                             $this->mailService->sendEmail($mail);
-                            $message = ['Please check your email for a link to activate your new address.','info'];
+                            $message = [$translator > translate('email.changeemail.sent', 'user'), 'info'];
                             unset ($params['form']);
 
                         } catch (Exception $e) {
-                            $message = ['We were unable to send your e-mail confirmation. Please contact '.$this->config->email->support.'.','danger'];
+                            $message = [$translator > translate('email.changeemail.notsent', 'user') . $this->config->email->support . '.', 'danger'];
                         }
 
                     } else {
-                        $message = ['Your password was wrong','danger'];
+                        $message = [$translator > translate('email.changeemail.wrongpass', 'user'), 'danger'];
                     }
                 }
             }
@@ -522,7 +529,7 @@ class BoneMvcUserController extends Controller
         $array = $this->userService->getPersonSvc()->toArray($person);
 
         $form->populate($array);
-        
+
         if ($request->getMethod() === 'POST') {
             $post = $request->getParsedBody();
             $form->populate($post);
@@ -535,7 +542,7 @@ class BoneMvcUserController extends Controller
                 $this->userService->saveUser($user);
             }
         }
-        
+
         $body = $this->getView()->render('bonemvcuser::edit-profile', ['person' => $person, 'form' => $form->render()]);
 
         return new HtmlResponse($body);
@@ -552,6 +559,7 @@ class BoneMvcUserController extends Controller
         $newEmail = $request->getAttribute('new-email');
         $token = $request->getAttribute('token');
         $message = null;
+        $translator = $this->getTranslator();
 
         try {
 
@@ -560,7 +568,7 @@ class BoneMvcUserController extends Controller
             $user->setEmail($newEmail);
             $this->userService->saveUser($user);
             $this->userService->deleteEmailLink($link);
-            $message = ['You have switched your email address. Please log in with ' . $newEmail . ' from now on.', 'success'];
+            $message = [$translator->translate('email.changeemail.success', 'user') . $newEmail . $translator->translate('email.changeemail.success2', 'user'), 'success'];
             SessionManager::set('user', $user->getId());
 
         } catch (EmailLinkException $e) {

@@ -7,9 +7,8 @@
                     <img src="/img/skull_and_crossbones.png" />
                     <?= null !== $message ? $box->alert($message) : '' ?>
                     <div class="overflow mt20">
-                        <p class="lead"><?= Icon::ENVELOPE; ?> Thanks for (re)registering</p>
-                        <p>An activation email has been sent to your email inbox. Please click on the link to activate
-                            your account and log in to the system.</p>
+                        <p class="lead"><?= Icon::ENVELOPE; ?> <?= $this->t('resend.lead', 'user') ?></p>
+                        <p><?= $this->t('resend.p', 'user') ?></p>
                     </div>
                 </div>
             </div>

@@ -5,12 +5,12 @@
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <img alt="Logo" src="/img/skull_and_crossbones.png" />
-                    <h1>Welcome, <?= $user->getEmail() ?></h1>
-                    <p class="lead">This is the logged in user's home page.</p>
-                    <a class="btn btn-success" href="/user/edit-profile">Edit Profile</a>
-                    <a class="btn btn-primary" href="/user/change-email">Change Email</a>
-                    <a class="btn btn-warning" href="/user/change-password">Change Password</a>
-                    <a class="btn btn-danger" href="/user/logout">Logout</a>
+                    <h1><?= $this->t('home.welcome', 'user') . $user->getEmail() ?></h1>
+                    <p class="lead"><?= $this->t('home.placeholder', 'user') ?></p>
+                    <a class="btn btn-success" href="/user/edit-profile"><?= $this->t('home.editprofile', 'user') ?></a>
+                    <a class="btn btn-primary" href="/user/change-email"><?= $this->t('home.changeemail', 'user') ?></a>
+                    <a class="btn btn-warning" href="/user/change-password"><?= $this->t('home.changepass', 'user') ?></a>
+                    <a class="btn btn-danger" href="/user/logout"><?= $this->t('home.logout', 'user') ?></a>
                 </div>
             </div>
         </div>
