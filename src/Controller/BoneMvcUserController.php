@@ -175,7 +175,7 @@ class BoneMvcUserController extends Controller
      */
     public function loginFormAction(ServerRequestInterface $request, array $args): ResponseInterface
     {
-        $translator = $translator->getTranslator();
+        $translator = $this->getTranslator();
         $form = new LoginForm('userlogin', $translator);
         $post = $request->getParsedBody();
         $form->populate($post);
