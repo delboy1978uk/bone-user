@@ -175,7 +175,8 @@ class BoneMvcUserController extends Controller
      */
     public function loginFormAction(ServerRequestInterface $request, array $args): ResponseInterface
     {
-        $form = new LoginForm('userlogin', $this->getTranslator());
+        $translator = $translator->getTranslator();
+        $form = new LoginForm('userlogin', $translator);
         $post = $request->getParsedBody();
         $form->populate($post);
         $params = ['form' => $form];
@@ -187,7 +188,7 @@ class BoneMvcUserController extends Controller
                 $email = $data['email'];
                 $pass = $data['password'];
                 $userId = $this->userService->authenticate($email, $pass);
-                $locale = $this->getTranslator()->getLocale();
+                $locale = $translator->getLocale();
                 SessionManager::set('user', $userId);
                 SessionManager::set('locale', $locale);
 
