@@ -357,7 +357,7 @@ class BoneMvcUserController extends Controller
         $email = $request->getAttribute('email');
         $token = $request->getAttribute('token');
         $form = new ResetPasswordForm('resetpass');
-        $translator = $translator->getTranslator();
+        $translator = $this->getTranslator();
         $params = [];
         $success = false;
 
@@ -413,7 +413,7 @@ class BoneMvcUserController extends Controller
     {
         $user = $request->getAttribute('user');
         $form = new ResetPasswordForm('resetpass');
-        $translator = $translator->getTranslator();
+        $translator = $this->getTranslator();
         $params = [];
         $success = false;
 

@@ -14,6 +14,7 @@ use BoneMvc\Module\BoneMvcUser\Controller\BoneMvcUserController;
 use Bone\Mvc\Router\RouterConfigInterface;
 use Bone\Mvc\View\PlatesEngine;
 use BoneMvc\Module\BoneMvcUser\Http\Middleware\SessionAuth;
+use BoneMvc\Module\BoneMvcUser\View\Helper\LoginWidget;
 use Del\Service\UserService;
 use Del\SessionManager;
 use Del\UserPackage;
@@ -21,6 +22,7 @@ use League\Route\RouteGroup;
 use League\Route\Router;
 use League\Route\Strategy\JsonStrategy;
 use Zend\Diactoros\ResponseFactory;
+use Zend\I18n\Translator\Translator;
 
 class BoneMvcUserPackage implements RegistrationInterface, RouterConfigInterface, I18nRegistrationInterface
 {
@@ -33,6 +35,10 @@ class BoneMvcUserPackage implements RegistrationInterface, RouterConfigInterface
         $viewEngine = $c->get(PlatesEngine::class);
         $viewEngine->addFolder('bonemvcuser', __DIR__ . '/View/BoneMvcUser/');
         $viewEngine->addFolder('email.user', __DIR__ . '/View/email/');
+
+        
+        $loginWidget = new LoginWidget($c->get(UserService::class), $c->get(Translator::class));
+        $viewEngine->loadExtension($loginWidget);
 
         if (!$c->has(UserService::class)) {
             $package = new UserPackage();
