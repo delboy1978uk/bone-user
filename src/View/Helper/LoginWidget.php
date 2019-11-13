@@ -62,14 +62,9 @@ class LoginWidget implements ExtensionInterface
 
             return $html;
         } else {
-            return '<li><a href="' . $locale . '/user/login">Login</a></li>';
+            return '<li><a href="/' . $locale . '/user/login">Login</a></li>';
         }
     }
     
 
 }
-
-
-/*
-
-
