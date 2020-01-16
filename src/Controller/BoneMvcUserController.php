@@ -46,7 +46,7 @@ class BoneMvcUserController extends Controller
     {
         $this->userService = $userService;
         $this->mailService = $mailService;
-        $this->loginRedirectRoute = $loginRedirectRoute
+        $this->loginRedirectRoute = $loginRedirectRoute;
     }
 
 
