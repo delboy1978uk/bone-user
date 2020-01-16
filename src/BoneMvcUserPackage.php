@@ -57,7 +57,7 @@ class BoneMvcUserPackage implements RegistrationInterface, RouterConfigInterface
                 $loginRedirectRoute = $options['loginRedirectRoute'];
             }
 
-            return  Init::controller(new BoneMvcUserController($userService, $mailService), $c);
+            return  Init::controller(new BoneMvcUserController($userService, $mailService, $loginRedirectRoute), $c);
         });
 
         $c[BoneMvcUserApiController::class] = $c->factory(function (Container $c) {
