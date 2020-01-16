@@ -34,15 +34,19 @@ class BoneMvcUserController extends Controller
     /** @var MailService $mailService */
     private $mailService;
 
+    /** @var string $loginRedirectRoute */
+    private $loginRedirectRoute;
+
     /**
      * BoneMvcUserController constructor.
      * @param UserService $userService
      * @param MailService $mailService
      */
-    public function __construct(UserService $userService, MailService $mailService)
+    public function __construct(UserService $userService, MailService $mailService, string $loginRedirectRoute = '/user/home')
     {
         $this->userService = $userService;
         $this->mailService = $mailService;
+        $this->loginRedirectRoute = $loginRedirectRoute
     }
 
 
@@ -192,7 +196,7 @@ class BoneMvcUserController extends Controller
                 SessionManager::set('user', $userId);
                 SessionManager::set('locale', $locale);
 
-                return new RedirectResponse('/' . $locale . '/user/home');
+                return new RedirectResponse('/' . $locale . $this->loginRedirectRoute);
             }
         } catch (UserException $e) {
             switch ($e->getMessage()) {

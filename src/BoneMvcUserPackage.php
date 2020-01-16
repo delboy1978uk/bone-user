@@ -50,6 +50,12 @@ class BoneMvcUserPackage implements RegistrationInterface, RouterConfigInterface
             $mailService = $c->get(MailService::class);
             /** @var UserService $userService */
             $userService = $c->get(UserService::class);
+            $loginRedirectRoute = '/user/home';
+
+            if ($c->has('bone-user')) {
+                $options = $c->get('bone-user');
+                $loginRedirectRoute = $options['loginRedirectRoute'];
+            }
 
             return  Init::controller(new BoneMvcUserController($userService, $mailService), $c);
         });
