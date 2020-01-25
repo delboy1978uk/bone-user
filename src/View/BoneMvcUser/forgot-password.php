@@ -4,7 +4,7 @@
         <br>
         <div class="container">
             <div class="row">
-                <?= null !== $message ? $this->alert($message) : null; ?>
+                <?= isset($message) ? $this->alert($message) : null; ?>
                 <div class="col-md-8 col-md-offset-2">
                     <img src="/img/skull_and_crossbones.png" />
                     <h1><?= $this->t('resetpass.h1', 'user') ?></h1>

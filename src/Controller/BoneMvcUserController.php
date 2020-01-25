@@ -383,7 +383,7 @@ class BoneMvcUserController extends Controller
                     if ($data['password'] === $data['confirm']) {
                         $this->userService->changePassword($user, $data['password']);
                         $this->userService->deleteEmailLink($link);
-                        $message = [$translator > translate('email.resetpass.success', 'user'), 'success'];
+                        $message = [$translator->translate('email.resetpass.success', 'user'), 'success'];
                         $success = true;
                         SessionManager::set('user', $user->getId());
                     } else {
