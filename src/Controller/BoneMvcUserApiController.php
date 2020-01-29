@@ -131,7 +131,7 @@ class BoneMvcUserApiController
     }
 
     /**
-     * @param Zend_Form_Element_File $file
+     * @param string $fileNameAsUploaded
      * @return string
      */
     private function getFilename(string $fileNameAsUploaded)

@@ -14,6 +14,7 @@ use BoneMvc\Module\BoneMvcUser\Controller\BoneMvcUserController;
 use Bone\Mvc\Router\RouterConfigInterface;
 use Bone\Mvc\View\PlatesEngine;
 use BoneMvc\Module\BoneMvcUser\Http\Middleware\SessionAuth;
+use BoneMvc\Module\BoneMvcUser\Http\Middleware\SessionAuthRedirect;
 use BoneMvc\Module\BoneMvcUser\View\Helper\LoginWidget;
 use Del\Service\UserService;
 use Del\SessionManager;
@@ -78,6 +79,15 @@ class BoneMvcUserPackage implements RegistrationInterface, RouterConfigInterface
             $userService = $c->get(UserService::class);
 
             return new SessionAuth($session, $userService);
+        });
+
+        $c[SessionAuthRedirect::class] = $c->factory(function (Container $c) {
+            /** @var SessionManager $session */
+            $session = $c->get(SessionManager::class);
+            /** @var UserService $userService */
+            $userService = $c->get(UserService::class);
+
+            return new SessionAuthRedirect($session, $userService);
         });
     }
 
