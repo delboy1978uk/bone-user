@@ -5,6 +5,8 @@ namespace BoneMvc\Module\BoneMvcUser\Controller;
 use Bone\Form;
 use Bone\Mvc\Controller;
 use Bone\Mvc\View\ViewEngine;
+use Bone\Server\SessionAwareInterface;
+use Bone\Traits\HasSessionTrait;
 use BoneMvc\Mail\EmailMessage;
 use BoneMvc\Mail\Service\MailService;
 use BoneMvc\Module\BoneMvcUser\Form\LoginForm;
@@ -26,8 +28,10 @@ use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Diactoros\Uri;
 
-class BoneMvcUserController extends Controller
+class BoneMvcUserController extends Controller implements SessionAwareInterface
 {
+    use HasSessionTrait;
+
     /** @var UserService $userService */
     private $userService;
 
@@ -138,7 +142,7 @@ class BoneMvcUserController extends Controller
             $user->setLastLogin(new DateTime());
             $userService->saveUser($user);
             $userService->deleteEmailLink($link);
-            SessionManager::set('user', $user->getId());
+            $this->getSession()->set('user', $user->getId());
 
         } catch (EmailLinkException $e) {
             switch ($e->getMessage()) {
@@ -193,8 +197,14 @@ class BoneMvcUserController extends Controller
                 $pass = $data['password'];
                 $userId = $this->userService->authenticate($email, $pass);
                 $locale = $translator->getLocale();
-                SessionManager::set('user', $userId);
-                SessionManager::set('locale', $locale);
+                $session = $this->getSession();
+                $session->set('user', $userId);
+                $session->set('locale', $locale);
+
+                if ($route = $session->get('loginRedirectRoute')) {
+                    $this->loginRedirectRoute = $route;
+                    $session->destroy('loginRedirectRoute');
+                }
 
                 return new RedirectResponse('/' . $locale . $this->loginRedirectRoute);
             }

@@ -41,6 +41,9 @@ class SessionAuthRedirect implements MiddlewareInterface, SessionAwareInterface
             return $handler->handle($request);
         }
 
+        $currentUrl = $request->getUri()->getPath() . '?' . $request->getUri()->getQuery();
+        $this->getSession()->set('loginRedirectRoute', $currentUrl);
+
         return new RedirectResponse(new Uri('/user/login'));
     }
 }
