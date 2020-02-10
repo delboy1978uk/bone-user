@@ -24,9 +24,9 @@ use Del\Value\User\State;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Diactoros\Response\RedirectResponse;
-use Zend\Diactoros\Uri;
+use Laminas\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\Response\RedirectResponse;
+use Laminas\Diactoros\Uri;
 
 class BoneMvcUserController extends Controller implements SessionAwareInterface
 {

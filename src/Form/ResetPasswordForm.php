@@ -8,7 +8,7 @@ use Del\Form\Field\Text\EmailAddress;
 use Del\Form\Field\Text\Password;
 use Del\Form\Filter\Adapter\FilterAdapterZf;
 use Del\Form\Renderer\HorizontalFormRenderer;
-use Zend\Filter\StringToLower;
+use Laminas\Filter\StringToLower;
 
 class ResetPasswordForm extends AbstractForm
 {

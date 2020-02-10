@@ -6,7 +6,7 @@ use Del\Service\UserService;
 use Del\SessionManager;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
-use Zend\I18n\Translator\Translator;
+use Laminas\I18n\Translator\Translator;
 
 class LoginWidget implements ExtensionInterface
 {

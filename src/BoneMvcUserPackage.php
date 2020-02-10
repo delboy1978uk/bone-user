@@ -22,8 +22,8 @@ use Del\UserPackage;
 use League\Route\RouteGroup;
 use League\Route\Router;
 use League\Route\Strategy\JsonStrategy;
-use Zend\Diactoros\ResponseFactory;
-use Zend\I18n\Translator\Translator;
+use Laminas\Diactoros\ResponseFactory;
+use Laminas\I18n\Translator\Translator;
 
 class BoneMvcUserPackage implements RegistrationInterface, RouterConfigInterface, I18nRegistrationInterface
 {

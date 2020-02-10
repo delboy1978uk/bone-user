@@ -486,7 +486,7 @@ msgstr "Activate yer account"
 
 #~ msgid "learn.mail"
 #~ msgstr ""
-#~ "Bone uses Zend Mail. T' configure th' mail client, jus' drop in yer "
+#~ "Bone uses Laminas Mail. T' configure th' mail client, jus' drop in yer "
 #~ "config (see zend mail docs)"
 
 #~ msgid "learn.mail.hog"

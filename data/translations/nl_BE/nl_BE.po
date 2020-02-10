@@ -490,7 +490,7 @@ msgstr "Activeren"
 
 #~ msgid "learn.mail"
 #~ msgstr ""
-#~ "Bone gebruikt Zend Mail. Om de e-mailclient te configureren, hoeft u "
+#~ "Bone gebruikt Laminas Mail. Om de e-mailclient te configureren, hoeft u "
 #~ "alleen uw configuratie in te voeren (zie zend mail docs)"
 
 #~ msgid "learn.mail.hog"
