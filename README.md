@@ -30,6 +30,12 @@ export PATH=$PATH:bin:vendor/bin
 ```
 Then you can close and reopen your terminal, and from now on you can just type `migrant blahblah`. The same for any 
 executable stored in a `bin/` directory in your current folder.
+
+The last setup stage is to deploy the public assets (CSS, JS, etc.)
+```
+booty deploy
+```
+(You added your PATH so didn't have to type `vendor/bin/booty`, right?)
 ## usage
 Once installed head to your site (by default using the Bone Framework Docker development environment (it's 
 `https://awesome.scot/user`) and register yourself as a user. Again if using the provided dev environment, check your 
@@ -61,3 +67,20 @@ also fetch the `Del\Person\Service\PersonService` from the container.
     /** @var PersonService $personService */
     $personService = $c->get(PersonService::class);
 ``` 
+### views
+Obviously, you probably won't want the default Bone view with the pirate theme! So head into your config
+folder and override the views. Email templates are also in there. Hack away.
+```php
+<?php
+
+/*
+ *  You can override views from vendor packages
+ *  You should copy the vendor view folder into your src and tweak from there
+ */
+return [
+    'views' => [
+        'bonemvcuser' => 'src/App/View/bone-user',
+    ],
+];
+````
+That's about it! The rest should autocomplete in your IDE, and it's all pretty straightforward! Have fun.
