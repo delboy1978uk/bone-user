@@ -4,7 +4,7 @@ namespace BoneMvc\Module\BoneMvcUser\Controller;
 
 use Bone\Form;
 use Bone\Mvc\Controller;
-use Bone\Mvc\View\ViewEngine;
+use Bone\View\ViewEngine;
 use Bone\Server\SessionAwareInterface;
 use Bone\Traits\HasSessionTrait;
 use BoneMvc\Mail\EmailMessage;

@@ -13,7 +13,7 @@ use BoneMvc\Module\BoneMvcUser\Controller\BoneMvcUserApiController;
 use BoneMvc\Module\BoneMvcUser\Controller\BoneMvcUserController;
 use Bone\Mvc\Router;
 use Bone\Mvc\Router\RouterConfigInterface;
-use Bone\Mvc\View\PlatesEngine;
+use Bone\View\PlatesEngine;
 use BoneMvc\Module\BoneMvcUser\Http\Middleware\SessionAuth;
 use BoneMvc\Module\BoneMvcUser\Http\Middleware\SessionAuthRedirect;
 use BoneMvc\Module\BoneMvcUser\View\Helper\LoginWidget;
