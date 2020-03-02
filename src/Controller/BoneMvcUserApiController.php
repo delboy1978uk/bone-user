@@ -6,7 +6,7 @@ namespace BoneMvc\Module\BoneMvcUser\Controller;
 
 use Bone\Server\SiteConfig;
 use Del\Form\Form;
-use Bone\Mvc\Controller;
+use Bone\Controller\Controller;
 use BoneMvc\Mail\Service\MailService;
 use BoneMvc\Module\BoneMvcUser\Form\PersonForm;
 use Del\Entity\User;

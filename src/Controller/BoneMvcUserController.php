@@ -3,7 +3,7 @@
 namespace BoneMvc\Module\BoneMvcUser\Controller;
 
 use Bone\Form;
-use Bone\Mvc\Controller;
+use Bone\Controller\Controller;
 use Bone\View\ViewEngine;
 use Bone\Server\SessionAwareInterface;
 use Bone\Traits\HasSessionTrait;
