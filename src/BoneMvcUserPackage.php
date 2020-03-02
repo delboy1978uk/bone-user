@@ -12,7 +12,7 @@ use BoneMvc\Mail\Service\MailService;
 use BoneMvc\Module\BoneMvcUser\Controller\BoneMvcUserApiController;
 use BoneMvc\Module\BoneMvcUser\Controller\BoneMvcUserController;
 use Bone\Router\Router;
-use Bone\Router\Router;ConfigInterface;
+use Bone\Router\RouterConfigInterface;
 use Bone\View\PlatesEngine;
 use BoneMvc\Module\BoneMvcUser\Http\Middleware\SessionAuth;
 use BoneMvc\Module\BoneMvcUser\Http\Middleware\SessionAuthRedirect;
