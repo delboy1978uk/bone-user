@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Bone\n"
+"Project-Id-Version: BoneUser\n"
 "POT-Creation-Date: 2019-11-10 12:52+0100\n"
-"PO-Revision-Date: 2019-11-10 13:17+0100\n"
+"PO-Revision-Date: 2020-03-05 21:02+0100\n"
 "Last-Translator: Derek McLean <delboy1978uk@gmail.com>\n"
 "Language-Team: \n"
 "Language: en_PI\n"
@@ -168,8 +168,7 @@ msgstr "There be a problem"
 msgid "activate.resend"
 msgstr "Resend activation link"
 
-#: src/View/BoneUser/change-email.php:9
-#: src/View/BoneUser/reset-email.php:8
+#: src/View/BoneUser/change-email.php:9 src/View/BoneUser/reset-email.php:8
 msgid "changeemail.h1"
 msgstr "Change yer email"
 
@@ -193,8 +192,7 @@ msgstr "Yer password be successfully changed."
 msgid "changepass.continue"
 msgstr "Continue"
 
-#: src/View/BoneUser/change-pass.php:20
-#: src/View/BoneUser/reset-pass.php:20
+#: src/View/BoneUser/change-pass.php:20 src/View/BoneUser/reset-pass.php:20
 msgid "changepass.choose"
 msgstr ""
 "Be choosin’ a good password. A combination of upper and lower case "
@@ -250,8 +248,7 @@ msgstr "Upload.."
 msgid "home"
 msgstr "Home"
 
-#: src/View/BoneUser/forgot-password.php:10
-#: src/View/BoneUser/reset-pass.php:11
+#: src/View/BoneUser/forgot-password.php:10 src/View/BoneUser/reset-pass.php:11
 msgid "resetpass.h1"
 msgstr "Reset yer password"
 
@@ -317,8 +314,7 @@ msgstr ""
 msgid "changeemail.success"
 msgstr "Email address changed."
 
-#: src/View/BoneUser/reset-email.php:13
-#: src/View/BoneUser/reset-pass.php:18
+#: src/View/BoneUser/reset-email.php:13 src/View/BoneUser/reset-pass.php:18
 msgid "continue"
 msgstr "Continue"
 

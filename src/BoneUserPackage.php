@@ -37,14 +37,13 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
         $viewEngine->addFolder('boneuser', __DIR__ . '/View/BoneUser/');
         $viewEngine->addFolder('email.user', __DIR__ . '/View/email/');
 
-        
-        $loginWidget = new LoginWidget($c->get(UserService::class), $c->get(Translator::class));
-        $viewEngine->loadExtension($loginWidget);
-
         if (!$c->has(UserService::class)) {
             $package = new UserPackage();
             $package->addToContainer($c);
         }
+
+        $loginWidget = new LoginWidget($c->get(UserService::class), $c->get(Translator::class));
+        $viewEngine->loadExtension($loginWidget);
 
         $c[BoneUserController::class] = $c->factory(function (Container $c) {
             /** @var MailService $mailService */

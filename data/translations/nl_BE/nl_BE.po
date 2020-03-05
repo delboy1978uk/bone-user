@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: BoneUser\n"
 "POT-Creation-Date: 2019-11-10 13:17+0100\n"
-"PO-Revision-Date: 2019-11-10 13:41+0100\n"
+"PO-Revision-Date: 2020-03-05 21:01+0100\n"
 "Last-Translator: Derek McLean <delboy1978uk@gmail.com>\n"
 "Language-Team: \n"
 "Language: nl_BE\n"
@@ -170,8 +170,7 @@ msgstr "Er was een probleem"
 msgid "activate.resend"
 msgstr "Activeringslink opnieuw verzenden"
 
-#: src/View/BoneUser/change-email.php:9
-#: src/View/BoneUser/reset-email.php:8
+#: src/View/BoneUser/change-email.php:9 src/View/BoneUser/reset-email.php:8
 msgid "changeemail.h1"
 msgstr "Verander je e-mailadres"
 
@@ -195,8 +194,7 @@ msgstr "Uw wachtwoord is succesvol gewijzigd."
 msgid "changepass.continue"
 msgstr "Doorgaan"
 
-#: src/View/BoneUser/change-pass.php:20
-#: src/View/BoneUser/reset-pass.php:20
+#: src/View/BoneUser/change-pass.php:20 src/View/BoneUser/reset-pass.php:20
 msgid "changepass.choose"
 msgstr ""
 "Kies alstublieft een goed wachtwoord. Een combinatie van hoofdletters en "
@@ -252,8 +250,7 @@ msgstr "Uploaden.."
 msgid "home"
 msgstr "Huis"
 
-#: src/View/BoneUser/forgot-password.php:10
-#: src/View/BoneUser/reset-pass.php:11
+#: src/View/BoneUser/forgot-password.php:10 src/View/BoneUser/reset-pass.php:11
 msgid "resetpass.h1"
 msgstr "Stel je wachtwoord opnieuw in"
 
@@ -321,8 +318,7 @@ msgstr ""
 msgid "changeemail.success"
 msgstr "E-mailadres gewijzigd."
 
-#: src/View/BoneUser/reset-email.php:13
-#: src/View/BoneUser/reset-pass.php:18
+#: src/View/BoneUser/reset-email.php:13 src/View/BoneUser/reset-pass.php:18
 msgid "continue"
 msgstr "Bijdragen"
 
