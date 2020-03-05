@@ -13,7 +13,7 @@ use BoneMvc\Module\BoneMvcUser\Controller\BoneMvcUserApiController;
 use BoneMvc\Module\BoneMvcUser\Controller\BoneMvcUserController;
 use Bone\Router\Router;
 use Bone\Router\RouterConfigInterface;
-use Bone\View\PlatesEngine;
+use Bone\View\ViewEngine;
 use BoneMvc\Module\BoneMvcUser\Http\Middleware\SessionAuth;
 use BoneMvc\Module\BoneMvcUser\Http\Middleware\SessionAuthRedirect;
 use BoneMvc\Module\BoneMvcUser\View\Helper\LoginWidget;
@@ -32,8 +32,8 @@ class BoneMvcUserPackage implements RegistrationInterface, RouterConfigInterface
      */
     public function addToContainer(Container $c)
     {
-        /** @var PlatesEngine $viewEngine */
-        $viewEngine = $c->get(PlatesEngine::class);
+        /** @var ViewEngine $viewEngine */
+        $viewEngine = $c->get(ViewEngine::class);
         $viewEngine->addFolder('bonemvcuser', __DIR__ . '/View/BoneMvcUser/');
         $viewEngine->addFolder('email.user', __DIR__ . '/View/email/');
 
