@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace BoneMvc\Module\BoneMvcUser\Controller;
+namespace Bone\User\Controller;
 
 use Bone\Server\SiteConfig;
 use Del\Form\Form;
 use Bone\Controller\Controller;
-use BoneMvc\Mail\Service\MailService;
-use BoneMvc\Module\BoneMvcUser\Form\PersonForm;
+use Bone\Mail\Service\MailService;
+use Bone\User\Form\PersonForm;
 use Del\Entity\User;
 use Del\Form\Field\FileUpload;
 use Del\Image;
@@ -17,7 +17,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Laminas\Diactoros\Response\JsonResponse;
 
-class BoneMvcUserApiController
+class BoneUserApiController
 {
     /** @var UserService $userService */
     private $userService;
@@ -32,7 +32,7 @@ class BoneMvcUserApiController
     private $imgDirectory;
 
     /**
-     * BoneMvcUserController constructor.
+     * BoneUserController constructor.
      * @param UserService $userService
      */
     public function __construct(UserService $userService, string $uploadsDirectory, string $imgSubDir, string $tempDirectory)

@@ -1,6 +1,6 @@
 <?php declare(strict_types=1);
 
-namespace BoneMvc\Module\BoneMvcUser\View\Helper;
+namespace Bone\User\View\Helper;
 
 use Del\Service\UserService;
 use Del\SessionManager;

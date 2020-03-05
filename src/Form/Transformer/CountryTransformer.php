@@ -1,6 +1,6 @@
 <?php
 
-namespace BoneMvc\Module\BoneMvcUser\Form\Transformer;
+namespace Bone\User\Form\Transformer;
 
 use Del\Entity\Country;
 use Del\Factory\CountryFactory;

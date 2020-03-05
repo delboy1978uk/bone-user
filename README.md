@@ -6,14 +6,14 @@ Simply add the Package to Bone's module config
 <?php
 
 // use statements here
-use BoneMvc\Module\BoneMvcUser\BoneMvcUserPackage;
+use Bone\User\BoneUserPackage;
 use Del\UserPackage;
 
 return [
     'packages' => [
         // packages here (order is important)...,
         UserPackage::class,
-        BoneMvcUserPackage::class,
+        BoneUserPackage::class,
     ],
     // ...
 ];
@@ -40,7 +40,7 @@ booty deploy
 Once installed head to your site (by default using the Bone Framework Docker development environment (it's 
 `https://awesome.scot/user`) and register yourself as a user. Again if using the provided dev environment, check your 
 MailHog server at `https://awesome.scot:8025` to see any outgoing mails in a convenient web inbox. Activate your account
-etc! You can see all of the available endpoints in `src/BoneMvcUserPackage.php` in the `addRoutes()` section.
+etc! You can see all of the available endpoints in `src/BoneUserPackage.php` in the `addRoutes()` section.
 ### the user - in code
 You can get the logged in user from the `Psr\Http\Message\ServerRequestInterface` like so:
 ```php
@@ -48,7 +48,7 @@ $user = $request->getAttribute('user');
 ``` 
 ### authorization middleware
 You can lock down a route to make it available to a logged in user by adding the session authorization middleware
-`BoneMvc\Module\BoneMvcUser\Http\Middleware\SessionAuth` like so:
+`Bone\User\Http\Middleware\SessionAuth` like so:
 ```php
 $sessionAuth = $c->get(SessionAuth::class); // of course there's a use statement above, right? With the full name?
 $router->map('GET', '/my/route', [MyController::class, 'whateverAction'])->middleware($sessionAuth);
@@ -79,7 +79,7 @@ folder and override the views. Email templates are also in there. Hack away.
  */
 return [
     'views' => [
-        'bonemvcuser' => 'src/App/View/bone-user',
+        'boneuser' => 'src/App/View/bone-user',
     ],
 ];
 ````

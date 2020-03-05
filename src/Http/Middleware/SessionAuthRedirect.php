@@ -1,6 +1,6 @@
 <?php
 
-namespace BoneMvc\Module\BoneMvcUser\Http\Middleware;
+namespace Bone\User\Http\Middleware;
 
 use Bone\Server\SessionAwareInterface;
 use Bone\Traits\HasSessionTrait;

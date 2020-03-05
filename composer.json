@@ -1,6 +1,6 @@
 {
   "name": "delboy1978uk/bone-user",
-  "description": "Integration of delboy1978uk/user for BoneMvcFramework",
+  "description": "Integration of delboy1978uk/user for Bone Framework",
   "license": "MIT",
   "authors": [
     {
@@ -16,7 +16,7 @@
   },
   "autoload": {
     "psr-4": {
-      "BoneMvc\\Module\\BoneMvcUser\\": "src/"
+      "BoneM\\User\\": "src/"
     }
   }
 }

@@ -1,9 +1,9 @@
 <?php
 
-namespace BoneMvc\Module\BoneMvcUser\Form;
+namespace Bone\User\Form;
 
 use Bone\Form;
-use BoneMvc\Module\BoneMvcUser\Form\Transformer\CountryTransformer;
+use Bone\User\Form\Transformer\CountryTransformer;
 use Del\Form\Field\Hidden;
 use Del\Form\Field\Select;
 use Del\Form\Field\Submit;

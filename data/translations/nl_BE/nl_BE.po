@@ -15,88 +15,88 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: src\n"
 
-#: src/Controller/BoneMvcUserController.php:91
-#: src/Controller/BoneMvcUserController.php:281
+#: src/Controller/BoneUserController.php:91
+#: src/Controller/BoneUserController.php:281
 msgid "email.user.register.thankswith"
 msgstr "Bedankt voor uw aanmelding"
 
-#: src/Controller/BoneMvcUserController.php:142
+#: src/Controller/BoneUserController.php:142
 msgid "login.activation.expired"
 msgstr ""
 "De activeringslink is verlopen. U kunt een nieuwe activeringslink verzenden "
 "door "
 
-#: src/Controller/BoneMvcUserController.php:142
+#: src/Controller/BoneUserController.php:142
 msgid "login.activation.expired2"
 msgstr "hier te klikken"
 
-#: src/Controller/BoneMvcUserController.php:200
+#: src/Controller/BoneUserController.php:200
 msgid "login.error.password"
 msgstr "Verkeerde gebruikersnaam of wachtwoord. Ben je je "
 
-#: src/Controller/BoneMvcUserController.php:200
+#: src/Controller/BoneUserController.php:200
 msgid "login.error.password2"
 msgstr "wachtwoord vergeten?"
 
-#: src/Controller/BoneMvcUserController.php:203
+#: src/Controller/BoneUserController.php:203
 msgid "login.unactivated"
 msgstr "Dit e-mailadres is nog niet geactiveerd. Activerings-e-mail "
 
-#: src/Controller/BoneMvcUserController.php:203
+#: src/Controller/BoneUserController.php:203
 msgid "login.unactivated2"
 msgstr "opnieuw verzenden?"
 
-#: src/Controller/BoneMvcUserController.php:207
+#: src/Controller/BoneUserController.php:207
 msgid "login.activation.banned"
 msgstr "Deze gebruiker is uitgeschakeld of verbannen"
 
-#: src/Controller/BoneMvcUserController.php:232
+#: src/Controller/BoneUserController.php:232
 msgid "home.loggedin"
 msgstr "Je bent ingelogd."
 
-#: src/Controller/BoneMvcUserController.php:291
+#: src/Controller/BoneUserController.php:291
 msgid "login.resendactivation.error"
 msgstr "We konden uw bevestigingsmail niet verzenden. Neem contact op met "
 
-#: src/Controller/BoneMvcUserController.php:329
+#: src/Controller/BoneUserController.php:329
 msgid "email.forgotpass.subject"
 msgstr "Reset uw wachtwoord op "
 
-#: src/Controller/BoneMvcUserController.php:381
-#: src/Controller/BoneMvcUserController.php:428
+#: src/Controller/BoneUserController.php:381
+#: src/Controller/BoneUserController.php:428
 msgid "email.resetpass.success"
 msgstr "Je hebt met succes je wachtwoord veranderd."
 
-#: src/Controller/BoneMvcUserController.php:385
-#: src/Controller/BoneMvcUserController.php:431
+#: src/Controller/BoneUserController.php:385
+#: src/Controller/BoneUserController.php:431
 msgid "email.resetpass.nomatch"
 msgstr "Wachtwoorden komen niet overeen, probeer het opnieuw."
 
-#: src/Controller/BoneMvcUserController.php:477
+#: src/Controller/BoneUserController.php:477
 msgid "email.changeemail.registered"
 msgstr "Deze e-mail heeft al een geregistreerd account bij "
 
-#: src/Controller/BoneMvcUserController.php:491
+#: src/Controller/BoneUserController.php:491
 msgid "email.changeemail.subject"
 msgstr "Wijzig uw e-mailadres op "
 
-#: src/Controller/BoneMvcUserController.php:499
+#: src/Controller/BoneUserController.php:499
 msgid "email.changeemail.sent"
 msgstr "Controleer uw e-mail voor een link om uw nieuwe adres te activeren."
 
-#: src/Controller/BoneMvcUserController.php:503
+#: src/Controller/BoneUserController.php:503
 msgid "email.changeemail.notsent"
 msgstr "We konden uw e-mailbevestiging niet verzenden. Neem contact op met"
 
-#: src/Controller/BoneMvcUserController.php:507
+#: src/Controller/BoneUserController.php:507
 msgid "email.changeemail.wrongpass"
 msgstr "Je wachtwoord was fout"
 
-#: src/Controller/BoneMvcUserController.php:571
+#: src/Controller/BoneUserController.php:571
 msgid "email.changeemail.success"
 msgstr "U heeft uw e-mailadres gewijzigd. Log in met"
 
-#: src/Controller/BoneMvcUserController.php:571
+#: src/Controller/BoneUserController.php:571
 msgid "email.changeemail.success2"
 msgstr " van nu af aan."
 
@@ -120,7 +120,7 @@ msgstr "Kies een wachtwoord"
 msgid "form.password.error"
 msgstr "U moet een wachtwoord invoeren"
 
-#: src/Form/LoginForm.php:36 src/View/BoneMvcUser/index.php:10
+#: src/Form/LoginForm.php:36 src/View/BoneUser/index.php:10
 #, fuzzy
 #| msgid "user.register"
 msgid "user.login"
@@ -146,195 +146,195 @@ msgstr "Typ je wachtwoord opnieuw"
 msgid "form.submit.label"
 msgstr "Registreren"
 
-#: src/View/BoneMvcUser/activate-user-account.php:13
+#: src/View/BoneUser/activate-user-account.php:13
 msgid "activate.h1"
 msgstr "Welkom, gebruiker"
 
-#: src/View/BoneMvcUser/activate-user-account.php:14
+#: src/View/BoneUser/activate-user-account.php:14
 msgid "activate.p"
 msgstr "Uw gebruikersaccount is geactiveerd en u bent ingelogd!"
 
-#: src/View/BoneMvcUser/activate-user-account.php:15
+#: src/View/BoneUser/activate-user-account.php:15
 msgid "activate.start"
 msgstr "Begin"
 
-#: src/View/BoneMvcUser/activate-user-account.php:17
+#: src/View/BoneUser/activate-user-account.php:17
 msgid "oops"
 msgstr "Oeps"
 
-#: src/View/BoneMvcUser/activate-user-account.php:18
+#: src/View/BoneUser/activate-user-account.php:18
 msgid "problem"
 msgstr "Er was een probleem"
 
-#: src/View/BoneMvcUser/activate-user-account.php:20
+#: src/View/BoneUser/activate-user-account.php:20
 msgid "activate.resend"
 msgstr "Activeringslink opnieuw verzenden"
 
-#: src/View/BoneMvcUser/change-email.php:9
-#: src/View/BoneMvcUser/reset-email.php:8
+#: src/View/BoneUser/change-email.php:9
+#: src/View/BoneUser/reset-email.php:8
 msgid "changeemail.h1"
 msgstr "Verander je e-mailadres"
 
-#: src/View/BoneMvcUser/change-email.php:17
+#: src/View/BoneUser/change-email.php:17
 msgid "changeemail.p"
 msgstr "Een bevestigingse-mail wordt naar uw oude e-mailadres verzonden."
 
-#: src/View/BoneMvcUser/change-email.php:20
+#: src/View/BoneUser/change-email.php:20
 msgid "changeemail.check"
 msgstr "Controleer je e-mail"
 
-#: src/View/BoneMvcUser/change-pass.php:11
+#: src/View/BoneUser/change-pass.php:11
 msgid "changepass.h1"
 msgstr "Verander uw wachtwoord"
 
-#: src/View/BoneMvcUser/change-pass.php:17
+#: src/View/BoneUser/change-pass.php:17
 msgid "changepass.p"
 msgstr "Uw wachtwoord is succesvol gewijzigd."
 
-#: src/View/BoneMvcUser/change-pass.php:18
+#: src/View/BoneUser/change-pass.php:18
 msgid "changepass.continue"
 msgstr "Doorgaan"
 
-#: src/View/BoneMvcUser/change-pass.php:20
-#: src/View/BoneMvcUser/reset-pass.php:20
+#: src/View/BoneUser/change-pass.php:20
+#: src/View/BoneUser/reset-pass.php:20
 msgid "changepass.choose"
 msgstr ""
 "Kies alstublieft een goed wachtwoord. Een combinatie van hoofdletters en "
 "kleine letters, symbolen en cijfers zorgt voor een sterk wachtwoord."
 
-#: src/View/BoneMvcUser/edit-profile.php:14
+#: src/View/BoneUser/edit-profile.php:14
 msgid "editprofile.h1"
 msgstr "Pas je profiel aan"
 
-#: src/View/BoneMvcUser/edit-profile.php:17
+#: src/View/BoneUser/edit-profile.php:17
 msgid "editprofile.alert"
 msgstr ""
 "Je kunt hier je gebruikersnaam instellen en je afbeelding uploaden (of een "
 "van de onze kiezen)."
 
-#: src/View/BoneMvcUser/edit-profile.php:23
+#: src/View/BoneUser/edit-profile.php:23
 msgid "avatar.change"
 msgstr "Verander mijn avatar"
 
-#: src/View/BoneMvcUser/edit-profile.php:28
+#: src/View/BoneUser/edit-profile.php:28
 msgid "avatar.choose"
 msgstr "Kies een avatar"
 
-#: src/View/BoneMvcUser/edit-profile.php:29
+#: src/View/BoneUser/edit-profile.php:29
 msgid "avatar.upload"
 msgstr "Upload mijn eigen"
 
-#: src/View/BoneMvcUser/edit-profile.php:34
+#: src/View/BoneUser/edit-profile.php:34
 msgid "picture.choose"
 msgstr "Kies een foto"
 
-#: src/View/BoneMvcUser/edit-profile.php:71
+#: src/View/BoneUser/edit-profile.php:71
 msgid "avatar.freepik"
 msgstr "Deze geweldige dierenavatars werden geleverd door Freepik"
 
-#: src/View/BoneMvcUser/edit-profile.php:72
+#: src/View/BoneUser/edit-profile.php:72
 msgid "avatar.design"
 msgstr "Ontwerp vector ontworpen door Freepik"
 
-#: src/View/BoneMvcUser/edit-profile.php:77
+#: src/View/BoneUser/edit-profile.php:77
 msgid "avatar.select"
 msgstr "Selecteer en upload een foto"
 
-#: src/View/BoneMvcUser/edit-profile.php:81
+#: src/View/BoneUser/edit-profile.php:81
 msgid "avatar.browse"
 msgstr "Bladeren"
 
-#: src/View/BoneMvcUser/edit-profile.php:86
+#: src/View/BoneUser/edit-profile.php:86
 msgid "avatar.uploadbtn"
 msgstr "Uploaden.."
 
-#: src/View/BoneMvcUser/edit-profile.php:99
+#: src/View/BoneUser/edit-profile.php:99
 msgid "home"
 msgstr "Huis"
 
-#: src/View/BoneMvcUser/forgot-password.php:10
-#: src/View/BoneMvcUser/reset-pass.php:11
+#: src/View/BoneUser/forgot-password.php:10
+#: src/View/BoneUser/reset-pass.php:11
 msgid "resetpass.h1"
 msgstr "Stel je wachtwoord opnieuw in"
 
-#: src/View/BoneMvcUser/forgot-password.php:16
+#: src/View/BoneUser/forgot-password.php:16
 msgid "resetpass.lead"
 msgstr "Als een account is gevonden, is er een e-mail naar verzonden."
 
-#: src/View/BoneMvcUser/forgot-password.php:17
+#: src/View/BoneUser/forgot-password.php:17
 msgid "resetpass.p"
 msgstr ""
 "Controleer uw inbox en klik op de beveiligde link om uw wachtwoord opnieuw "
 "in te stellen."
 
-#: src/View/BoneMvcUser/home.php:8
+#: src/View/BoneUser/home.php:8
 msgid "home.welcome"
 msgstr "Welkom, "
 
-#: src/View/BoneMvcUser/home.php:9
+#: src/View/BoneUser/home.php:9
 msgid "home.placeholder"
 msgstr "Dit is de startpagina van de ingelogde gebruiker."
 
-#: src/View/BoneMvcUser/home.php:10
+#: src/View/BoneUser/home.php:10
 msgid "home.editprofile"
 msgstr "Bewerk profiel"
 
-#: src/View/BoneMvcUser/home.php:11
+#: src/View/BoneUser/home.php:11
 msgid "home.changeemail"
 msgstr "Verander e-mailadres"
 
-#: src/View/BoneMvcUser/home.php:12
+#: src/View/BoneUser/home.php:12
 msgid "home.changepass"
 msgstr "Verander wachtwoord"
 
-#: src/View/BoneMvcUser/home.php:13
+#: src/View/BoneUser/home.php:13
 msgid "home.logout"
 msgstr "Uitloggen"
 
-#: src/View/BoneMvcUser/index.php:9
+#: src/View/BoneUser/index.php:9
 msgid "user.welcome"
 msgstr "Welkom bij de website"
 
-#: src/View/BoneMvcUser/index.php:11 src/View/BoneMvcUser/register.php:10
+#: src/View/BoneUser/index.php:11 src/View/BoneUser/register.php:10
 msgid "user.register"
 msgstr "Registreren"
 
-#: src/View/BoneMvcUser/login.php:9
+#: src/View/BoneUser/login.php:9
 msgid "login.h1"
 msgstr "Log in"
 
-#: src/View/BoneMvcUser/login.php:14
+#: src/View/BoneUser/login.php:14
 msgid "login.a"
 msgstr "Uw wachtwoord vergeten?"
 
-#: src/View/BoneMvcUser/resend-activation.php:10
+#: src/View/BoneUser/resend-activation.php:10
 msgid "resend.lead"
 msgstr "Bedankt voor het opnieuw registreren"
 
-#: src/View/BoneMvcUser/resend-activation.php:11
+#: src/View/BoneUser/resend-activation.php:11
 msgid "resend.p"
 msgstr ""
 "Er is een activerings-e-mail verzonden naar uw e-mailinbox. Klik op de link "
 "om uw account te activeren en in te loggen op het systeem."
 
-#: src/View/BoneMvcUser/reset-email.php:12
+#: src/View/BoneUser/reset-email.php:12
 msgid "changeemail.success"
 msgstr "E-mailadres gewijzigd."
 
-#: src/View/BoneMvcUser/reset-email.php:13
-#: src/View/BoneMvcUser/reset-pass.php:18
+#: src/View/BoneUser/reset-email.php:13
+#: src/View/BoneUser/reset-pass.php:18
 msgid "continue"
 msgstr "Bijdragen"
 
-#: src/View/BoneMvcUser/reset-pass.php:17
+#: src/View/BoneUser/reset-pass.php:17
 msgid "resetpass.success"
 msgstr "Uw wachtwoord is succesvol gewijzigd."
 
-#: src/View/BoneMvcUser/thanks-for-registering.php:7
+#: src/View/BoneUser/thanks-for-registering.php:7
 msgid "register.thanks"
 msgstr "Bedankt voor het registreren"
 
-#: src/View/BoneMvcUser/thanks-for-registering.php:8
+#: src/View/BoneUser/thanks-for-registering.php:8
 msgid "register.check"
 msgstr "Controleer uw e-mail voor uw activeringslink."
 

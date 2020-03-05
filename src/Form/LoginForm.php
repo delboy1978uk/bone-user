@@ -1,6 +1,6 @@
 <?php
 
-namespace BoneMvc\Module\BoneMvcUser\Form;
+namespace Bone\User\Form;
 
 use Bone\Form;
 use Del\Form\Field\Submit;

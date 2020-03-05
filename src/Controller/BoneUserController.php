@@ -1,18 +1,18 @@
 <?php declare(strict_types=1);
 
-namespace BoneMvc\Module\BoneMvcUser\Controller;
+namespace Bone\User\Controller;
 
 use Bone\Form;
 use Bone\Controller\Controller;
 use Bone\View\ViewEngine;
 use Bone\Server\SessionAwareInterface;
 use Bone\Traits\HasSessionTrait;
-use BoneMvc\Mail\EmailMessage;
-use BoneMvc\Mail\Service\MailService;
-use BoneMvc\Module\BoneMvcUser\Form\LoginForm;
-use BoneMvc\Module\BoneMvcUser\Form\PersonForm;
-use BoneMvc\Module\BoneMvcUser\Form\RegistrationForm;
-use BoneMvc\Module\BoneMvcUser\Form\ResetPasswordForm;
+use Bone\Mail\EmailMessage;
+use Bone\Mail\Service\MailService;
+use Bone\User\Form\LoginForm;
+use Bone\User\Form\PersonForm;
+use Bone\User\Form\RegistrationForm;
+use Bone\User\Form\ResetPasswordForm;
 use DateTime;
 use Del\Exception\EmailLinkException;
 use Del\Exception\UserException;
@@ -28,7 +28,7 @@ use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\Uri;
 
-class BoneMvcUserController extends Controller implements SessionAwareInterface
+class BoneUserController extends Controller implements SessionAwareInterface
 {
     use HasSessionTrait;
 
@@ -42,7 +42,7 @@ class BoneMvcUserController extends Controller implements SessionAwareInterface
     private $loginRedirectRoute;
 
     /**
-     * BoneMvcUserController constructor.
+     * BoneUserController constructor.
      * @param UserService $userService
      * @param MailService $mailService
      */
@@ -62,7 +62,7 @@ class BoneMvcUserController extends Controller implements SessionAwareInterface
      */
     public function indexAction(ServerRequestInterface $request, array $args): ResponseInterface
     {
-        $body = $this->getView()->render('bonemvcuser::index', []);
+        $body = $this->getView()->render('boneuser::index', []);
 
         return new HtmlResponse($body);
     }
@@ -104,7 +104,7 @@ class BoneMvcUserController extends Controller implements SessionAwareInterface
                         'activationLink' => '/user/activate/' . $email . '/' . $token,
                     ]);
                     $this->mailService->sendEmail($mail);
-                    $body = $this->getView()->render('bonemvcuser::thanks-for-registering');
+                    $body = $this->getView()->render('boneuser::thanks-for-registering');
 
                     return new HtmlResponse($body);
 
@@ -114,7 +114,7 @@ class BoneMvcUserController extends Controller implements SessionAwareInterface
             }
         }
 
-        $body = $this->getView()->render('bonemvcuser::register', ['form' => $form, 'message' => $message]);
+        $body = $this->getView()->render('boneuser::register', ['form' => $form, 'message' => $message]);
 
         return new HtmlResponse($body);
     }
@@ -155,7 +155,7 @@ class BoneMvcUserController extends Controller implements SessionAwareInterface
             }
         }
 
-        $body = $this->getView()->render('bonemvcuser::activate-user-account', ['message' => $message]);
+        $body = $this->getView()->render('boneuser::activate-user-account', ['message' => $message]);
 
         return new HtmlResponse($body);
     }
@@ -170,7 +170,7 @@ class BoneMvcUserController extends Controller implements SessionAwareInterface
     {
         $form = new LoginForm('userlogin', $this->getTranslator());
 
-        $body = $this->getView()->render('bonemvcuser::login', ['form' => $form]);
+        $body = $this->getView()->render('boneuser::login', ['form' => $form]);
 
         return new HtmlResponse($body);
     }
@@ -229,7 +229,7 @@ class BoneMvcUserController extends Controller implements SessionAwareInterface
             $params['message'] = $message;
         }
 
-        $body = $this->getView()->render('bonemvcuser::login', $params);
+        $body = $this->getView()->render('boneuser::login', $params);
 
         return new HtmlResponse($body);
 
@@ -243,7 +243,7 @@ class BoneMvcUserController extends Controller implements SessionAwareInterface
     public function homePageAction(ServerRequestInterface $request, array $args): ResponseInterface
     {
         $user = $request->getAttribute('user');
-        $body = $this->getView()->render('bonemvcuser::home', [
+        $body = $this->getView()->render('boneuser::home', [
             'message' => [$this->getTranslator()->translate('home.loggedin', 'user'), 'success'],
             'user' => $user,
         ]);
@@ -308,7 +308,7 @@ class BoneMvcUserController extends Controller implements SessionAwareInterface
             }
         }
 
-        $body = $this->getView()->render('bonemvcuser::resend-activation', $message);
+        $body = $this->getView()->render('boneuser::resend-activation', $message);
 
         return new HtmlResponse($body);
     }
@@ -355,7 +355,7 @@ class BoneMvcUserController extends Controller implements SessionAwareInterface
             $this->view->message = [$e->getMessage(), 'danger'];
         }
 
-        $body = $this->getView()->render('bonemvcuser::forgot-password');
+        $body = $this->getView()->render('boneuser::forgot-password');
 
         return new HtmlResponse($body);
     }
@@ -413,7 +413,7 @@ class BoneMvcUserController extends Controller implements SessionAwareInterface
         }
         $params['success'] = $success;
         $params['form'] = $form;
-        $body = $this->getView()->render('bonemvcuser::reset-pass', $params);
+        $body = $this->getView()->render('boneuser::reset-pass', $params);
 
         return new HtmlResponse($body);
     }
@@ -455,7 +455,7 @@ class BoneMvcUserController extends Controller implements SessionAwareInterface
         $params['success'] = $success;
         $params['form'] = $form;
 
-        $body = $this->getView()->render('bonemvcuser::change-pass', $params);
+        $body = $this->getView()->render('boneuser::change-pass', $params);
 
         return new HtmlResponse($body);
     }
@@ -526,7 +526,7 @@ class BoneMvcUserController extends Controller implements SessionAwareInterface
             $params['message'] = $message;
         }
 
-        $body = $this->getView()->render('bonemvcuser::change-email', $params);
+        $body = $this->getView()->render('boneuser::change-email', $params);
 
         return new HtmlResponse($body);
     }
@@ -558,7 +558,7 @@ class BoneMvcUserController extends Controller implements SessionAwareInterface
             }
         }
 
-        $body = $this->getView()->render('bonemvcuser::edit-profile', ['person' => $person, 'form' => $form->render()]);
+        $body = $this->getView()->render('boneuser::edit-profile', ['person' => $person, 'form' => $form->render()]);
 
         return new HtmlResponse($body);
     }
@@ -592,7 +592,7 @@ class BoneMvcUserController extends Controller implements SessionAwareInterface
             throw $e;
         }
 
-        $body = $this->getView()->render('bonemvcuser::reset-email', ['message' => null]);
+        $body = $this->getView()->render('boneuser::reset-email', ['message' => null]);
 
         return new HtmlResponse($body);
     }

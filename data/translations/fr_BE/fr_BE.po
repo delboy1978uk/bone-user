@@ -15,94 +15,94 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: src\n"
 
-#: src/Controller/BoneMvcUserController.php:91
-#: src/Controller/BoneMvcUserController.php:281
+#: src/Controller/BoneUserController.php:91
+#: src/Controller/BoneUserController.php:281
 msgid "email.user.register.thankswith"
 msgstr "Merci de vous inscrire avec"
 
-#: src/Controller/BoneMvcUserController.php:142
+#: src/Controller/BoneUserController.php:142
 msgid "login.activation.expired"
 msgstr ""
 "Le lien d’activation a expiré. Vous pouvez envoyer un nouveau lien "
 "d’activation en cliquant "
 
-#: src/Controller/BoneMvcUserController.php:142
+#: src/Controller/BoneUserController.php:142
 msgid "login.activation.expired2"
 msgstr "ici"
 
-#: src/Controller/BoneMvcUserController.php:200
+#: src/Controller/BoneUserController.php:200
 msgid "login.error.password"
 msgstr "Nom d’utilisateur ou mot de passe incorrect. Avez-vous oublié votre"
 
-#: src/Controller/BoneMvcUserController.php:200
+#: src/Controller/BoneUserController.php:200
 msgid "login.error.password2"
 msgstr " mot de passe?"
 
-#: src/Controller/BoneMvcUserController.php:203
+#: src/Controller/BoneUserController.php:203
 msgid "login.unactivated"
 msgstr "Cette adresse email n’a pas encore été activée. Renvoyer un "
 
-#: src/Controller/BoneMvcUserController.php:203
+#: src/Controller/BoneUserController.php:203
 msgid "login.unactivated2"
 msgstr "email d’activation?"
 
-#: src/Controller/BoneMvcUserController.php:207
+#: src/Controller/BoneUserController.php:207
 msgid "login.activation.banned"
 msgstr "Cet utilisateur a été désactivé ou banni"
 
-#: src/Controller/BoneMvcUserController.php:232
+#: src/Controller/BoneUserController.php:232
 msgid "home.loggedin"
 msgstr "Vous êtes connecté."
 
-#: src/Controller/BoneMvcUserController.php:291
+#: src/Controller/BoneUserController.php:291
 msgid "login.resendactivation.error"
 msgstr ""
 "Nous n’avons pas pu envoyer votre e-mail de confirmation. S’il vous plaît "
 "contactez "
 
-#: src/Controller/BoneMvcUserController.php:329
+#: src/Controller/BoneUserController.php:329
 msgid "email.forgotpass.subject"
 msgstr "Réinitialiser votre mot de passe sur "
 
-#: src/Controller/BoneMvcUserController.php:381
-#: src/Controller/BoneMvcUserController.php:428
+#: src/Controller/BoneUserController.php:381
+#: src/Controller/BoneUserController.php:428
 msgid "email.resetpass.success"
 msgstr "Vous avez changé votre mot de passe avec succès."
 
-#: src/Controller/BoneMvcUserController.php:385
-#: src/Controller/BoneMvcUserController.php:431
+#: src/Controller/BoneUserController.php:385
+#: src/Controller/BoneUserController.php:431
 msgid "email.resetpass.nomatch"
 msgstr "Les mots de passe ne correspondent pas. Veuillez réessayer."
 
-#: src/Controller/BoneMvcUserController.php:477
+#: src/Controller/BoneUserController.php:477
 msgid "email.changeemail.registered"
 msgstr "Cet email a déjà un compte enregistré avec "
 
-#: src/Controller/BoneMvcUserController.php:491
+#: src/Controller/BoneUserController.php:491
 msgid "email.changeemail.subject"
 msgstr "Changer votre adresse email sur "
 
-#: src/Controller/BoneMvcUserController.php:499
+#: src/Controller/BoneUserController.php:499
 msgid "email.changeemail.sent"
 msgstr ""
 "S’il vous plaît vérifier votre email pour un lien pour activer votre "
 "nouvelle adresse."
 
-#: src/Controller/BoneMvcUserController.php:503
+#: src/Controller/BoneUserController.php:503
 msgid "email.changeemail.notsent"
 msgstr ""
 "Nous n’avons pas pu envoyer votre confirmation par e-mail. S’il vous plaît "
 "contactez "
 
-#: src/Controller/BoneMvcUserController.php:507
+#: src/Controller/BoneUserController.php:507
 msgid "email.changeemail.wrongpass"
 msgstr "Votre mot de passe était faux"
 
-#: src/Controller/BoneMvcUserController.php:571
+#: src/Controller/BoneUserController.php:571
 msgid "email.changeemail.success"
 msgstr "Vous avez changé d’adresse email. Veuillez vous connecter avec "
 
-#: src/Controller/BoneMvcUserController.php:571
+#: src/Controller/BoneUserController.php:571
 msgid "email.changeemail.success2"
 msgstr " à partir de maintenant."
 
@@ -126,7 +126,7 @@ msgstr "Tapez un mot de passe"
 msgid "form.password.error"
 msgstr "Vous devez taper un mot de passe"
 
-#: src/Form/LoginForm.php:36 src/View/BoneMvcUser/index.php:10
+#: src/Form/LoginForm.php:36 src/View/BoneUser/index.php:10
 msgid "user.login"
 msgstr "S’identifier"
 
@@ -150,101 +150,101 @@ msgstr "Confirmer votre mot de passe"
 msgid "form.submit.label"
 msgstr "S’inscrire"
 
-#: src/View/BoneMvcUser/activate-user-account.php:13
+#: src/View/BoneUser/activate-user-account.php:13
 msgid "activate.h1"
 msgstr "Bienvenue, utilisateur."
 
-#: src/View/BoneMvcUser/activate-user-account.php:14
+#: src/View/BoneUser/activate-user-account.php:14
 msgid "activate.p"
 msgstr "Votre compte utilisateur est activé et vous êtes connecté!"
 
-#: src/View/BoneMvcUser/activate-user-account.php:15
+#: src/View/BoneUser/activate-user-account.php:15
 msgid "activate.start"
 msgstr "Commencer"
 
-#: src/View/BoneMvcUser/activate-user-account.php:17
+#: src/View/BoneUser/activate-user-account.php:17
 msgid "oops"
 msgstr "Oops"
 
-#: src/View/BoneMvcUser/activate-user-account.php:18
+#: src/View/BoneUser/activate-user-account.php:18
 msgid "problem"
 msgstr "Il y avait un problème"
 
-#: src/View/BoneMvcUser/activate-user-account.php:20
+#: src/View/BoneUser/activate-user-account.php:20
 msgid "activate.resend"
 msgstr "Renvoyer le lien d’activation"
 
-#: src/View/BoneMvcUser/change-email.php:9
-#: src/View/BoneMvcUser/reset-email.php:8
+#: src/View/BoneUser/change-email.php:9
+#: src/View/BoneUser/reset-email.php:8
 msgid "changeemail.h1"
 msgstr "Changer votre email"
 
-#: src/View/BoneMvcUser/change-email.php:17
+#: src/View/BoneUser/change-email.php:17
 msgid "changeemail.p"
 msgstr "Un email de confirmation sera envoyé à votre ancienne adresse email."
 
-#: src/View/BoneMvcUser/change-email.php:20
+#: src/View/BoneUser/change-email.php:20
 msgid "changeemail.check"
 msgstr "Vérifiez votre email"
 
-#: src/View/BoneMvcUser/change-pass.php:11
+#: src/View/BoneUser/change-pass.php:11
 msgid "changepass.h1"
 msgstr "Changez votre mot de passe"
 
-#: src/View/BoneMvcUser/change-pass.php:17
+#: src/View/BoneUser/change-pass.php:17
 msgid "changepass.p"
 msgstr "Votre mot de passe a été changé avec succès."
 
-#: src/View/BoneMvcUser/change-pass.php:18
+#: src/View/BoneUser/change-pass.php:18
 msgid "changepass.continue"
 msgstr "Continuez"
 
-#: src/View/BoneMvcUser/change-pass.php:20
-#: src/View/BoneMvcUser/reset-pass.php:20
+#: src/View/BoneUser/change-pass.php:20
+#: src/View/BoneUser/reset-pass.php:20
 msgid "changepass.choose"
 msgstr ""
 "Veuillez choisir un bon mot de passe. Une combinaison de majuscules et "
 "minuscules, de symboles et de chiffres constitue un mot de passe fort."
 
-#: src/View/BoneMvcUser/edit-profile.php:14
+#: src/View/BoneUser/edit-profile.php:14
 msgid "editprofile.h1"
 msgstr "Modifier votre profil"
 
-#: src/View/BoneMvcUser/edit-profile.php:17
+#: src/View/BoneUser/edit-profile.php:17
 msgid "editprofile.alert"
 msgstr ""
 "Vous pouvez définir votre nom d’utilisateur ici et télécharger votre image "
 "(ou choisir un des nôtres)."
 
-#: src/View/BoneMvcUser/edit-profile.php:23
+#: src/View/BoneUser/edit-profile.php:23
 msgid "avatar.change"
 msgstr "Changer mon avatar"
 
-#: src/View/BoneMvcUser/edit-profile.php:28
+#: src/View/BoneUser/edit-profile.php:28
 msgid "avatar.choose"
 msgstr "Choisissez un avatar"
 
-#: src/View/BoneMvcUser/edit-profile.php:29
+#: src/View/BoneUser/edit-profile.php:29
 msgid "avatar.upload"
 msgstr "Télécharger mon propre"
 
-#: src/View/BoneMvcUser/edit-profile.php:34
+#: src/View/BoneUser/edit-profile.php:34
 msgid "picture.choose"
 msgstr "Choisis une image"
 
-#: src/View/BoneMvcUser/edit-profile.php:71
+#: src/View/BoneUser/edit-profile.php:71
 msgid "avatar.freepik"
 msgstr "Ces grands avatars d’animaux ont été fournis par Freepik"
 
-#: src/View/BoneMvcUser/edit-profile.php:72
+#: src/View/BoneUser/edit-profile.php:72
 msgid "avatar.design"
 msgstr "Vecteur de design conçu par Freepik"
 
-#: src/View/BoneMvcUser/edit-profile.php:77
+#: src/View/BoneUser/edit-profile.php:77
 msgid "avatar.select"
 msgstr "Sélectionner et télécharger une image"
 
-#: src/View/BoneMvcUser/edit-profile.php:81
+#: src/View/BoneUser/edit-profile.php:81
 #, fuzzy
 #| msgid "docker.browse"
 msgid "avatar.browse"
@@ -253,97 +253,97 @@ msgstr ""
 "votre navigateur. Bien sûr, si vous n'utilisez pas docker, vous pouvez "
 "l'ajouter à votre pile LAMP de la manière habituelle."
 
-#: src/View/BoneMvcUser/edit-profile.php:86
+#: src/View/BoneUser/edit-profile.php:86
 msgid "avatar.uploadbtn"
 msgstr "Télécharger…"
 
-#: src/View/BoneMvcUser/edit-profile.php:99
+#: src/View/BoneUser/edit-profile.php:99
 msgid "home"
 msgstr "Accueil"
 
-#: src/View/BoneMvcUser/forgot-password.php:10
-#: src/View/BoneMvcUser/reset-pass.php:11
+#: src/View/BoneUser/forgot-password.php:10
+#: src/View/BoneUser/reset-pass.php:11
 msgid "resetpass.h1"
 msgstr "Réinitialisez votre mot de passe"
 
-#: src/View/BoneMvcUser/forgot-password.php:16
+#: src/View/BoneUser/forgot-password.php:16
 msgid "resetpass.lead"
 msgstr "Si un compte a été trouvé, un email lui a été envoyé."
 
-#: src/View/BoneMvcUser/forgot-password.php:17
+#: src/View/BoneUser/forgot-password.php:17
 msgid "resetpass.p"
 msgstr ""
 "Vérifiez votre boîte de réception et cliquez sur le lien sécurisé pour "
 "réinitialiser votre mot de passe."
 
-#: src/View/BoneMvcUser/home.php:8
+#: src/View/BoneUser/home.php:8
 msgid "home.welcome"
 msgstr "Bienvenue, "
 
-#: src/View/BoneMvcUser/home.php:9
+#: src/View/BoneUser/home.php:9
 msgid "home.placeholder"
 msgstr "Ceci est la page d’accueil de l’utilisateur connecté."
 
-#: src/View/BoneMvcUser/home.php:10
+#: src/View/BoneUser/home.php:10
 msgid "home.editprofile"
 msgstr "Editer le profil"
 
-#: src/View/BoneMvcUser/home.php:11
+#: src/View/BoneUser/home.php:11
 msgid "home.changeemail"
 msgstr "Changer l’e-mail"
 
-#: src/View/BoneMvcUser/home.php:12
+#: src/View/BoneUser/home.php:12
 msgid "home.changepass"
 msgstr "Changer le mot de passe"
 
-#: src/View/BoneMvcUser/home.php:13
+#: src/View/BoneUser/home.php:13
 msgid "home.logout"
 msgstr "Se déconnecter"
 
-#: src/View/BoneMvcUser/index.php:9
+#: src/View/BoneUser/index.php:9
 msgid "user.welcome"
 msgstr "Bienvenue sur le site"
 
-#: src/View/BoneMvcUser/index.php:11 src/View/BoneMvcUser/register.php:10
+#: src/View/BoneUser/index.php:11 src/View/BoneUser/register.php:10
 msgid "user.register"
 msgstr "S’inscrire"
 
-#: src/View/BoneMvcUser/login.php:9
+#: src/View/BoneUser/login.php:9
 msgid "login.h1"
 msgstr "S’identifier"
 
-#: src/View/BoneMvcUser/login.php:14
+#: src/View/BoneUser/login.php:14
 msgid "login.a"
 msgstr "Mot de passe oublié?"
 
-#: src/View/BoneMvcUser/resend-activation.php:10
+#: src/View/BoneUser/resend-activation.php:10
 msgid "resend.lead"
 msgstr "Merci de vous réinscrire"
 
-#: src/View/BoneMvcUser/resend-activation.php:11
+#: src/View/BoneUser/resend-activation.php:11
 msgid "resend.p"
 msgstr ""
 "Un email d’activation a été envoyé dans votre boîte de réception. Veuillez "
 "cliquer sur le lien pour activer votre compte et vous connecter au système."
 
-#: src/View/BoneMvcUser/reset-email.php:12
+#: src/View/BoneUser/reset-email.php:12
 msgid "changeemail.success"
 msgstr "Adresse e-mail modifiée"
 
-#: src/View/BoneMvcUser/reset-email.php:13
-#: src/View/BoneMvcUser/reset-pass.php:18
+#: src/View/BoneUser/reset-email.php:13
+#: src/View/BoneUser/reset-pass.php:18
 msgid "continue"
 msgstr "Continuez"
 
-#: src/View/BoneMvcUser/reset-pass.php:17
+#: src/View/BoneUser/reset-pass.php:17
 msgid "resetpass.success"
 msgstr "Votre mot de passe a été changé avec succès."
 
-#: src/View/BoneMvcUser/thanks-for-registering.php:7
+#: src/View/BoneUser/thanks-for-registering.php:7
 msgid "register.thanks"
 msgstr "Merci de vous inscrire"
 
-#: src/View/BoneMvcUser/thanks-for-registering.php:8
+#: src/View/BoneUser/thanks-for-registering.php:8
 msgid "register.check"
 msgstr "Vérifiez votre email pour votre lien d’activation."
 
