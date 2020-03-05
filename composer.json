@@ -16,7 +16,7 @@
   },
   "autoload": {
     "psr-4": {
-      "BoneM\\User\\": "src/"
+      "Bone\\User\\": "src/"
     }
   }
 }
