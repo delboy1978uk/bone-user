@@ -2,7 +2,7 @@
 
 namespace Bone\User\Controller;
 
-use Bone\Form;
+use Bone\I18n\Form;
 use Bone\Controller\Controller;
 use Bone\View\ViewEngine;
 use Bone\Server\SessionAwareInterface;

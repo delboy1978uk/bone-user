@@ -2,7 +2,7 @@
 
 namespace Bone\User\Form;
 
-use Bone\Form;
+use Bone\I18n\Form;
 use Bone\User\Form\Transformer\CountryTransformer;
 use Del\Form\Field\Hidden;
 use Del\Form\Field\Select;

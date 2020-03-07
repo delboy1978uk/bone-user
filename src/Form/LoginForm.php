@@ -2,7 +2,7 @@
 
 namespace Bone\User\Form;
 
-use Bone\Form;
+use Bone\I18n\Form;
 use Del\Form\Field\Submit;
 use Del\Form\Field\Text\EmailAddress;
 use Del\Form\Field\Text\Password;
