@@ -6,7 +6,7 @@ use Bone\I18n\Form;
 use Bone\Controller\Controller;
 use Bone\View\ViewEngine;
 use Bone\Server\SessionAwareInterface;
-use Bone\Traits\HasSessionTrait;
+use Bone\Server\Traits\HasSessionTrait;
 use Bone\Mail\EmailMessage;
 use Bone\Mail\Service\MailService;
 use Bone\User\Form\LoginForm;

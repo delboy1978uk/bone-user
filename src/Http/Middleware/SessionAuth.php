@@ -3,7 +3,7 @@
 namespace Bone\User\Http\Middleware;
 
 use Bone\Server\SessionAwareInterface;
-use Bone\Traits\HasSessionTrait;
+use Bone\Server\Traits\HasSessionTrait;
 use Del\Exception\UserException;
 use Del\Service\UserService;
 use Del\SessionManager;
