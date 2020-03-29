@@ -1,6 +1,6 @@
-<script type="text/javascript" src="/bone-mvc-user/js/jquery.pstrength-min.1.2.js"></script>
-<script type="text/javascript" src="/bone-mvc-user/js/register.js"></script>
-<link rel="stylesheet" href="/bone-mvc-user/css/password-strength.css" />
+<script type="text/javascript" src="/bone-user/js/jquery.pstrength-min.1.2.js"></script>
+<script type="text/javascript" src="/bone-user/js/register.js"></script>
+<link rel="stylesheet" href="/bone-user/css/password-strength.css" />
 <section class="intro">
     <div class="">
         <br>

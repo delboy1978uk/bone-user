@@ -34,37 +34,37 @@ $p = $person;
                                 <p class="lead tc mt20"><?= $this->t('picture.choose', 'user') ?></p>
                                 <div class="row">
                                     <div class="col-md-3 tc mb20">
-                                        <img src="/bone-mvc-user/img/avatars/dog.png" alt="Dog"
+                                        <img src="/bone-user/img/avatars/dog.png" alt="Dog"
                                              class="img-responsive centered avatar"/>
                                     </div>
                                     <div class="col-md-3 tc mb20">
-                                        <img src="/bone-mvc-user/img/avatars/cat.png" alt="Cat"
+                                        <img src="/bone-user/img/avatars/cat.png" alt="Cat"
                                              class="img-responsive centered avatar"/>
                                     </div>
                                     <div class="col-md-3 tc mb20">
-                                        <img src="/bone-mvc-user/img/avatars/gorilla.png" alt="Gorilla"
+                                        <img src="/bone-user/img/avatars/gorilla.png" alt="Gorilla"
                                              class="img-responsive centered avatar"/>
                                     </div>
                                     <div class="col-md-3 tc mb20">
-                                        <img src="/bone-mvc-user/img/avatars/lion.png" alt="Lion"
+                                        <img src="/bone-user/img/avatars/lion.png" alt="Lion"
                                              class="img-responsive centered avatar"/>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3 tc mb20">
-                                        <img src="/bone-mvc-user/img/avatars/koala.png" alt="Koala"
+                                        <img src="/bone-user/img/avatars/koala.png" alt="Koala"
                                              class="img-responsive centered avatar"/>
                                     </div>
                                     <div class="col-md-3 tc mb20">
-                                        <img src="/bone-mvc-user/img/avatars/rabbit.png" alt="Rabbit"
+                                        <img src="/bone-user/img/avatars/rabbit.png" alt="Rabbit"
                                              class="img-responsive centered avatar"/>
                                     </div>
                                     <div class="col-md-3 tc mb20">
-                                        <img src="/bone-mvc-user/img/avatars/tiger.png" alt="Tiger"
+                                        <img src="/bone-user/img/avatars/tiger.png" alt="Tiger"
                                              class="img-responsive centered avatar"/>
                                     </div>
                                     <div class="col-md-3 tc mb20 ">
-                                        <img src="/bone-mvc-user/img/avatars/fox.png" alt="Fox"
+                                        <img src="/bone-user/img/avatars/fox.png" alt="Fox"
                                              class="img-responsive centered avatar"/>
                                     </div>
                                 </div>

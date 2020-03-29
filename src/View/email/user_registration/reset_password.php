@@ -14,7 +14,7 @@
                         <tr>
                             <td class="padding" align="center">
                                 <a href="<?= $this->e($siteUrl) ;?>" target="_blank">
-                                    <img src="<?= $this->e($siteUrl) ;?>/bone-mvc-user/img/pirateship.jpg" width="400" height="164" border="0" alt="<?= $this->e($siteUrl) ;?>" style="display: block; color: #666666;  font-family: Helvetica, arial, sans-serif; font-size: 16px;" class="img-max">
+                                    <img src="<?= $this->e($siteUrl) ;?>/bone-user/img/pirateship.jpg" width="400" height="164" border="0" alt="<?= $this->e($siteUrl) ;?>" style="display: block; color: #666666;  font-family: Helvetica, arial, sans-serif; font-size: 16px;" class="img-max">
                                 </a>
                             </td>
                         </tr>
