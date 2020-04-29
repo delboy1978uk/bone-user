@@ -42,7 +42,7 @@ class BoneUserApiController
         $this->tempDirectory = $tempDirectory;
         $this->imgDirectory = $imgSubDir;
     }
-    
+
     /**
      * @param ServerRequestInterface $request
      * @param array $args
@@ -56,7 +56,7 @@ class BoneUserApiController
         $person = $user->getPerson();
         $person->setImage($avatar);
         $this->userService->getPersonSvc()->savePerson($person);
-        
+
         return new JsonResponse([
             'result' => 'success',
             'message' => 'Avatar is now set to ' . $avatar . '.',
@@ -164,5 +164,33 @@ class BoneUserApiController
         $filenameOnDisk .= '.' . $ext;
 
         return $filenameOnDisk;
+    }
+
+
+
+    /**
+     * User profile data
+     * @OA\Get(
+     *     path="/api/user/profile",
+     *     @OA\Response(response="200", description="User profile data"),
+     *     tags={"user"}
+     * )
+     * @param ServerRequestInterface $request
+     * @param array $args
+     * @return ResponseInterface
+     */
+    public function profileAction(ServerRequestInterface $request, array $args): ResponseInterface
+    {
+        /** @var User $user */
+        $user = $request->getAttribute('user');
+        $person = $user->getPerson();
+        $country = $person->getCountry();
+        $user = $this->userService->toArray($user);
+        $person = $this->userService->getPersonSvc()->toArray($person);
+        $person['country'] = $country->toArray();
+        $user['person'] = $person;
+        unset($user['password']);
+
+        return new JsonResponse($user);
     }
 }
