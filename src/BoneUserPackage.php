@@ -6,6 +6,7 @@ namespace Bone\User;
 
 use Barnacle\Container;
 use Barnacle\RegistrationInterface;
+use Bone\Http\Middleware\HalEntity;
 use Bone\I18n\I18nRegistrationInterface;
 use Bone\Controller\Init;
 use Bone\Mail\Service\MailService;
@@ -147,7 +148,7 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
             $route->map('GET', '/user', [BoneUserApiController::class, 'indexAction']);
             $route->map('POST', '/user/choose-avatar', [BoneUserApiController::class, 'chooseAvatarAction'])->middleware($c->get(SessionAuth::class));
             $route->map('POST', '/user/upload-avatar', [BoneUserApiController::class, 'uploadAvatarAction'])->middleware($c->get(SessionAuth::class));
-            $route->map('GET', '/user/profile', [BoneUserApiController::class, 'profileAction'])->middleware($c->get(ResourceServerMiddleware::class));
+            $route->map('GET', '/user/profile', [BoneUserApiController::class, 'profileAction'])->middlewares([new HalEntity(), $c->get(ResourceServerMiddleware::class)]);
         })
         ->setStrategy($strategy);
 

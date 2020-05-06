@@ -173,7 +173,10 @@ class BoneUserApiController
      * @OA\Get(
      *     path="/api/user/profile",
      *     @OA\Response(response="200", description="User profile data"),
-     *     tags={"user"}
+     *     tags={"user"},
+     *     security={
+     *         {"authorizationCode": {"basic"}}
+     *     }
      * )
      * @param ServerRequestInterface $request
      * @param array $args
@@ -186,8 +189,10 @@ class BoneUserApiController
         $person = $user->getPerson();
         $country = $person->getCountry();
         $user = $this->userService->toArray($user);
+        $dob = $person->getDob() ? $person->getDob()->format('Y-m-d H:i:s') : null;
         $person = $this->userService->getPersonSvc()->toArray($person);
-        $person['country'] = $country->toArray();
+        $person['dob'] = $dob;
+        $person['country'] = $country ? $country->toArray() : null;
         $user['person'] = $person;
         unset($user['password']);
 
