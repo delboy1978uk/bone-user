@@ -7,7 +7,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">
-                    <img src="/img/skull_and_crossbones.png" />
+                    <img src="<?= $logo ?>" />
                     <h1><?= $this->t('changepass.h1', 'user') ?></h1>
                     <?= null !== $message ? $this->alert($message) : '' ?>
                     <div class="page-scroll">

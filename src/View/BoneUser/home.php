@@ -4,7 +4,7 @@
             <?= null !== $message ? $this->alert($message) : null ?>
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <img alt="Logo" src="/img/skull_and_crossbones.png" />
+                    <img alt="Logo" src="<?= $logo ?>" />
                     <h1><?= $this->t('home.welcome', 'user') . $user->getEmail() ?></h1>
                     <p class="lead"><?= $this->t('home.placeholder', 'user') ?></p>
                     <a class="btn btn-success" href="/user/edit-profile"><?= $this->t('home.editprofile', 'user') ?></a>

@@ -6,7 +6,7 @@
             <div class="row">
                 <?= isset($message) ? $this->alert($message) : null; ?>
                 <div class="col-md-8 col-md-offset-2">
-                    <img src="/img/skull_and_crossbones.png" />
+                    <img src="<?= $logo ?>" />
                     <h1><?= $this->t('resetpass.h1', 'user') ?></h1>
                     <div class="page-scroll">
                         <div class="well overflow" style="color: black;">

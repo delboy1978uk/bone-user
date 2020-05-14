@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <img alt="Logo" src="/img/skull_and_crossbones.png" />
+                    <img alt="Logo" src="<?= $logo ?>" />
                 </div>
                 <div class="col-md-6">
                     <h1><?= $this->t('user.welcome', 'user') ?></h1>

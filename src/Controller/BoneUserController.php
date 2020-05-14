@@ -4,6 +4,8 @@ namespace Bone\User\Controller;
 
 use Bone\I18n\Form;
 use Bone\Controller\Controller;
+use Bone\Server\SiteConfigAwareInterface;
+use Bone\Server\Traits\HasSiteConfigTrait;
 use Bone\View\ViewEngine;
 use Bone\Server\SessionAwareInterface;
 use Bone\Server\Traits\HasSessionTrait;
@@ -28,9 +30,10 @@ use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\Uri;
 
-class BoneUserController extends Controller implements SessionAwareInterface
+class BoneUserController extends Controller implements SessionAwareInterface, SiteConfigAwareInterface
 {
     use HasSessionTrait;
+    use HasSiteConfigTrait;
 
     /** @var UserService $userService */
     private $userService;
@@ -40,6 +43,9 @@ class BoneUserController extends Controller implements SessionAwareInterface
 
     /** @var string $loginRedirectRoute */
     private $loginRedirectRoute;
+
+    /** @var string $logo */
+    private $logo;
 
     /**
      * BoneUserController constructor.
@@ -51,6 +57,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
         $this->userService = $userService;
         $this->mailService = $mailService;
         $this->loginRedirectRoute = $loginRedirectRoute;
+        $this->logo = $this->getSiteConfig()->getLogo();
     }
 
 
@@ -62,7 +69,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
      */
     public function indexAction(ServerRequestInterface $request, array $args): ResponseInterface
     {
-        $body = $this->getView()->render('boneuser::index', []);
+        $body = $this->getView()->render('boneuser::index', ['logo' => $this->logo]);
 
         return new HtmlResponse($body);
     }
@@ -104,7 +111,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
                         'activationLink' => '/user/activate/' . $email . '/' . $token,
                     ]);
                     $this->mailService->sendEmail($mail);
-                    $body = $this->getView()->render('boneuser::thanks-for-registering');
+                    $body = $this->getView()->render('boneuser::thanks-for-registering', ['logo' => $this->logo]);
 
                     return new HtmlResponse($body);
 
@@ -114,7 +121,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
             }
         }
 
-        $body = $this->getView()->render('boneuser::register', ['form' => $form, 'message' => $message]);
+        $body = $this->getView()->render('boneuser::register', ['form' => $form, 'message' => $message, 'logo' => $this->logo]);
 
         return new HtmlResponse($body);
     }
@@ -155,7 +162,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
             }
         }
 
-        $body = $this->getView()->render('boneuser::activate-user-account', ['message' => $message]);
+        $body = $this->getView()->render('boneuser::activate-user-account', ['message' => $message, 'logo' => $this->logo]);
 
         return new HtmlResponse($body);
     }
@@ -170,7 +177,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
     {
         $form = new LoginForm('userlogin', $this->getTranslator());
 
-        $body = $this->getView()->render('boneuser::login', ['form' => $form]);
+        $body = $this->getView()->render('boneuser::login', ['form' => $form, 'logo' => $this->logo]);
 
         return new HtmlResponse($body);
     }
@@ -233,6 +240,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
             $params['message'] = $message;
         }
 
+        $params['logo'] = $this->logo;
         $body = $this->getView()->render('boneuser::login', $params);
 
         return new HtmlResponse($body);
@@ -312,8 +320,10 @@ class BoneUserController extends Controller implements SessionAwareInterface
             }
         }
 
-        $body = $this->getView()->render('boneuser::resend-activation', $message);
-
+        $body = $this->getView()->render('boneuser::resend-activation', [
+            'message' => $message,
+            'logo' => $this->logo,
+        ]);
         return new HtmlResponse($body);
     }
 
@@ -359,7 +369,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
             $this->view->message = [$e->getMessage(), 'danger'];
         }
 
-        $body = $this->getView()->render('boneuser::forgot-password');
+        $body = $this->getView()->render('boneuser::forgot-password', ['logo' => $this->logo]);
 
         return new HtmlResponse($body);
     }
@@ -417,6 +427,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
         }
         $params['success'] = $success;
         $params['form'] = $form;
+        $params['logo'] = $this->logo;
         $body = $this->getView()->render('boneuser::reset-pass', $params);
 
         return new HtmlResponse($body);
@@ -458,6 +469,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
         }
         $params['success'] = $success;
         $params['form'] = $form;
+        $params['logo'] = $this->logo;
 
         $body = $this->getView()->render('boneuser::change-pass', $params);
 
@@ -529,6 +541,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
             }
             $params['message'] = $message;
         }
+        $params['logo'] = $this->logo;
 
         $body = $this->getView()->render('boneuser::change-email', $params);
 
@@ -562,7 +575,10 @@ class BoneUserController extends Controller implements SessionAwareInterface
             }
         }
 
-        $body = $this->getView()->render('boneuser::edit-profile', ['person' => $person, 'form' => $form->render()]);
+        $body = $this->getView()->render('boneuser::edit-profile', [
+            'person' => $person,
+            'form' => $form->render(),
+        ]);
 
         return new HtmlResponse($body);
     }
@@ -596,7 +612,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
             throw $e;
         }
 
-        $body = $this->getView()->render('boneuser::reset-email', ['message' => null]);
+        $body = $this->getView()->render('boneuser::reset-email', ['message' => null, 'logo' => $this->logo]);
 
         return new HtmlResponse($body);
     }
