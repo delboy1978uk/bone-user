@@ -206,6 +206,10 @@ class BoneUserController extends Controller implements SessionAwareInterface
                     $session->destroy('loginRedirectRoute');
                 }
 
+                $user = $this->userService->findUserById($userId);
+                $user->setLastLogin(new DateTime());
+                $this->userService->saveUser($user);
+
                 return new RedirectResponse('/' . $locale . $this->loginRedirectRoute);
             }
         } catch (UserException $e) {
