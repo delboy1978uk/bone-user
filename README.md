@@ -6,12 +6,16 @@ Simply add the Package to Bone's module config
 <?php
 
 // use statements here
+use Bone\Mail\MailPackage;
 use Bone\User\BoneUserPackage;
+use Del\Person\PersonPackage;
 use Del\UserPackage;
 
 return [
     'packages' => [
         // packages here (order is important)...,
+        MailPackage::class,
+        PersonPackage::class,
         UserPackage::class,
         BoneUserPackage::class,
     ],

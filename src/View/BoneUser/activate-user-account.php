@@ -2,7 +2,7 @@
     <div class="va-top">
         <div class="container pt10">
             <div class="row">
-                <?= null !== $message ? $box->alert($message) : '' ?>
+                <?= null !== $message ? $this->alert($message) : '' ?>
             </div>
         </div>
         <div class="container">
