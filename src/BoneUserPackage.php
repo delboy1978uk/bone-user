@@ -11,6 +11,7 @@ use Bone\I18n\I18nRegistrationInterface;
 use Bone\Controller\Init;
 use Bone\Mail\Service\MailService;
 use Bone\OAuth2\Http\Middleware\ResourceServerMiddleware;
+use Bone\Server\SiteConfig;
 use Bone\User\Controller\BoneUserApiController;
 use Bone\User\Controller\BoneUserController;
 use Bone\Router\Router;

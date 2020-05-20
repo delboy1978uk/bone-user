@@ -57,7 +57,18 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
         $this->userService = $userService;
         $this->mailService = $mailService;
         $this->loginRedirectRoute = $loginRedirectRoute;
-        $this->logo = $this->getSiteConfig()->getLogo();
+    }
+
+    /**
+     * @return string
+     */
+    public function getLogo(): string
+    {
+        if (!$this->logo) {
+            $this->logo = $this->getSiteConfig()->getLogo();
+        }
+
+        return $this->logo;
     }
 
 
@@ -69,7 +80,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
      */
     public function indexAction(ServerRequestInterface $request, array $args): ResponseInterface
     {
-        $body = $this->getView()->render('boneuser::index', ['logo' => $this->logo]);
+        $body = $this->getView()->render('boneuser::index', ['logo' => $this->getLogo()]);
 
         return new HtmlResponse($body);
     }
@@ -111,7 +122,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
                         'activationLink' => '/user/activate/' . $email . '/' . $token,
                     ]);
                     $this->mailService->sendEmail($mail);
-                    $body = $this->getView()->render('boneuser::thanks-for-registering', ['logo' => $this->logo]);
+                    $body = $this->getView()->render('boneuser::thanks-for-registering', ['logo' => $this->getLogo()]);
 
                     return new HtmlResponse($body);
 
@@ -121,7 +132,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
             }
         }
 
-        $body = $this->getView()->render('boneuser::register', ['form' => $form, 'message' => $message, 'logo' => $this->logo]);
+        $body = $this->getView()->render('boneuser::register', ['form' => $form, 'message' => $message, 'logo' => $this->getLogo()]);
 
         return new HtmlResponse($body);
     }
@@ -162,7 +173,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
             }
         }
 
-        $body = $this->getView()->render('boneuser::activate-user-account', ['message' => $message, 'logo' => $this->logo]);
+        $body = $this->getView()->render('boneuser::activate-user-account', ['message' => $message, 'logo' => $this->getLogo()]);
 
         return new HtmlResponse($body);
     }
@@ -177,7 +188,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
     {
         $form = new LoginForm('userlogin', $this->getTranslator());
 
-        $body = $this->getView()->render('boneuser::login', ['form' => $form, 'logo' => $this->logo]);
+        $body = $this->getView()->render('boneuser::login', ['form' => $form, 'logo' => $this->getLogo()]);
 
         return new HtmlResponse($body);
     }
@@ -240,7 +251,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
             $params['message'] = $message;
         }
 
-        $params['logo'] = $this->logo;
+        $params['logo'] = $this->getLogo();
         $body = $this->getView()->render('boneuser::login', $params);
 
         return new HtmlResponse($body);
@@ -322,7 +333,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
 
         $body = $this->getView()->render('boneuser::resend-activation', [
             'message' => $message,
-            'logo' => $this->logo,
+            'logo' => $this->getLogo(),
         ]);
         return new HtmlResponse($body);
     }
@@ -369,7 +380,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
             $this->view->message = [$e->getMessage(), 'danger'];
         }
 
-        $body = $this->getView()->render('boneuser::forgot-password', ['logo' => $this->logo]);
+        $body = $this->getView()->render('boneuser::forgot-password', ['logo' => $this->getLogo()]);
 
         return new HtmlResponse($body);
     }
@@ -427,7 +438,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
         }
         $params['success'] = $success;
         $params['form'] = $form;
-        $params['logo'] = $this->logo;
+        $params['logo'] = $this->getLogo();
         $body = $this->getView()->render('boneuser::reset-pass', $params);
 
         return new HtmlResponse($body);
@@ -469,7 +480,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
         }
         $params['success'] = $success;
         $params['form'] = $form;
-        $params['logo'] = $this->logo;
+        $params['logo'] = $this->getLogo();
 
         $body = $this->getView()->render('boneuser::change-pass', $params);
 
@@ -541,7 +552,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
             }
             $params['message'] = $message;
         }
-        $params['logo'] = $this->logo;
+        $params['logo'] = $this->getLogo();
 
         $body = $this->getView()->render('boneuser::change-email', $params);
 
@@ -612,7 +623,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
             throw $e;
         }
 
-        $body = $this->getView()->render('boneuser::reset-email', ['message' => null, 'logo' => $this->logo]);
+        $body = $this->getView()->render('boneuser::reset-email', ['message' => null, 'logo' => $this->getLogo()]);
 
         return new HtmlResponse($body);
     }
