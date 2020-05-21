@@ -175,7 +175,7 @@ class BoneUserApiController
      *     @OA\Response(response="200", description="User profile data"),
      *     tags={"user"},
      *     security={
-     *         {"authorizationCode": {"basic"}}
+     *         {"oauth2": {"basic"}}
      *     }
      * )
      * @param ServerRequestInterface $request
