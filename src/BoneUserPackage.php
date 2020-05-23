@@ -11,6 +11,7 @@ use Bone\I18n\I18nRegistrationInterface;
 use Bone\Controller\Init;
 use Bone\Mail\Service\MailService;
 use Bone\OAuth2\Http\Middleware\ResourceServerMiddleware;
+use Bone\OAuth2\Http\Middleware\ScopeCheck;
 use Bone\Server\SiteConfig;
 use Bone\User\Controller\BoneUserApiController;
 use Bone\User\Controller\BoneUserController;
@@ -149,7 +150,8 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
             $route->map('GET', '/user', [BoneUserApiController::class, 'indexAction']);
             $route->map('POST', '/user/choose-avatar', [BoneUserApiController::class, 'chooseAvatarAction'])->middleware($c->get(SessionAuth::class));
             $route->map('POST', '/user/upload-avatar', [BoneUserApiController::class, 'uploadAvatarAction'])->middleware($c->get(SessionAuth::class));
-            $route->map('GET', '/user/profile', [BoneUserApiController::class, 'profileAction'])->middlewares([new HalEntity(), $c->get(ResourceServerMiddleware::class)]);
+            $route->map('GET', '/user/profile', [BoneUserApiController::class, 'profileAction'])
+                ->middlewares([$c->get(ResourceServerMiddleware::class), new ScopeCheck(['basic']), new HalEntity()]);
         })
         ->setStrategy($strategy);
 
