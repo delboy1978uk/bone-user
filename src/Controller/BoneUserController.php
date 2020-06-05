@@ -269,6 +269,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
         $body = $this->getView()->render('boneuser::home', [
             'message' => [$this->getTranslator()->translate('home.loggedin', 'user'), 'success'],
             'user' => $user,
+            'logo' => $this->getSiteConfig()->getLogo(),
         ]);
 
         return new HtmlResponse($body);
