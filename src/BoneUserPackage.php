@@ -71,8 +71,9 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
             $dir = $c->get('uploads_dir');
             $img = $c->get('image_dir');
             $tmp = $c->get('temp_dir');
+            $mailService = $c->get(MailService::class);
 
-            return new BoneUserApiController($userService, $dir, $img, $tmp);
+            return Init::controller(new BoneUserApiController($userService, $dir, $img, $tmp, $mailService), $c);
         });
 
 
@@ -148,6 +149,7 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
 
         $router->group('/api', function (RouteGroup $route) use ($c) {
             $route->map('GET', '/user', [BoneUserApiController::class, 'indexAction']);
+            $route->map('POST', '/user/register', [BoneUserApiController::class, 'registerAction'])->middleware($c->get(ResourceServerMiddleware::class));
             $route->map('POST', '/user/choose-avatar', [BoneUserApiController::class, 'chooseAvatarAction'])->middleware($c->get(SessionAuth::class));
             $route->map('POST', '/user/upload-avatar', [BoneUserApiController::class, 'uploadAvatarAction'])->middleware($c->get(SessionAuth::class));
             $route->map('GET', '/user/profile', [BoneUserApiController::class, 'profileAction'])

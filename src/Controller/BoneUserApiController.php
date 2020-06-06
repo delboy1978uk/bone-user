@@ -4,7 +4,12 @@ declare(strict_types=1);
 
 namespace Bone\User\Controller;
 
+use Bone\I18n\I18nAwareInterface;
+use Bone\I18n\Traits\HasTranslatorTrait;
+use Bone\Mail\EmailMessage;
 use Bone\Server\SiteConfig;
+use Bone\User\Form\RegistrationForm;
+use Del\Exception\UserException;
 use Del\Form\Form;
 use Bone\Controller\Controller;
 use Bone\Mail\Service\MailService;
@@ -13,11 +18,12 @@ use Del\Entity\User;
 use Del\Form\Field\FileUpload;
 use Del\Image;
 use Del\Service\UserService;
+use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Laminas\Diactoros\Response\JsonResponse;
 
-class BoneUserApiController
+class BoneUserApiController extends Controller
 {
     /** @var UserService $userService */
     private $userService;
@@ -31,16 +37,20 @@ class BoneUserApiController
     /** @var string $imgDirectory */
     private $imgDirectory;
 
+    /** @var MailService $mailService */
+    private $mailService;
+
     /**
      * BoneUserController constructor.
      * @param UserService $userService
      */
-    public function __construct(UserService $userService, string $uploadsDirectory, string $imgSubDir, string $tempDirectory)
+    public function __construct(UserService $userService, string $uploadsDirectory, string $imgSubDir, string $tempDirectory, MailService $mailService)
     {
         $this->userService = $userService;
         $this->uploadsDirectory = $uploadsDirectory;
         $this->tempDirectory = $tempDirectory;
         $this->imgDirectory = $imgSubDir;
+        $this->mailService = $mailService;
     }
 
     /**
@@ -86,7 +96,7 @@ class BoneUserApiController
                 $newFileName = $this->imgDirectory . $this->getFilename($file);
                 $destinationFileName = $this->uploadsDirectory . $newFileName;
                 $image = new Image($sourceFileName);
-                
+
                 if ($image->getHeight() > $image->getWidth()) { //portrait
 
                     $image->resizeToWidth(100);
@@ -113,7 +123,7 @@ class BoneUserApiController
 
                 return new JsonResponse([
                     'result' => 'success',
-                    'message' => 'Avatar now set to '.$person->getImage(),
+                    'message' => 'Avatar now set to ' . $person->getImage(),
                     'avatar' => $person->getImage(),
                 ]);
             } catch (Exception $e) {
@@ -167,7 +177,6 @@ class BoneUserApiController
     }
 
 
-
     /**
      * User profile data
      * @OA\Get(
@@ -197,5 +206,89 @@ class BoneUserApiController
         unset($user['password']);
 
         return new JsonResponse($user);
+    }
+
+
+    /**
+     * Register a new user
+     * @OA\Post(
+     *     path="/api/user/register",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/x-www-form-urlencoded",
+     *             @OA\Schema(
+     *                 required={"email", "password", "confirm"},
+     *                 @OA\Property(
+     *                     property="email",
+     *                     type="string",
+     *                     example="fake@email.com",
+     *                     description="The new user's email"
+     *                 ),@OA\Property(
+     *                     property="password",
+     *                     type="string",
+     *                     example="xxxxxxxxxx",
+     *                     description="The users chosen password"
+     *                 ),@OA\Property(
+     *                     property="confirm",
+     *                     type="string",
+     *                     example="xxxxxxxxxx",
+     *                     description="Password confirmation"
+     *                 ),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Email sent"),
+     *     tags={"user"},
+     *     security={
+     *         {"oauth2": {"register"}}
+     *     }
+     * )
+     * @param ServerRequestInterface $request
+     * @param array $args
+     * @return ResponseInterface
+     */
+    public function registerAction(ServerRequestInterface $request, array $args): ResponseInterface
+    {
+        $form = new RegistrationForm('register', $this->getTranslator());
+        $message = null;
+        $responseData = [];
+
+        $formData = $request->getParsedBody();
+        $form->populate($formData);
+
+        if ($form->isValid()) {
+            $data = $form->getValues();
+            try {
+                $user = $this->userService->registerUser($data);
+                $link = $this->userService->generateEmailLink($user);
+                $mail = $this->mailService;
+
+                $env = $mail->getSiteConfig()->getEnvironment();
+                $email = $user->getEmail();
+                $token = $link->getToken();
+
+                $mail = new EmailMessage();
+                $mail->setTo($user->getEmail());
+                $mail->setSubject($this->getTranslator()->translate('email.user.register.thankswith', 'user') . ' ' . $this->mailService->getSiteConfig()->getTitle());
+                $mail->setTemplate('email.user::user_registration/user_registration');
+                $mail->setViewData([
+                    'siteUrl' => $env->getSiteURL(),
+                    'logo' => $this->getSiteConfig()->getEmailLogo(),
+                    'activationLink' => '/user/activate/' . $email . '/' . $token,
+                ]);
+                $this->mailService->sendEmail($mail);
+
+                $responseData['success'] = 'Email sent to ' . $email;
+                $code = 200;
+
+            } catch (UserException $e) {
+                $responseData['error'] = $e->getMessage();
+                $responseData['code'] = $e->getCode();
+            }
+        } else {
+            $responseData['error'] = $form->getErrorMessages();
+        }
+
+        return new JsonResponse($responseData);
     }
 }
