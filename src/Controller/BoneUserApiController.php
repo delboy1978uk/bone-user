@@ -215,7 +215,7 @@ class BoneUserApiController extends Controller
      *     path="/api/user/register",
      *     @OA\RequestBody(
      *         @OA\MediaType(
-     *             mediaType="application/x-www-form-urlencoded",
+     *             mediaType="application/json",
      *             @OA\Schema(
      *                 required={"email", "password", "confirm"},
      *                 @OA\Property(
