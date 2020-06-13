@@ -155,6 +155,8 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
             $route->map('POST', '/user/upload-avatar', [BoneUserApiController::class, 'uploadAvatarAction'])->middleware($c->get(SessionAuth::class));
             $route->map('GET', '/user/profile', [BoneUserApiController::class, 'profileAction'])
                 ->middlewares([$c->get(ResourceServerMiddleware::class), new ScopeCheck(['basic']), new HalEntity()]);
+            $route->map('PUT', '/user/profile', [BoneUserApiController::class, 'editProfileAction'])
+                ->middlewares([$c->get(ResourceServerMiddleware::class), new ScopeCheck(['basic']), new JsonParse()]);
         })
         ->setStrategy($strategy);
 

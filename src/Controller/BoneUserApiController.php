@@ -9,7 +9,10 @@ use Bone\I18n\Traits\HasTranslatorTrait;
 use Bone\Mail\EmailMessage;
 use Bone\Server\SiteConfig;
 use Bone\User\Form\RegistrationForm;
+use DateTime;
+use Del\Entity\Country;
 use Del\Exception\UserException;
+use Del\Factory\CountryFactory;
 use Del\Form\Form;
 use Bone\Controller\Controller;
 use Bone\Mail\Service\MailService;
@@ -178,7 +181,7 @@ class BoneUserApiController extends Controller
 
 
     /**
-     * User profile data
+     * User profile data.
      * @OA\Get(
      *     path="/api/user/profile",
      *     @OA\Response(response="200", description="User profile data"),
@@ -210,7 +213,7 @@ class BoneUserApiController extends Controller
 
 
     /**
-     * Register a new user
+     * Register a new user.
      * @OA\Post(
      *     path="/api/user/register",
      *     @OA\RequestBody(
@@ -290,5 +293,90 @@ class BoneUserApiController extends Controller
         }
 
         return new JsonResponse($responseData);
+    }
+
+    /**
+     * Update user profile data.
+     * @OA\Put(
+     *     path="/api/user/profile",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 required={"email", "password", "confirm"},
+     *                 @OA\Property(
+     *                     property="firstname",
+     *                     type="string",
+     *                     example="Captain",
+     *                     description="The user's firstname"
+     *                 ),@OA\Property(
+     *                     property="middlename",
+     *                     type="string",
+     *                     example="Jack",
+     *                     description="The users middlename"
+     *                 ),@OA\Property(
+     *                     property="lastname",
+     *                     type="string",
+     *                     example="Sparrow",
+     *                     description="The user's surname"
+     *                 ),
+     *                  @OA\Property(
+     *                     property="aka",
+     *                     type="string",
+     *                     example="outlaw pirate",
+     *                     description="The user's nickname"
+     *                 ),
+     *                  @OA\Property(
+     *                     property="dob",
+     *                     type="date",
+     *                     example="2014-09-18",
+     *                     description="The user's date of birth"
+     *                 ),
+     *                  @OA\Property(
+     *                     property="birthplace",
+     *                     type="string",
+     *                     example="Jamaica",
+     *                     description="The user's birthplace"
+     *                 ),
+     *                  @OA\Property(
+     *                     property="country",
+     *                     type="string",
+     *                     example="JM",
+     *                     description="The user's country"
+     *                 ),
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Success message"),
+     *     tags={"user"},
+     *     security={
+     *         {"oauth2": {"basic"}}
+     *     }
+     * )
+     * @param ServerRequestInterface $request
+     * @param array $args
+     * @return ResponseInterface
+     */
+    public function editProfileAction(ServerRequestInterface $request, array $args): ResponseInterface
+    {
+        $data = $request->getParsedBody();
+        $form = new PersonForm('profile', $this->getTranslator());
+        $form->populate($data);
+
+        if ($form->isValid()) {
+            $data = $form->getValues();
+            $data['dob'] = new DateTime($data['dob']);
+            $data['country'] = CountryFactory::generate($data['country']);
+            $user = $request->getAttribute('user');
+            $person = $user->getPerson();
+            $personService = $this->userService->getPersonSvc();
+            $person = $personService->populateFromArray($person, $data);
+            $person = $personService->toArray($person);
+            $person['country'] = $person['country']->toArray();
+
+            return new JsonResponse($person);
+        }
+
+        return new JsonResponse($form->getErrorMessages());
     }
 }
