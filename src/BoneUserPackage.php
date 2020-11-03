@@ -60,7 +60,7 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
 
             if ($c->has('bone-user')) {
                 $options = $c->get('bone-user');
-                $loginRedirectRoute = $options['loginRedirectRoute'];
+                $loginRedirectRoute = $options['loginRedirectRoute'] ?? null;
             }
 
             return  Init::controller(new BoneUserController($userService, $mailService, $loginRedirectRoute), $c);
@@ -149,14 +149,8 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
         $strategy->setContainer($c);
 
         $router->group('/api', function (RouteGroup $route) use ($c) {
-            $route->map('GET', '/user', [BoneUserApiController::class, 'indexAction']);
-            $route->map('POST', '/user/register', [BoneUserApiController::class, 'registerAction'])->middlewares([new JsonParse(), $c->get(ResourceServerMiddleware::class)]);
             $route->map('POST', '/user/choose-avatar', [BoneUserApiController::class, 'chooseAvatarAction'])->middleware($c->get(SessionAuth::class));
             $route->map('POST', '/user/upload-avatar', [BoneUserApiController::class, 'uploadAvatarAction'])->middleware($c->get(SessionAuth::class));
-            $route->map('GET', '/user/profile', [BoneUserApiController::class, 'profileAction'])
-                ->middlewares([$c->get(ResourceServerMiddleware::class), new ScopeCheck(['basic']), new HalEntity()]);
-            $route->map('PUT', '/user/profile', [BoneUserApiController::class, 'editProfileAction'])
-                ->middlewares([$c->get(ResourceServerMiddleware::class), new ScopeCheck(['basic']), new JsonParse()]);
         })
         ->setStrategy($strategy);
 

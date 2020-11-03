@@ -89,4 +89,16 @@ return [
     ],
 ];
 ````
+### redirecting after login
+If you'd like to go to your own controller upon login, create a config with the key `bone-user`, and add the URL you 
+wish to redirect to.
+```php
+<?php
+
+return [
+    'bone-user' => [
+        'loginRedirectRoute' => '/my/custom/user-home-page',
+    ],
+];
+````
 That's about it! The rest should autocomplete in your IDE, and it's all pretty straightforward! Have fun.
