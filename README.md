@@ -6,6 +6,7 @@ Simply add the Package to Bone's module config
 <?php
 
 // use statements here
+use Bone\BoneDoctrine\BoneDoctrinePackage;
 use Bone\Mail\MailPackage;
 use Bone\User\BoneUserPackage;
 use Del\Person\PersonPackage;
@@ -15,6 +16,7 @@ return [
     'packages' => [
         // packages here (order is important)...,
         MailPackage::class,
+        BoneDoctrinePackage::class,
         PersonPackage::class,
         UserPackage::class,
         BoneUserPackage::class,
@@ -24,22 +26,22 @@ return [
 ```
 And once you have done that, setup the DB using the migration commands:
 ```
-vendor/bin/migrant diff
-vendor/bin/migrant migrate
+vendor/bin/bone migrant:diff
+vendor/bin/bone migrant:migrate
 ```
 Quick point of order here. If you always type `vendor/bin/whatever`, save yourself the hassle by adding the following to
 your `~/.bashrc` or `~.zshrc` or whichever shell file:
 ```php
 export PATH=$PATH:bin:vendor/bin
 ```
-Then you can close and reopen your terminal, and from now on you can just type `migrant blahblah`. The same for any 
+Then you can close and reopen your terminal, and from now on you can just type `bone`. The same for any 
 executable stored in a `bin/` directory in your current folder.
 
 The last setup stage is to deploy the public assets (CSS, JS, etc.)
 ```
-booty deploy
+vendor/bin/bone assets:deploy
 ```
-(You added your PATH so didn't have to type `vendor/bin/booty`, right?)
+(You added your PATH so didn't have to type `vendor/bin/bone`, right?)
 ## usage
 Once installed head to your site (by default using the Bone Framework Docker development environment (it's 
 `https://awesome.scot/user`) and register yourself as a user. Again if using the provided dev environment, check your 
