@@ -59,6 +59,10 @@ You can lock down a route to make it available to a logged in user by adding the
 $sessionAuth = $c->get(SessionAuth::class); // of course there's a use statement above, right? With the full name?
 $router->map('GET', '/my/route', [MyController::class, 'whateverAction'])->middleware($sessionAuth);
 ```
+Once a route is locked down, in your controller you can get a User object by calling:
+```
+$user = $request->getAttribute('user');
+```
 There is also a `SessionAuthRedirect` middleware class, which you can add and which will take the visitor to the login 
 page, but redirect back there once logged in.
 ### service and repository classes
