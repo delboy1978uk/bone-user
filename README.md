@@ -28,6 +28,7 @@ And once you have done that, setup the DB using the migration commands:
 ```
 vendor/bin/bone migrant:diff
 vendor/bin/bone migrant:migrate
+vendor/bin/bone migrant:generate-proxies
 ```
 Quick point of order here. If you always type `vendor/bin/whatever`, save yourself the hassle by adding the following to
 your `~/.bashrc` or `~.zshrc` or whichever shell file:
