@@ -143,8 +143,8 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
      */
     public function activateAction(ServerRequestInterface $request): ResponseInterface
     {
-        $email = $args['email'];
-        $token = $args['token'];
+        $email = $request->getAttribute('email');
+        $token = $request->getAttribute('token');
         $translator = $this->getTranslator();
         $userService = $this->userService;
         $message = null;
