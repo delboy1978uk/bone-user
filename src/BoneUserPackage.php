@@ -22,6 +22,7 @@ use Bone\View\ViewEngine;
 use Bone\User\Http\Middleware\SessionAuth;
 use Bone\User\Http\Middleware\SessionAuthRedirect;
 use Bone\User\View\Helper\LoginWidget;
+use Bone\View\ViewRegistrationInterface;
 use Del\Booty\AssetRegistrationInterface;
 use Del\Service\UserService;
 use Del\SessionManager;
@@ -31,7 +32,7 @@ use League\Route\Strategy\JsonStrategy;
 use Laminas\Diactoros\ResponseFactory;
 use Laminas\I18n\Translator\Translator;
 
-class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I18nRegistrationInterface, AssetRegistrationInterface
+class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I18nRegistrationInterface, AssetRegistrationInterface, ViewRegistrationInterface
 {
     /**
      * @param Container $c
@@ -40,8 +41,6 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
     {
         /** @var ViewEngine $viewEngine */
         $viewEngine = $c->get(ViewEngine::class);
-        $viewEngine->addFolder('boneuser', __DIR__ . '/View/BoneUser/');
-        $viewEngine->addFolder('email.user', __DIR__ . '/View/email/');
 
         if (!$c->has(UserService::class)) {
             $package = new UserPackage();
@@ -114,6 +113,17 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
     public function getTranslationsDirectory(): string
     {
         return dirname(__DIR__) . '/data/translations';
+    }
+
+    /**
+     * @return array
+     */
+    public function addViews(): array
+    {
+        return [
+            'boneuser' => __DIR__ . '/View/BoneUser/',
+            'email.user' => __DIR__ . '/View/email/',
+        ];
     }
 
 
