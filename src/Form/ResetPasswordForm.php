@@ -36,6 +36,9 @@ class ResetPasswordForm extends AbstractForm
         $this->addField($password);
         $this->addField($confirm);
         $this->addField($submit);
+
+        $renderer = new HorizontalFormRenderer();
+        $this->setFormRenderer($renderer);
     }
 
 }

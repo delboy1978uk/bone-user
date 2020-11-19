@@ -20,6 +20,7 @@ use Del\Exception\EmailLinkException;
 use Del\Exception\UserException;
 use Del\Factory\CountryFactory;
 use Del\Form\Field\Text\EmailAddress;
+use Del\Icon;
 use Del\Service\UserService;
 use Del\SessionManager;
 use Del\Value\User\State;
@@ -162,7 +163,9 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
         } catch (EmailLinkException $e) {
             switch ($e->getMessage()) {
                 case EmailLinkException::LINK_EXPIRED:
-                    $message = [$translator->translate('login.activation.expired') . '<a href="/resend-activation-mail/' . $email . '">' . $translator->translate('login.activation.expired2') . '</a>', 'danger'];
+                    $message = [$translator->translate('login.activation.expired', 'user')
+                        . ' <a href="/user/resend-activation-mail/' . $email . '">'
+                        . $translator->translate('login.activation.expired2', 'user') . '</a>', 'danger'];
                     break;
                 default:
                     $message = [$e->getMessage(), 'danger'];
@@ -229,14 +232,14 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
             switch ($e->getMessage()) {
                 case UserException::USER_NOT_FOUND:
                 case UserException::WRONG_PASSWORD:
-                    $message = [$translator->translate('login.error.password', 'user') . '<a href="/user/lost-password/' . $email . '">' . $translator->translate('login.error.password2', 'user') . '</a>', 'danger'];
+                    $message = [Icon::WARNING . ' ' . $translator->translate('login.error.password', 'user') . '<a href="/user/lost-password/' . $email . '">' . $translator->translate('login.error.password2', 'user') . '</a>', 'danger'];
                     break;
                 case UserException::USER_UNACTIVATED:
-                    $message = [$translator->translate('login.unactivated', 'user') . '<a href="/user/resend-activation-mail/' . $email . '">' . $translator->translate('login.unactivated2', 'user') . '</a>', 'danger'];
+                    $message = [Icon::WARNING . ' ' . $translator->translate('login.unactivated', 'user') . '<a href="/user/resend-activation-mail/' . $email . '">' . $translator->translate('login.unactivated2', 'user') . '</a>', 'danger'];
                     break;
                 case UserException::USER_DISABLED:
                 case UserException::USER_BANNED:
-                    $message = [$translator->translate('login.activation.banned', 'user'), 'danger'];
+                    $message = [Icon::REMOVE . ' ' . $translator->translate('login.activation.banned', 'user'), 'danger'];
                     break;
                 default:
                     $message = $e->getMessage();
@@ -325,7 +328,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
         }
 
         $body = $this->getView()->render('boneuser::resend-activation', [
-            'message' => $message,
+            'message' => null,
             'logo' => $this->getLogo(),
         ]);
         return new HtmlResponse($body);
@@ -413,7 +416,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
                         $success = true;
                         SessionManager::set('user', $user->getId());
                     } else {
-                        $message = [$translator > translate('email.resetpass.nomatch', 'user'), 'danger'];
+                        $message = [$translator->translate('email.resetpass.nomatch', 'user'), 'danger'];
                         $form = new ResetPasswordForm('resetpass');
                     }
                 }
@@ -444,7 +447,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
         $user = $request->getAttribute('user');
         $form = new ResetPasswordForm('resetpass');
         $translator = $this->getTranslator();
-        $params = [];
+        $message = null;
         $success = false;
 
         if ($request->getMethod() === 'POST') {
@@ -456,23 +459,25 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
                 $data = $form->getValues();
                 if ($data['password'] === $data['confirm']) {
                     $this->userService->changePassword($user, $data['password']);
-                    $message = [$translator > translate('email.resetpass.success', 'user'), 'success'];
+                    $message = [$translator->translate('email.resetpass.success', 'user'), 'success'];
                     $success = true;
                 } else {
-                    $message = [$translator > translate('email.resetpass.nomatch', 'user') , 'danger'];
+                    $message = [$translator->translate('email.resetpass.nomatch', 'user') , 'danger'];
                     $form = new ResetPasswordForm('resetpass');
                 }
             }
         }
 
-        if (isset($message)) {
-            $params['message'] = $message;
-        }
         $params['success'] = $success;
         $params['form'] = $form;
         $params['logo'] = $this->getLogo();
 
-        $body = $this->getView()->render('boneuser::change-pass', $params);
+        $body = $this->getView()->render('boneuser::change-pass', [
+            'success' => $success,
+            'form' => $form,
+            'logo' => $this->getLogo(),
+            'message' => $message
+        ]);
 
         return new HtmlResponse($body);
     }
@@ -505,7 +510,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
                 $existing = $this->userService->findUserByEmail($newEmail);
 
                 if ($existing) {
-                    $message = [$translator > translate('email.changeemail.registered', 'user') . 'This email already has a registered account with ' . $this->getSiteConfig()->getTitle() . '.', 'danger'];
+                    $message = [$translator->translate('email.changeemail.registered', 'user') . $this->getSiteConfig()->getTitle() . '.', 'danger'];
                 } else {
                     if ($this->userService->checkPassword($user, $password)) {
 
@@ -519,7 +524,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
                             $env = $this->getSiteConfig()->getEnvironment();
                             $mail = new EmailMessage();
                             $mail->setTo($email);
-                            $mail->setSubject($translator > translate('email.changeemail.subject', 'user') . $this->mailService->getSiteConfig()->getTitle() . '.');
+                            $mail->setSubject($translator->translate('email.changeemail.subject', 'user') . $this->mailService->getSiteConfig()->getTitle() . '.');
                             $mail->setTemplate('email.user::user_registration/change_email');
                             $mail->setViewData([
                                 'siteUrl' => $env->getSiteURL(),
@@ -527,15 +532,15 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
                                 'resetLink' => '/user/reset-email/' . $email . '/' . $newEmail . '/' . $token,
                             ]);
                             $this->mailService->sendEmail($mail);
-                            $message = [$translator > translate('email.changeemail.sent', 'user'), 'info'];
+                            $message = [$translator->translate('email.changeemail.sent', 'user'), 'info'];
                             unset ($params['form']);
 
                         } catch (Exception $e) {
-                            $message = [$translator > translate('email.changeemail.notsent', 'user') . $this->config->email->support . '.', 'danger'];
+                            $message = [$translator->translate('email.changeemail.notsent', 'user') . $this->config->email->support . '.', 'danger'];
                         }
 
                     } else {
-                        $message = [$translator > translate('email.changeemail.wrongpass', 'user'), 'danger'];
+                        $message = [$translator->translate('email.changeemail.wrongpass', 'user'), 'danger'];
                     }
                 }
             }

@@ -6,99 +6,102 @@ use Del\Icon;
 $p = $person;
 ?>
 <section class="intro">
-    <div class="">
-        <br>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    <h1><?= $this->t('editprofile.h1', 'user') ?></h1>
-                    <?= isset($message) ? $this->alert($message) : '' ?>
-                    <div id="alert" class="alert alert-info alert-dismissible" role="alert">
-                        <?= $this->t('editprofile.alert', 'user') ?>
-                    </div>
-                    <form action="" method="post">
-                        <div id="existing-avatar" class="<?= $p->getImage() ? null : 'hidden'; ?>">
-                            <img id="my-avatar" src="/download?file=<?= $p->getImage() ?>" alt="<?= $p->getAka(); ?>"
-                                 class="m20 img-circle"/>
-                            <button id="change-avatar" type="button" class="btn btn-primary"><?= $this->t('avatar.change', 'user') ?></button>
-                        </div>
-
-                        <div id="change-existing" class="<?= $p->getImage() ? 'hidden' : null; ?>">
-                            <div class="btn-group btn-block nav" role="group" aria-label="...">
-                                <button id="choose-pic" type="button" class="btn btn-default disabled"><?= $this->t('avatar.choose', 'user') ?></button>
-                                <button id="upload-pic" type="button" class="btn btn-primary"><?= $this->t('avatar.upload', 'user') ?></button>
-                            </div>
-
-
-                            <div id="choose-avatar">
-                                <p class="lead tc mt20"><?= $this->t('picture.choose', 'user') ?></p>
-                                <div class="row">
-                                    <div class="col-md-3 tc mb20">
-                                        <img src="/bone-user/img/avatars/dog.png" alt="Dog"
-                                             class="img-responsive centered avatar"/>
-                                    </div>
-                                    <div class="col-md-3 tc mb20">
-                                        <img src="/bone-user/img/avatars/cat.png" alt="Cat"
-                                             class="img-responsive centered avatar"/>
-                                    </div>
-                                    <div class="col-md-3 tc mb20">
-                                        <img src="/bone-user/img/avatars/gorilla.png" alt="Gorilla"
-                                             class="img-responsive centered avatar"/>
-                                    </div>
-                                    <div class="col-md-3 tc mb20">
-                                        <img src="/bone-user/img/avatars/lion.png" alt="Lion"
-                                             class="img-responsive centered avatar"/>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3 tc mb20">
-                                        <img src="/bone-user/img/avatars/koala.png" alt="Koala"
-                                             class="img-responsive centered avatar"/>
-                                    </div>
-                                    <div class="col-md-3 tc mb20">
-                                        <img src="/bone-user/img/avatars/rabbit.png" alt="Rabbit"
-                                             class="img-responsive centered avatar"/>
-                                    </div>
-                                    <div class="col-md-3 tc mb20">
-                                        <img src="/bone-user/img/avatars/tiger.png" alt="Tiger"
-                                             class="img-responsive centered avatar"/>
-                                    </div>
-                                    <div class="col-md-3 tc mb20 ">
-                                        <img src="/bone-user/img/avatars/fox.png" alt="Fox"
-                                             class="img-responsive centered avatar"/>
-                                    </div>
-                                </div>
-                                <p><small><?= $this->t('avatar.freepik', 'user') ?>(<a target="_blank"
-                                                href="//www.freepik.com/free-photos-vectors/design"><?= $this->t('avatar.design', 'user') ?></a>)</small></p>
-                            </div>
-
-
-                            <div id="upload-my-own" class="hidden mt20">
-                                <p class="lead tc mt20"><?= $this->t('avatar.select', 'user') ?></p>
-                                <div class="input-group">
-                                    <span class="input-group-btn">
-                                        <span class="btn btn-primary btn-file">
-                                            <?= $this->t('avatar.browse', 'user') ?>  <input type="file" name="avatar" id="avatar"/>
-                                        </span>
-                                    </span>
-                                    <input type="text" class="form-control" readonly/>
-                                    <span class="input-group-btn">
-                                        <span id="upload" class="btn btn-primary group-end disabled"><?= $this->t('avatar.uploadbtn', 'user') ?>Upload..</span>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <br>
-
-
-                    </form>
-                    <?= $form ?>
-                    <a id="home-button" href="/"
-                                   class="btn btn-lg btn-success <?= ($p->getImage() && $p->getAka()) ? null : 'disabled'; ?> pull-right"><?= $this->t('home', 'user') ?></a>
-
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="col-md-8">
+                <h1><?= $this->t('editprofile.h1', 'user') ?></h1>
+                <?= isset($message) ? $this->alert($message) : '' ?>
+                <div id="alert" class="alert alert-info alert-dismissible" role="alert">
+                    <?= $this->t('editprofile.alert', 'user') ?>
                 </div>
+                <form action="" method="post">
+                    <div id="existing-avatar" class="<?= $p->getImage() ? null : 'hide'; ?>">
+                        <img id="my-avatar" src="/download?file=<?= $p->getImage() ?>" alt="<?= $p->getAka(); ?>"
+                             class="m20 img-responsive rounded-circle"/>
+                        <button id="change-avatar" type="button"
+                                class="btn btn-primary"><?= $this->t('avatar.change', 'user') ?></button>
+                    </div>
+
+                    <div id="change-existing" class="<?= $p->getImage() ? 'hide' : null; ?>">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button id="choose-pic" type="button"
+                                    class="btn btn-primary disabled"><?= $this->t('avatar.choose', 'user') ?></button>
+                            <button id="upload-pic" type="button"
+                                    class="btn btn-primary"><?= $this->t('avatar.upload', 'user') ?></button>
+                        </div>
+
+
+                        <div id="choose-avatar">
+                            <p class="lead tc mt20"><?= $this->t('picture.choose', 'user') ?></p>
+                            <div class="row">
+                                <div class="col-md-3 tc mb20">
+                                    <img src="/bone-user/img/avatars/dog.png" alt="Dog"
+                                         class="img-responsive centered avatar"/>
+                                </div>
+                                <div class="col-md-3 tc mb20">
+                                    <img src="/bone-user/img/avatars/cat.png" alt="Cat"
+                                         class="img-responsive centered avatar"/>
+                                </div>
+                                <div class="col-md-3 tc mb20">
+                                    <img src="/bone-user/img/avatars/gorilla.png" alt="Gorilla"
+                                         class="img-responsive centered avatar"/>
+                                </div>
+                                <div class="col-md-3 tc mb20">
+                                    <img src="/bone-user/img/avatars/lion.png" alt="Lion"
+                                         class="img-responsive centered avatar"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 tc mb20">
+                                    <img src="/bone-user/img/avatars/koala.png" alt="Koala"
+                                         class="img-responsive centered avatar"/>
+                                </div>
+                                <div class="col-md-3 tc mb20">
+                                    <img src="/bone-user/img/avatars/rabbit.png" alt="Rabbit"
+                                         class="img-responsive centered avatar"/>
+                                </div>
+                                <div class="col-md-3 tc mb20">
+                                    <img src="/bone-user/img/avatars/tiger.png" alt="Tiger"
+                                         class="img-responsive centered avatar"/>
+                                </div>
+                                <div class="col-md-3 tc mb20 ">
+                                    <img src="/bone-user/img/avatars/fox.png" alt="Fox"
+                                         class="img-responsive centered avatar"/>
+                                </div>
+                            </div>
+                            <p><small><?= $this->t('avatar.freepik', 'user') ?>(<a target="_blank"
+                                                                                   href="//www.freepik.com/free-photos-vectors/design"><?= $this->t('avatar.design', 'user') ?></a>)</small>
+                            </p>
+                        </div>
+
+
+                        <div id="upload-my-own" class="hide mt20">
+                            <div class="input-group">
+                                <span id="choosefile" class="input-group-prepend">
+                                    <label for="avatar" class="btn btn-primary btn-file">
+                                        <?= $this->t('avatar.browse', 'user') ?>
+                                        <input class="form-control-file hide" type="file" name="avatar" id="avatar"/>
+                                    </label>
+                                </span>
+                                <input type="text" class="form-control" readonly/>
+                                <span class="input-group-append">
+                                    <label id="upload" class="btn btn-primary disabled">
+                                        <?= $this->t('avatar.uploadbtn', 'user') ?>
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <br>
+
+
+                </form>
+                <?= $form ?>
+                <a id="home-button" href="/" class="btn btn-lg btn-success <?= ($p->getImage() && $p->getAka())
+                    ? null : 'disabled'; ?> pull-right"><?= $this->t('home', 'user') ?></a>
+
             </div>
         </div>
     </div>
@@ -111,9 +114,9 @@ $p = $person; ?>
 
     // BOOTSTRAP STYLE FILE INPUT
     $(document).on('change', '.btn-file :file', function () {
-        var input = $(this),
-            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        var input = $('#avatar');
+        numFiles = input.get(0).files ? input.get(0).files.length : 1;
+        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
         input.trigger('fileselect', [numFiles, label]);
     });
 
@@ -121,10 +124,12 @@ $p = $person; ?>
 
 
         // BOOTSTRAP STYLE FILE INPUT
+
+
         $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
 
             var input = $(this).parents('.input-group').find(':text'),
-                log = numFiles > 1 ? numFiles + ' files selected' : label;
+            log = numFiles > 1 ? numFiles + ' files selected' : label;
 
             if (input.length) {
                 input.val(log);
@@ -132,7 +137,6 @@ $p = $person; ?>
             } else if (log) {
                 alert(log);
             }
-
         });
 
 
@@ -141,21 +145,21 @@ $p = $person; ?>
         $('#upload-pic').click(function (e) {
             $(this).addClass('disabled');
             $('#choose-pic').removeClass('disabled').removeClass('btn-default').addClass('btn-primary');
-            $('#choose-avatar').addClass('hidden');
-            $('#upload-my-own').removeClass('hidden');
+            $('#choose-avatar').addClass('hide');
+            $('#upload-my-own').removeClass('hide');
         });
         $('#choose-pic').click(function (e) {
             $(this).addClass('disabled');
             $('#upload-pic').removeClass('disabled').removeClass('btn-default').addClass('btn-primary');
-            $('#upload-my-own').addClass('hidden');
-            $('#choose-avatar').removeClass('hidden');
+            $('#upload-my-own').addClass('hide');
+            $('#choose-avatar').removeClass('hide');
         });
 
 
         // Change Avatar
         $('#change-avatar').click(function () {
-            $('#existing-avatar').addClass('hidden');
-            $('#change-existing').removeClass('hidden');
+            $('#existing-avatar').addClass('hide');
+            $('#change-existing').removeClass('hide');
         });
 
 
@@ -174,10 +178,10 @@ $p = $person; ?>
                 if (result.result == 'success') {
                     set_avatar = result.avatar;
                     $('#image').val(set_avatar);
-                    $('#user-avatar').prop('src',  set_avatar);
-                    $('#my-avatar').prop('src',  set_avatar);
-                    $('#existing-avatar').removeClass('hidden');
-                    $('#change-existing').addClass('hidden');
+                    $('#user-avatar').prop('src', set_avatar);
+                    $('#my-avatar').prop('src', set_avatar);
+                    $('#existing-avatar').removeClass('hide');
+                    $('#change-existing').addClass('hide');
                 }
             });
         });
@@ -209,8 +213,8 @@ $p = $person; ?>
                         $('#image').val(set_avatar);
                         $('#my-avatar').prop('src', '/download?file=' + set_avatar).addClass('img-circle');
                         $('#user-avatar').prop('src', '/img/' + set_avatar);
-                        $('#existing-avatar').removeClass('hidden');
-                        $('#change-existing').addClass('hidden');
+                        $('#existing-avatar').removeClass('hide');
+                        $('#change-existing').addClass('hide');
                     }
                 },
                 error: function (jqXHR, status, error) {

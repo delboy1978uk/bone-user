@@ -1,14 +1,17 @@
 <?php use Del\Icon; ?>
-<section class="intro">
+<section id="resend-activation">
     <div class="mt20">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3 mt20">
-                    <img src="<?= $logo ?>" />
-                    <?= null !== $message ? $box->alert($message) : '' ?>
+            <div class="row justify-content-md-center">
+                <div class="col-md-6 mt20">
+                    <?= null !== $message ? $this->alert($message) : '' ?>
                     <div class="overflow mt20">
-                        <p class="lead"><?= Icon::ENVELOPE; ?> <?= $this->t('resend.lead', 'user') ?></p>
-                        <p><?= $this->t('resend.p', 'user') ?></p>
+                        <div class="text-center">
+                            <?= Icon::custom(Icon::ENVELOPE, 'fa-5x'); ?>
+                            <br>&nbsp;
+                        </div>
+                        <h1 class="text-center"><?= $this->t('resend.lead', 'user') ?></h1>
+                        <p class="lead"><?= $this->t('resend.p', 'user') ?></p>
                     </div>
                 </div>
             </div>
