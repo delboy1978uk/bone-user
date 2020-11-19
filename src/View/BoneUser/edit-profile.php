@@ -124,8 +124,6 @@ $p = $person; ?>
 
 
         // BOOTSTRAP STYLE FILE INPUT
-
-
         $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
 
             var input = $(this).parents('.input-group').find(':text'),

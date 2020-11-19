@@ -139,11 +139,11 @@
             <table width="100%" border="0" cellspacing="0" cellpadding="0" align="center" style="max-width: 500px;" class="responsive-table">
                 <tr>
                     <td align="center" style="font-size: 12px; line-height: 18px; font-family: Helvetica, Arial, sans-serif; color:#666666;">
-                        1234 Main Street, Anywhere, MA 01234, USA
+                        <?= $this->e($address) ;?>
+                        <?php if (null !== $unsubscribe) { ?>
                         <br>
-                        <a href="<?= $this->e($siteUrl) ;?>" target="_blank" style="color: #666666; text-decoration: none;">Unsubscribe</a>
-                        <span style="font-family: Arial, sans-serif; font-size: 12px; color: #444444;">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                        <a href="<?= $this->e($siteUrl) ;?>" target="_blank" style="color: #666666; text-decoration: none;">View this email in your browser</a>
+                        <a href="<?= $this->e($siteUrl) . '/' . $this->e($unsubscribe) ?>" target="_blank" style="color: #666666; text-decoration: none;">Unsubscribe</a>
+                        <?php } ?>
                     </td>
                 </tr>
             </table>

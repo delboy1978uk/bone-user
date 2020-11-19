@@ -118,6 +118,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
                     $mail->setViewData([
                         'siteUrl' => $env->getSiteURL(),
                         'logo' => $this->getSiteConfig()->getEmailLogo(),
+                        'address' => $this->getSiteConfig()->getAddress(),
                         'activationLink' => '/user/activate/' . $email . '/' . $token,
                     ]);
                     $this->mailService->sendEmail($mail);
@@ -317,6 +318,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
                 $mail->setViewData([
                     'siteUrl' => $env->getSiteURL(),
                     'logo' => $this->getSiteConfig()->getEmailLogo(),
+                    'address' => $this->getSiteConfig()->getAddress(),
                     'activationLink' => '/user/activate/' . $email . '/' . $token,
                 ]);
                 $this->mailService->sendEmail($mail);
@@ -366,6 +368,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
             $mail->setViewData([
                 'siteUrl' => $env->getSiteURL(),
                 'logo' => $this->getSiteConfig()->getEmailLogo(),
+                'address' => $this->getSiteConfig()->getAddress(),
                 'resetLink' => '/user/reset-password/' . $email . '/' . $token,
             ]);
             $this->mailService->sendEmail($mail);
@@ -529,6 +532,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
                             $mail->setViewData([
                                 'siteUrl' => $env->getSiteURL(),
                                 'logo' => $this->getSiteConfig()->getEmailLogo(),
+                                'address' => $this->getSiteConfig()->getAddress(),
                                 'resetLink' => '/user/reset-email/' . $email . '/' . $newEmail . '/' . $token,
                             ]);
                             $this->mailService->sendEmail($mail);

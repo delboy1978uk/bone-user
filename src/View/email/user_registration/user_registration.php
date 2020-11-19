@@ -1,4 +1,4 @@
-<?php $this->layout('email.user::/layout', ['title' => $this->t('email.user.register.thanks', 'user'), 'siteUrl' => $siteUrl, 'logo' => $logo]) ?>
+<?php $this->layout('email.user::/layout', ['title' => $this->t('email.user.register.thanks', 'user'), 'siteUrl' => $siteUrl, 'logo' => $logo, 'address' => $address, 'unsubscribe' => null]) ?>
 <tr>
     <td bgcolor="#ffffff" align="center" style="padding: 20px 15px 70px 15px;" class="section-padding">
         <!--[if (gte mso 9)|(IE)]>
