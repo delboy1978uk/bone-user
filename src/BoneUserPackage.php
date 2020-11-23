@@ -8,6 +8,7 @@ use Barnacle\Container;
 use Barnacle\RegistrationInterface;
 use Bone\Http\Middleware\HalEntity;
 use Bone\Http\Middleware\JsonParse;
+use Bone\Http\Middleware\Stack;
 use Bone\I18n\I18nRegistrationInterface;
 use Bone\Controller\Init;
 use Bone\Mail\Service\MailService;
@@ -39,16 +40,10 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
      */
     public function addToContainer(Container $c)
     {
-        /** @var ViewEngine $viewEngine */
-        $viewEngine = $c->get(ViewEngine::class);
-
         if (!$c->has(UserService::class)) {
             $package = new UserPackage();
             $package->addToContainer($c);
         }
-
-        $loginWidget = new LoginWidget($c->get(UserService::class), $c->get(Translator::class));
-        $viewEngine->loadExtension($loginWidget);
 
         $c[BoneUserController::class] = $c->factory(function (Container $c) {
             /** @var MailService $mailService */
@@ -124,6 +119,28 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
             'boneuser' => __DIR__ . '/View/BoneUser/',
             'email.user' => __DIR__ . '/View/email/',
         ];
+    }
+
+    /**
+     * @param Container $c
+     * @return array
+     */
+    public function addViewExtensions(Container $c): array
+    {
+        $userService = $c->get(UserService::class);
+        $mailService = $c->get(Translator::class);
+        $loginWidget = new LoginWidget($userService, $mailService);
+
+        return [$loginWidget];
+    }
+
+    /**
+     * @param Stack $stack
+     * @param Container $container
+     */
+    public function addMiddleware(Stack $stack, Container $container): void
+    {
+        // TODO: Implement addMiddleware() method.
     }
 
 
