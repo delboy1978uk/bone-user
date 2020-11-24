@@ -35,8 +35,10 @@ class SessionAuth implements MiddlewareInterface, SessionAwareInterface
         if ($id = $this->getSession()->get('user')) {
             $user = $this->userService->findUserById($id);
             $request = $request->withAttribute('user', $user);
+            $response = $handler->handle($request);
+            $array = $this->userService->toArray($user);
 
-            return $handler->handle($request);
+            return $response->withHeader('user', json_encode($array));
         }
 
         throw new UserException(UserException::UNAUTHORISED, 401);
