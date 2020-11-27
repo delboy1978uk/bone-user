@@ -1,18 +1,35 @@
-<section id="user-welcome">
-    <div class="container">
-        <div class="row justify-content-md-center">
-            <div class="col-md-6 text-center">
-                <img alt="Logo" src="<?= $logo ?>"/>
-                <br>&nbsp;
-                <h1><?= $this->t('user.welcome', 'user') ?></h1>
-                <a href="<?= $this->l() ?>/user/login"
-                   class="btn btn-success"><?= \Del\Icon::FORWARD; ?> <?= $this->t('user.login', 'user') ?></a>
-                <a href="<?= $this->l() ?>/user/register"
-                   class="btn btn-primary"><?= \Del\Icon::EDIT; ?> <?= $this->t('user.register', 'user') ?></a>
+<div class="container">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark"><?= \Del\Icon::HOME ?>&nbsp;&nbsp;User Home</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item "><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active">User</li>
+                    </ol>
+                </div>
             </div>
         </div>
-        <a href="<?= $this->l() ?>/" class="btn btn-circle tt" title="Back To Bone MVC API">
-            <?= \Del\Icon::CARET_LEFT; ?>
-        </a>&nbsp;
     </div>
-</section>
+
+    <div class="row justify-content-md-center">
+        <div class="login-box">
+            <div class="card text-center">
+                <div class="card-body login-card-body">
+                    <div class="login-logo">
+                        <img alt="Logo" src="<?= $logo ?>"/>
+                    </div>
+                    <p class="lead"><?= $this->t('user.welcome', 'user') ?></p>
+                    <a href="<?= $this->l() ?>/user/login"
+                    class="btn btn-success"><?= \Del\Icon::FORWARD; ?> <?= $this->t('user.login', 'user') ?></a>
+                    <a href="<?= $this->l() ?>/user/register"
+                    class="btn btn-primary"><?= \Del\Icon::EDIT; ?> <?= $this->t('user.register', 'user') ?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

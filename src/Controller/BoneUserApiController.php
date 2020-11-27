@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Bone\User\Controller;
 
+use Bone\Http\Response;
+use Bone\Http\Response\HtmlResponse;
 use Bone\I18n\I18nAwareInterface;
 use Bone\I18n\Traits\HasTranslatorTrait;
 use Bone\Mail\EmailMessage;
@@ -21,7 +23,7 @@ use Del\Entity\User;
 use Del\Form\Field\FileUpload;
 use Del\Image;
 use Del\Service\UserService;
-use Laminas\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\Stream;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Laminas\Diactoros\Response\JsonResponse;
@@ -67,7 +69,11 @@ class BoneUserApiController extends Controller
         /** @var User $user */
         $user = $request->getAttribute('user');
         $person = $user->getPerson();
-        $person->setImage($avatar);
+        $image = new Image('public' . $avatar);
+        $avatar = str_replace('/bone-user/img/avatars/', '', $avatar);
+        $file = $this->imgDirectory . $this->getFilename($avatar);
+        $image->save($this->uploadsDirectory . $file);
+        $person->setImage($file);
         $this->userService->getPersonSvc()->savePerson($person);
 
         return new JsonResponse([
@@ -179,6 +185,43 @@ class BoneUserApiController extends Controller
         return $filenameOnDisk;
     }
 
+    /**
+     * @param ServerRequestInterface $request
+     * @return ResponseInterface
+     * @throws ControllerException
+     */
+    public function avatar(ServerRequestInterface $request): ResponseInterface
+    {
+        $response = new Response();
+        /** @var User $user */
+        $user = $request->getAttribute('user');
 
+        if ($img = $user->getPerson()->getImage()) {
+            $path = $this->uploadsDirectory . $img;
+            $mimeType = $this->getMimeType($path);
+        }
+
+
+        $contents = file_get_contents($path);
+        $stream = new Stream('php://memory', 'r+');
+        $stream->write($contents);
+        $response = $response->withBody($stream);
+        $response = $response->withHeader('Content-Type', $mimeType);
+
+        return $response;
+    }
+
+    /**
+     * @param string $path
+     * @return string
+     */
+    private function getMimeType(string $path): string
+    {
+        $finfo = finfo_open(FILEINFO_MIME); // return mime type
+        $mimeType = finfo_file($finfo, $path);
+        finfo_close($finfo);
+
+        return $mimeType;
+    }
 
 }

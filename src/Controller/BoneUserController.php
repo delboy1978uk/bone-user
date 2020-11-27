@@ -85,6 +85,10 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
      */
     public function indexAction(ServerRequestInterface $request): ResponseInterface
     {
+        if ($this->getSession()->get('user')) {
+            return new RedirectResponse('/user/home');
+        }
+
         $body = $this->getView()->render('boneuser::index', ['logo' => $this->getLogo()]);
 
         return new HtmlResponse($body);
@@ -134,6 +138,8 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
                 } catch (UserException $e) {
                     $message = [$e->getMessage(), 'danger'];
                 }
+            } else {
+                $message = [Icon::WARNING . ' There was a problem with your form.', 'danger'];
             }
         }
 
@@ -154,6 +160,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
         $token = $request->getAttribute('token');
         $translator = $this->getTranslator();
         $userService = $this->userService;
+        $loginRedirect = $this->loginRedirectRoute;
         $message = null;
 
         try {
@@ -179,7 +186,11 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
             }
         }
 
-        $body = $this->getView()->render('boneuser::activate-user-account', ['message' => $message, 'logo' => $this->getLogo()]);
+        $body = $this->getView()->render('boneuser::activate-user-account', [
+            'loginRedirect' => $loginRedirect,
+            'message' => $message,
+            'logo' => $this->getLogo(),
+        ]);
 
         return new HtmlResponse($body);
     }
@@ -268,6 +279,10 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
      */
     public function homePageAction(ServerRequestInterface $request): ResponseInterface
     {
+        if ($this->loginRedirectRoute !== '/user/home') {
+            return new RedirectResponse($this->loginRedirectRoute);
+        }
+
         $user = $request->getAttribute('user');
         $body = $this->getView()->render('boneuser::home', [
             'message' => [$this->getTranslator()->translate('home.loggedin', 'user'), 'success'],
@@ -467,12 +482,14 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
                 $data = $form->getValues();
                 if ($data['password'] === $data['confirm']) {
                     $this->userService->changePassword($user, $data['password']);
-                    $message = [$translator->translate('email.resetpass.success', 'user'), 'success'];
+                    $message = [Icon::CHECK_CIRCLE . ' ' .$translator->translate('email.resetpass.success', 'user'), 'success'];
                     $success = true;
                 } else {
-                    $message = [$translator->translate('email.resetpass.nomatch', 'user') , 'danger'];
+                    $message = [Icon::WARNING . ' ' . $translator->translate('email.resetpass.nomatch', 'user') , 'danger'];
                     $form = new ResetPasswordForm('resetpass');
                 }
+            }  else {
+                $message = [Icon::WARNING . ' There was a problem with your form.' , 'danger'];
             }
         }
 
@@ -559,7 +576,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
 
         $body = $this->getView()->render('boneuser::change-email', $params);
 
-        return new HtmlResponse($body);
+        return new LayoutResponse($body, 'layouts::admin');
     }
 
     /**
@@ -578,6 +595,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
         if ($request->getMethod() === 'POST') {
             $post = $request->getParsedBody();
             $form->populate($post);
+
             if ($form->isValid()) {
                 $data = $form->getValues();
                 $dateFormat = $this->getSiteConfig()->getAttribute('i18n')['date_format'];
@@ -593,7 +611,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
             'form' => $form->render(),
         ]);
 
-        return new HtmlResponse($body);
+        return new LayoutResponse($body, $this->adminLayout);
     }
 
     /**
@@ -624,7 +642,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
             throw $e;
         }
 
-        $body = $this->getView()->render('boneuser::reset-email', ['message' => null, 'logo' => $this->getLogo()]);
+        $body = $this->getView()->render('boneuser::reset-email', ['message' => $message, 'logo' => $this->getLogo()]);
 
         return new HtmlResponse($body);
     }

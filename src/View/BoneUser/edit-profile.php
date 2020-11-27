@@ -5,18 +5,36 @@ use Del\Icon;
 /** @var Del\Entity\Person $p */
 $p = $person;
 ?>
-<section class="intro">
-    <div class="container">
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark"><?= Icon::HOME ?>&nbsp;&nbsp;<?= $this->t('editprofile.h1', 'user') ?></h1>
+            </div>
+
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item"><a href="/user">User</a></li>
+                    <li class="breadcrumb-item active"><?= $this->t('editprofile.h1', 'user') ?></li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+</div>
+<section class="content">
+    <div class="container-fluid">
         <div class="row justify-content-md-center">
             <div class="col-md-8">
-                <h1><?= $this->t('editprofile.h1', 'user') ?></h1>
                 <?= isset($message) ? $this->alert($message) : '' ?>
                 <div id="alert" class="alert alert-info alert-dismissible" role="alert">
                     <?= $this->t('editprofile.alert', 'user') ?>
                 </div>
                 <form action="" method="post">
                     <div id="existing-avatar" class="<?= $p->getImage() ? null : 'hide'; ?>">
-                        <img id="my-avatar" src="/download?file=<?= $p->getImage() ?>" alt="<?= $p->getAka(); ?>"
+                        <img id="my-avatar" src="/api/user/avatar" alt="<?= $p->getAka(); ?>"
                              class="m20 img-responsive rounded-circle"/>
                         <button id="change-avatar" type="button"
                                 class="btn btn-primary"><?= $this->t('avatar.change', 'user') ?></button>
@@ -174,10 +192,11 @@ $p = $person; ?>
                 alertbox.addClass('alert-' + result.result);
                 alertbox.html(result.message);
                 if (result.result == 'success') {
+                    d = new Date();
                     set_avatar = result.avatar;
                     $('#image').val(set_avatar);
                     $('#user-avatar').prop('src', set_avatar);
-                    $('#my-avatar').prop('src', set_avatar);
+                    $('#my-avatar').prop('src', '/api/user/avatar?' + d.getTime());
                     $('#existing-avatar').removeClass('hide');
                     $('#change-existing').addClass('hide');
                 }
@@ -207,9 +226,10 @@ $p = $person; ?>
                     alertbox.addClass('alert-' + result.result);
                     alertbox.html(result.message);
                     if (result.result == 'success') {
+                        d = new Date();
                         set_avatar = result.avatar
                         $('#image').val(set_avatar);
-                        $('#my-avatar').prop('src', '/download?file=' + set_avatar).addClass('img-circle');
+                        $('#my-avatar').prop('src', '/api/user/avatar?' + d.getTime()).addClass('img-circle');
                         $('#user-avatar').prop('src', '/img/' + set_avatar);
                         $('#existing-avatar').removeClass('hide');
                         $('#change-existing').addClass('hide');

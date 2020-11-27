@@ -50,6 +50,7 @@ class RegistrationForm extends Form
         $label = $this->getTranslator()->translate('form.submit.label', 'user');
         $submit = new Submit('submit');
         $submit->setValue($label);
+        $submit->setClass('btn btn-primary pull-right');
 
         $stringToLower = new StringToLower();
         $email->addFilter(new FilterAdapterZf($stringToLower));
