@@ -2,6 +2,7 @@
 
 namespace Bone\User\Http\Middleware;
 
+use Bone\Http\Response;
 use Bone\Server\SessionAwareInterface;
 use Bone\Server\Traits\HasSessionTrait;
 use Del\Exception\UserException;
@@ -36,12 +37,17 @@ class SessionAuth implements MiddlewareInterface, SessionAwareInterface
             $user = $this->userService->findUserById($id);
             $request = $request->withAttribute('user', $user);
             $response = $handler->handle($request);
+
+            if ($response instanceof Response) {
+                $response->setAttribute('user', $user);
+            }
+
             $person = $user->getPerson();
             $person = $this->userService->getPersonSvc()->toArray($person);
-            $user = $this->userService->toArray($user);
-            $user['person'] = $person;
+            $userArray = $this->userService->toArray($user);
+            $userArray['person'] = $person;
 
-            return $response->withHeader('user', json_encode($user));
+            return $response->withHeader('user', json_encode($userArray));
         }
 
         throw new UserException(UserException::UNAUTHORISED, 401);
