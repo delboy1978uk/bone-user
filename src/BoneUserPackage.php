@@ -51,13 +51,15 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
             /** @var UserService $userService */
             $userService = $c->get(UserService::class);
             $loginRedirectRoute = '/user/home';
+            $defaultLayout = $c->get('default_layout');
+            $adminLayout = $c->has('admin_layout') ? $c->get('admin_layout') : $defaultLayout;
 
             if ($c->has('bone-user')) {
                 $options = $c->get('bone-user');
                 $loginRedirectRoute = $options['loginRedirectRoute'] ?? null;
             }
 
-            return  Init::controller(new BoneUserController($userService, $mailService, $loginRedirectRoute), $c);
+            return  Init::controller(new BoneUserController($userService, $mailService, $loginRedirectRoute, $adminLayout), $c);
         });
 
         $c[BoneUserApiController::class] = $c->factory(function (Container $c) {

@@ -2,6 +2,7 @@
 
 namespace Bone\User\Controller;
 
+use Bone\Http\Response\LayoutResponse;
 use Bone\I18n\Form;
 use Bone\Controller\Controller;
 use Bone\Server\SiteConfigAwareInterface;
@@ -48,16 +49,20 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
     /** @var string $logo */
     private $logo;
 
+    /** @var string $adminLayout */
+    private $adminLayout;
+
     /**
      * BoneUserController constructor.
      * @param UserService $userService
      * @param MailService $mailService
      */
-    public function __construct(UserService $userService, MailService $mailService, string $loginRedirectRoute = '/user/home')
+    public function __construct(UserService $userService, MailService $mailService, string $loginRedirectRoute = '/user/home', string $adminLayout)
     {
         $this->userService = $userService;
         $this->mailService = $mailService;
         $this->loginRedirectRoute = $loginRedirectRoute;
+        $this->adminLayout = $adminLayout;
     }
 
     /**
@@ -82,7 +87,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
     {
         $body = $this->getView()->render('boneuser::index', ['logo' => $this->getLogo()]);
 
-        return new HtmlResponse($body);
+        return new LayoutResponse($body);
     }
 
     /**
@@ -270,7 +275,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
             'logo' => $this->getSiteConfig()->getLogo(),
         ]);
 
-        return new HtmlResponse($body);
+        return new LayoutResponse($body, $this->adminLayout);
     }
 
     /**
