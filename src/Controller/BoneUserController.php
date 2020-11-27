@@ -2,6 +2,7 @@
 
 namespace Bone\User\Controller;
 
+use Bone\Http\Response\HtmlResponse;
 use Bone\Http\Response\LayoutResponse;
 use Bone\I18n\Form;
 use Bone\Controller\Controller;
@@ -28,7 +29,6 @@ use Del\Value\User\State;
 use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\Uri;
 
@@ -87,7 +87,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
     {
         $body = $this->getView()->render('boneuser::index', ['logo' => $this->getLogo()]);
 
-        return new LayoutResponse($body);
+        return new HtmlResponse($body);
     }
 
     /**
