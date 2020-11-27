@@ -2,6 +2,7 @@
 
 namespace Bone\User\Http\Middleware;
 
+use Bone\Http\Response;
 use Bone\Server\SessionAwareInterface;
 use Bone\Server\Traits\HasSessionTrait;
 use Del\Exception\UserException;
@@ -38,7 +39,13 @@ class SessionAuthRedirect implements MiddlewareInterface, SessionAwareInterface
             $user = $this->userService->findUserById($id);
             $request = $request->withAttribute('user', $user);
 
-            return $handler->handle($request);
+            $response = $handler->handle($request);
+
+            if ($response instanceof Response) {
+                $response->setAttribute('user', $user);
+            }
+
+            return $response;
         }
 
         $currentUrl = $request->getUri()->getPath() . '?' . $request->getUri()->getQuery();
