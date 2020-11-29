@@ -12,6 +12,9 @@ use Del\Repository\CountryRepository;
 
 trait PersonFormTrait
 {
+    /** @var array $disabledFields */
+    protected $disabledFields = [];
+
     /**
      * @param FormInterface $form
      */
@@ -50,13 +53,13 @@ trait PersonFormTrait
         $image = new Hidden('image');
         $image->setId('image');
 
-        $form->addField($firstName);
-        $form->addField($middleName);
-        $form->addField($lastName);
-        $form->addField($aka);
-        $form->addField($dob);
-        $form->addField($birthPlace);
-        $form->addField($country);
-        $form->addField($image);
+        in_array('firstname', $this->disabledFields) ? null : $form->addField($firstName);
+        in_array('middlename', $this->disabledFields) ? null : $form->addField($middleName);
+        in_array('lastname', $this->disabledFields) ? null : $form->addField($lastName);
+        in_array('aka', $this->disabledFields) ? null : $form->addField($aka);
+        in_array('dob', $this->disabledFields) ? null : $form->addField($dob);
+        in_array('birthplace', $this->disabledFields) ? null : $form->addField($birthPlace);
+        in_array('country', $this->disabledFields) ? null : $form->addField($country);
+        in_array('image', $this->disabledFields) ? null : $form->addField($image);
     }
 }
