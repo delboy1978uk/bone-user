@@ -22,12 +22,14 @@ trait PersonFormTrait
     {
         $firstName = new Text('firstname');
         $firstName->setLabel('First name');
+        $firstName->setRequired(true);
 
         $middleName = new Text('middlename');
         $middleName->setLabel('Middle name');
 
         $lastName = new Text('lastname');
         $lastName->setLabel('Last name');
+        $lastName->setRequired(true);
 
         $aka = new Text('aka');
         $aka->setLabel('A.K.A.');
@@ -36,6 +38,7 @@ trait PersonFormTrait
         $dob->setLabel('Date of Birth');
         $dob->setClass('form-control datepicker');
         $dob->setTransformer(new DateTimeTransformer('d/m/Y'));
+        $dob->setRequired(true);
 
         $birthPlace = new Text('birthplace');
         $birthPlace->setLabel('Birth place');
@@ -45,6 +48,7 @@ trait PersonFormTrait
         $country->setTransformer(new CountryTransformer());
         $countryRepository = new CountryRepository();
         $countries = $countryRepository->findAllCountries();
+        $country->setRequired(true);
         $country->setOption('', '');
         foreach ($countries as $c) {
             $country->setOption($c->getIso(), $c->getName());
