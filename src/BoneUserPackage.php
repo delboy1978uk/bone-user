@@ -161,14 +161,24 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
             $route->map('GET', '/login', [BoneUserController::class, 'loginAction']);
             $route->map('POST', '/login', [BoneUserController::class, 'loginFormAction']);
             $route->map('GET', '/logout', [BoneUserController::class, 'logoutAction']);
-            $route->map('GET', '/register', [BoneUserController::class, 'registerAction']);
-            $route->map('POST', '/register', [BoneUserController::class, 'registerAction']);
             $route->map('GET', '/activate/{email}/{token}', [BoneUserController::class, 'activateAction']);
             $route->map('GET', '/reset-email/{email}/{new-email}/{token}', [BoneUserController::class, 'resetEmailAction']);
             $route->map('GET', '/reset-password/{email}/{token}', [BoneUserController::class, 'resetPasswordAction']);
             $route->map('POST', '/reset-password/{email}/{token}', [BoneUserController::class, 'resetPasswordAction']);
             $route->map('GET', '/resend-activation-mail/{email}', [BoneUserController::class, 'resendActivationEmailAction']);
         });
+
+        $canRegister = true;
+
+        if ($c->has('bone-user')) {
+            $config = $c->get('bone-user');
+            $canRegister = isset($config['enableRegistration']) ? $config['enableRegistration'] : null;
+
+            if ($canRegister) {
+                $router->map('GET', '/user/register', [BoneUserController::class, 'registerAction']);
+                $router->map('POST', '/user/register', [BoneUserController::class, 'registerAction']);
+            }
+        }
 
         $auth = $c->get(SessionAuth::class);
         $router->map('GET', '/user/change-password', [BoneUserController::class, 'changePasswordAction'])->middleware($c->get(SessionAuth::class));
