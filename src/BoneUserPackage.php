@@ -56,10 +56,12 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
 
             if ($c->has('bone-user')) {
                 $options = $c->get('bone-user');
-                $loginRedirectRoute = $options['loginRedirectRoute'] ?? null;
+                $loginRedirectRoute = $options['loginRedirectRoute'] ?? '/user/home';
+                $registrationEnabled = $options['enableRegistration'] ?: true;
+                $profileRequired = $options['requireProfile'] ?: false;
             }
 
-            return  Init::controller(new BoneUserController($userService, $mailService, $loginRedirectRoute, $adminLayout), $c);
+            return  Init::controller(new BoneUserController($userService, $mailService, $loginRedirectRoute, $adminLayout, $registrationEnabled, $profileRequired), $c);
         });
 
         $c[BoneUserApiController::class] = $c->factory(function (Container $c) {

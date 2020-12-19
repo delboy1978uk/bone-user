@@ -61,7 +61,7 @@ $sessionAuth = $c->get(SessionAuth::class); // of course there's a use statement
 $router->map('GET', '/my/route', [MyController::class, 'whateverAction'])->middleware($sessionAuth);
 ```
 Once a route is locked down, in your controller you can get a User object by calling:
-```
+```php
 $user = $request->getAttribute('user');
 ```
 There is also a `SessionAuthRedirect` middleware class, which you can add and which will take the visitor to the login 
@@ -94,15 +94,18 @@ return [
     ],
 ];
 ````
-### redirecting after login
+### config settings
 If you'd like to go to your own controller upon login, create a config with the key `bone-user`, and add the URL you 
-wish to redirect to.
+wish to redirect to. You can also disable the `/user/register` end point, and you can make filling in a profile a 
+requirement.
 ```php
-<?php
+<?php /* config/bone-user.php */
 
 return [
     'bone-user' => [
-        'loginRedirectRoute' => '/my/custom/user-home-page',
+        'loginRedirectRoute' => '/admin',
+        'enableRegistration' => true,
+        'requireProfile' => false,
     ],
 ];
 ````

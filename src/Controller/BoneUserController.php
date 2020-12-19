@@ -18,6 +18,7 @@ use Bone\User\Form\PersonForm;
 use Bone\User\Form\RegistrationForm;
 use Bone\User\Form\ResetPasswordForm;
 use DateTime;
+use Del\Entity\User;
 use Del\Exception\EmailLinkException;
 use Del\Exception\UserException;
 use Del\Factory\CountryFactory;
@@ -52,17 +53,25 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
     /** @var string $adminLayout */
     private $adminLayout;
 
+    /** @var bool $registrationEnabled */
+    private $registrationEnabled;
+
+    /** @var bool $profileRequired */
+    private $profileRequired;
+
     /**
      * BoneUserController constructor.
      * @param UserService $userService
      * @param MailService $mailService
      */
-    public function __construct(UserService $userService, MailService $mailService, string $loginRedirectRoute = '/user/home', string $adminLayout)
+    public function __construct(UserService $userService, MailService $mailService, string $loginRedirectRoute = '/user/home', string $adminLayout, bool $registrationEnabled = true, $profileRequired = false)
     {
         $this->userService = $userService;
         $this->mailService = $mailService;
         $this->loginRedirectRoute = $loginRedirectRoute;
         $this->adminLayout = $adminLayout;
+        $this->registrationEnabled = $registrationEnabled;
+        $this->profileRequired = $profileRequired;
     }
 
     /**
@@ -242,6 +251,10 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
                 $user = $this->userService->findUserById($userId);
                 $user->setLastLogin(new DateTime());
                 $this->userService->saveUser($user);
+
+                if ($this->profileRequired && !$this->userService->hasProfile($user)) {
+                    $this->loginRedirectRoute = '/user/edit-profile';
+                }
 
                 return new RedirectResponse('/' . $locale . $this->loginRedirectRoute);
             }
