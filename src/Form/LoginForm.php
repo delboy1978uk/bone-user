@@ -3,6 +3,7 @@
 namespace Bone\User\Form;
 
 use Bone\I18n\Form;
+use Del\Form\Field\CheckBox;
 use Del\Form\Field\Submit;
 use Del\Form\Field\Text\EmailAddress;
 use Del\Form\Field\Text\Password;
@@ -32,6 +33,15 @@ class LoginForm extends Form
         $password->setAttribute('placeholder', $translator->translate('form.password.placeholder', 'user'));
         $password->setCustomErrorMessage($translator->translate('form.password.error', 'user'));
 
+        $checkbox = new CheckBox('remember');
+        $checkbox->setLabel('Remember me');
+        $checkbox->setOptions([
+            1 => '1 week',
+            2 => '1 month',
+            3 => '1 year',
+        ]);
+        $checkbox->setRenderInline(true);
+
         $submit = new Submit('submit');
         $submit->setValue($translator->translate('user.login', 'user'));
 
@@ -42,6 +52,7 @@ class LoginForm extends Form
 
         $this->addField($email);
         $this->addField($password);
+        $this->addField($checkbox);
         $this->addField($submit);
         $this->setFormRenderer($renderer);
     }

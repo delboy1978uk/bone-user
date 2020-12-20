@@ -33,7 +33,15 @@ class SessionAuth implements MiddlewareInterface, SessionAwareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        if ($id = $this->getSession()->get('user')) {
+        $cookies = $request->getCookieParams();
+        $id = $this->getSession()->get('user');
+
+        if (!$id && isset($cookies['user'])) {
+            /** @todo  This needs to be a secure token */
+//            $id = $cookies['user'];
+        }
+
+        if ($id) {
             $user = $this->userService->findUserById($id);
             $request = $request->withAttribute('user', $user);
             $response = $handler->handle($request);

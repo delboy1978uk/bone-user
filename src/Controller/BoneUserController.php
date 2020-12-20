@@ -243,6 +243,26 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
                 $session->set('user', $userId);
                 $session->set('locale', $locale);
 
+                if (isset($data['remember'])) {
+                    switch ($data['remember']) {
+                        case 1:
+                            $time = 60 * 60 * 24 * 7;
+                            break;
+                        case 1:
+                            $time = 60 * 60 * 24 * 30;
+                            break;
+                        case 1:
+                            $time = 60 * 60 * 24 * 365;
+                            break;
+                        default:
+                            $time = 0;
+                            break;
+                    }
+                    $time = time() + $time;
+                    /** @todo  This needs to be a secure token */
+                    \setcookie('user', (string) $userId, \time() * 2, '/');
+                }
+
                 if ($route = $session->get('loginRedirectRoute')) {
                     $this->loginRedirectRoute = $route;
                     $session->destroy('loginRedirectRoute');
