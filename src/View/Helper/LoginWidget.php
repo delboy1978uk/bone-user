@@ -2,6 +2,7 @@
 
 namespace Bone\User\View\Helper;
 
+use Del\Image;
 use Del\Service\UserService;
 use Del\SessionManager;
 use League\Plates\Engine;
@@ -10,19 +11,29 @@ use Laminas\I18n\Translator\Translator;
 
 class LoginWidget implements ExtensionInterface
 {
+    /** @var UserService  $userService */
     private $userService;
 
+    /** @var Translator $translator */
     private $translator;
+
+    /** @var SessionManager $sessionManager */
+    private $sessionManager;
+
+    /** @var string $uploadFolder */
+    private $uploadFolder;
 
     /**
      * LoginWidget constructor.
      * @param UserService $userService
      * @param Translator $translator
      */
-    public function __construct(UserService $userService, Translator $translator)
+    public function __construct(UserService $userService, Translator $translator, SessionManager $sessionManager, string $uploadFolder)
     {
         $this->userService = $userService;
         $this->translator = $translator;
+        $this->sessionManager = $sessionManager;
+        $this->uploadFolder = $uploadFolder;
     }
 
     /**
@@ -33,37 +44,42 @@ class LoginWidget implements ExtensionInterface
         $engine->registerFunction('loginWidget', [$this, 'loginWidget']);
     }
 
-
-    public function loginWidget()
+    /**
+     * @return string
+     * @throws Image\Exception\NothingLoadedException
+     */
+    public function loginWidget(): string
     {
         $locale = $this->translator->getLocale();
 
-        if ($id = SessionManager::get('user')) {
+        if ($id = $this->sessionManager->get('user')) {
             $user = $this->userService->findUserById($id);
             $person = $user->getPerson();
-            $html = '<li class="dropdown">';
+            $html = '<li class="nav-item dropdown">';
+
             if ($person->getImage()) {
-                $html .= '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <img id="user-avatar" src="/download?file=' . $person->getImage() . '" class="navatar img-responsive img-circle pull-left" />';
-                $html .=  $person->getAka() ?: $user->getEmail();
-                $html .= '<span class="caret"></span></a>';
+                $image = new Image($this->uploadFolder . $person->getImage());
+                $html .= '<a id="user-dropdown" href="#" class="nav-link dropdown-toggle avatar" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <img id="user-avatar" src="' . $image->outputBase64Src() . '" class="img-rounded img-circle" />';
+                $html .=  $person->getAka() ?: $user->getEmail() . '</a>';
             } else {
-                $html .= '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">' . $user->getEmail() . ' <span class="caret"></span></a>';
+                $html .= '<a id="user-dropdown" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">' . $user->getEmail() . '</a>';
             }
 
-            $html .= '<ul class="dropdown-menu rampant-dropdown">
-                            <li><a href="/' . $locale . '/user/change-email">Change Email</a></li>
-                            <li><a href="/' . $locale . '/user/change-password">Change Password</a></li>
-                            <li><a href="/' . $locale . '/user/edit-profile">Edit Profile</a></li>
-                            <li class="divider"></li>
-                            <li><a href="/' . $locale . '/user/logout">Logout</a></li>
-                        </ul>
+            $html .=  '<div class="dropdown-menu login-widget" aria-labelledby="user-dropdown">
+                            <a class="dropdown-item" href="/' . $locale . '/user/change-email">Change Email</a>
+                            <a class="dropdown-item" href="/' . $locale . '/user/change-password">Change Password</a>
+                            <a class="dropdown-item" href="/' . $locale . '/user/edit-profile">Edit Profile</a>
+                            <a class="dropdown-item" href="/' . $locale . '/user/logout">Logout</a>
+                        </div>
                     </li>';
 
             return $html;
-        } else {
-            return '<li><a href="/' . $locale . '/user/login">Login</a></li>';
+
         }
+
+        return '<li class="nav-item"><a class="nav-link" href="/' . $locale . '/user/login">Login</a></li>';
+
     }
     
 

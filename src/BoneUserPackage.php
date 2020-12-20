@@ -133,7 +133,9 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
     {
         $userService = $c->get(UserService::class);
         $mailService = $c->get(Translator::class);
-        $loginWidget = new LoginWidget($userService, $mailService);
+        $sessionManager = $c->get(SessionManager::class);
+        $uploadFolder = $c->get('uploads_dir');
+        $loginWidget = new LoginWidget($userService, $mailService, $sessionManager, $uploadFolder);
 
         return [$loginWidget];
     }
