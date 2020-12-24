@@ -4,6 +4,7 @@ namespace Bone\User\Form;
 
 use Bone\I18n\Form;
 use Del\Form\Field\CheckBox;
+use Del\Form\Field\Radio;
 use Del\Form\Field\Submit;
 use Del\Form\Field\Text\EmailAddress;
 use Del\Form\Field\Text\Password;
@@ -13,6 +14,10 @@ use Laminas\Filter\StringToLower;
 
 class LoginForm extends Form
 {
+    const REMEMBER_WEEK = 1;
+    const REMEMBER_MONTH = 2;
+    const REMEMBER_YEAR = 3;
+
     public function init()
     {
         $translator= $this->getTranslator();
@@ -33,12 +38,12 @@ class LoginForm extends Form
         $password->setAttribute('placeholder', $translator->translate('form.password.placeholder', 'user'));
         $password->setCustomErrorMessage($translator->translate('form.password.error', 'user'));
 
-        $checkbox = new CheckBox('remember');
+        $checkbox = new Radio('remember');
         $checkbox->setLabel('Remember me');
         $checkbox->setOptions([
-            1 => '1 week',
-            2 => '1 month',
-            3 => '1 year',
+            self::REMEMBER_WEEK => '1 week',
+            self::REMEMBER_MONTH => '1 month',
+            self::REMEMBER_YEAR => '1 year',
         ]);
         $checkbox->setRenderInline(true);
 

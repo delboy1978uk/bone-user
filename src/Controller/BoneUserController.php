@@ -6,6 +6,7 @@ use Bone\Http\Response\HtmlResponse;
 use Bone\Http\Response\LayoutResponse;
 use Bone\I18n\Form;
 use Bone\Controller\Controller;
+use Bone\Paseto\PasetoService;
 use Bone\Server\SiteConfigAwareInterface;
 use Bone\Server\Traits\HasSiteConfigTrait;
 use Bone\View\ViewEngine;
@@ -59,12 +60,20 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
     /** @var bool $profileRequired */
     private $profileRequired;
 
+    /** @var bool $rememberMeCookie */
+    private $rememberMeCookie;
+
+    /** @var PasetoService $pasetoService */
+    private $pasetoService = null;
+
     /**
      * BoneUserController constructor.
      * @param UserService $userService
      * @param MailService $mailService
      */
-    public function __construct(UserService $userService, MailService $mailService, string $loginRedirectRoute = '/user/home', string $adminLayout, bool $registrationEnabled = true, $profileRequired = false)
+    public function __construct(UserService $userService, MailService $mailService, string $loginRedirectRoute = '/user/home',
+                                string $adminLayout, PasetoService $pasetoService, bool $registrationEnabled = true, $profileRequired = false,
+                                bool $rememberMeCookie = true)
     {
         $this->userService = $userService;
         $this->mailService = $mailService;
@@ -72,6 +81,9 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
         $this->adminLayout = $adminLayout;
         $this->registrationEnabled = $registrationEnabled;
         $this->profileRequired = $profileRequired;
+        $this->rememberMeCookie = $rememberMeCookie;
+        $this->profileRequired = $profileRequired;
+        $this->pasetoService = $pasetoService;
     }
 
     /**
@@ -85,7 +97,6 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
 
         return $this->logo;
     }
-
 
     /**
      * @param ServerRequestInterface $request
@@ -204,6 +215,13 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
         return new HtmlResponse($body);
     }
 
+    private function initForm(LoginForm $form)
+    {
+        if ($this->rememberMeCookie === false) {
+            $form->getFields()->removeByName('remember');
+        }
+    }
+
 
     /**
      * @param ServerRequestInterface $request
@@ -212,7 +230,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
     public function loginAction(ServerRequestInterface $request): ResponseInterface
     {
         $form = new LoginForm('userlogin', $this->getTranslator());
-
+        $this->initForm($form);
         $body = $this->getView()->render('boneuser::login', ['form' => $form, 'logo' => $this->getLogo()]);
 
         return new HtmlResponse($body);
@@ -227,6 +245,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
     {
         $translator = $this->getTranslator();
         $form = new LoginForm('userlogin', $translator);
+        $this->initForm($form);
         $post = $request->getParsedBody();
         $form->populate($post);
         $params = ['form' => $form];
@@ -242,26 +261,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
                 $session = $this->getSession();
                 $session->set('user', $userId);
                 $session->set('locale', $locale);
-
-                if (isset($data['remember'])) {
-                    switch ($data['remember']) {
-                        case 1:
-                            $time = 60 * 60 * 24 * 7;
-                            break;
-                        case 1:
-                            $time = 60 * 60 * 24 * 30;
-                            break;
-                        case 1:
-                            $time = 60 * 60 * 24 * 365;
-                            break;
-                        default:
-                            $time = 0;
-                            break;
-                    }
-                    $time = time() + $time;
-                    /** @todo  This needs to be a secure token */
-                    \setcookie('user', (string) $userId, \time() * 2, '/');
-                }
+                $this->rememberMeCookie && isset($data['remember']) ? $this->setCookie((int) $data['remember'], $userId) : null;
 
                 if ($route = $session->get('loginRedirectRoute')) {
                     $this->loginRedirectRoute = $route;
@@ -307,6 +307,36 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
     }
 
     /**
+     * @param int $length
+     * @param int $userId
+     * @throws \ParagonIE\Paseto\Exception\InvalidKeyException
+     * @throws \ParagonIE\Paseto\Exception\InvalidPurposeException
+     * @throws \ParagonIE\Paseto\Exception\PasetoException
+     */
+    private function setCookie(int $length, int $userId): void
+    {
+        switch ($length) {
+            case 1:
+                $time = 60 * 60 * 24 * 7;
+                break;
+            case 1:
+                $time = 60 * 60 * 24 * 30;
+                break;
+            case 1:
+                $time = 60 * 60 * 24 * 365;
+                break;
+            default:
+                $time = 0;
+                break;
+        }
+        $time = time() + $time;
+        $token = $this->pasetoService->encryptToken([
+            'user' => $userId,
+        ]);
+        \setcookie('resu', $token, \time() * 2, '/');
+    }
+
+    /**
      * @param ServerRequestInterface $request
      * @return ResponseInterface
      */
@@ -333,6 +363,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
     public function logoutAction(ServerRequestInterface $request): ResponseInterface
     {
         SessionManager::destroySession();
+        \setcookie('resu', false, 1, '/');
 
         return new RedirectResponse(new Uri('/'));
     }

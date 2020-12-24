@@ -8,6 +8,7 @@ Simply add the Package to Bone's module config
 // use statements here
 use Bone\BoneDoctrine\BoneDoctrinePackage;
 use Bone\Mail\MailPackage;
+use Bone\Paseto\PasetoPackage;
 use Bone\User\BoneUserPackage;
 use Del\Person\PersonPackage;
 use Del\UserPackage;
@@ -17,6 +18,7 @@ return [
         // packages here (order is important)...,
         MailPackage::class,
         BoneDoctrinePackage::class,
+        PasetoPackage::class,
         PersonPackage::class,
         UserPackage::class,
         BoneUserPackage::class,
@@ -48,11 +50,6 @@ Once installed head to your site (by default using the Bone Framework Docker dev
 `https://awesome.scot/user`) and register yourself as a user. Again if using the provided dev environment, check your 
 MailHog server at `https://awesome.scot:8025` to see any outgoing mails in a convenient web inbox. Activate your account
 etc! You can see all of the available endpoints in `src/BoneUserPackage.php` in the `addRoutes()` section.
-### the user - in code
-You can get the logged in user from the `Psr\Http\Message\ServerRequestInterface` like so:
-```php
-$user = $request->getAttribute('user');
-``` 
 ### authorization middleware
 You can lock down a route to make it available to a logged in user by adding the session authorization middleware
 `Bone\User\Http\Middleware\SessionAuth` like so:
@@ -106,7 +103,9 @@ return [
         'loginRedirectRoute' => '/admin',
         'enableRegistration' => true,
         'requireProfile' => false,
+        'rememberMeCookie' => true
     ],
 ];
 ````
+
 That's about it! The rest should autocomplete in your IDE, and it's all pretty straightforward! Have fun.

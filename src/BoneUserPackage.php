@@ -14,6 +14,7 @@ use Bone\Controller\Init;
 use Bone\Mail\Service\MailService;
 use Bone\OAuth2\Http\Middleware\ResourceServerMiddleware;
 use Bone\OAuth2\Http\Middleware\ScopeCheck;
+use Bone\Paseto\PasetoService;
 use Bone\Server\SiteConfig;
 use Bone\User\Controller\BoneUserApiController;
 use Bone\User\Controller\BoneUserController;
@@ -50,18 +51,23 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
             $mailService = $c->get(MailService::class);
             /** @var UserService $userService */
             $userService = $c->get(UserService::class);
+            $pasetoService = $c->get(PasetoService::class);
             $loginRedirectRoute = '/user/home';
             $defaultLayout = $c->get('default_layout');
             $adminLayout = $c->has('admin_layout') ? $c->get('admin_layout') : $defaultLayout;
+            $rememberMeCookie = false;
 
             if ($c->has('bone-user')) {
                 $options = $c->get('bone-user');
                 $loginRedirectRoute = $options['loginRedirectRoute'] ?? '/user/home';
                 $registrationEnabled = $options['enableRegistration'] ?: true;
                 $profileRequired = $options['requireProfile'] ?: false;
+                $rememberMeCookie = $options['rememberMeCookie'] ?? false;
             }
 
-            return  Init::controller(new BoneUserController($userService, $mailService, $loginRedirectRoute, $adminLayout, $registrationEnabled, $profileRequired), $c);
+            $controller = new BoneUserController($userService, $mailService, $loginRedirectRoute, $adminLayout, $pasetoService, $registrationEnabled, $profileRequired, $rememberMeCookie);
+
+            return  Init::controller($controller, $c);
         });
 
         $c[BoneUserApiController::class] = $c->factory(function (Container $c) {
@@ -81,8 +87,10 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
             $session = $c->get(SessionManager::class);
             /** @var UserService $userService */
             $userService = $c->get(UserService::class);
+            /** @var PasetoService $pasetoService */
+            $pasetoService = $c->get(PasetoService::class);
 
-            return new SessionAuth($session, $userService);
+            return new SessionAuth($session, $userService, $pasetoService);
         });
 
         $c[SessionAuthRedirect::class] = $c->factory(function (Container $c) {

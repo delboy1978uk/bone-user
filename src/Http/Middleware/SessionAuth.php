@@ -3,6 +3,7 @@
 namespace Bone\User\Http\Middleware;
 
 use Bone\Http\Response;
+use Bone\Paseto\PasetoService;
 use Bone\Server\SessionAwareInterface;
 use Bone\Server\Traits\HasSessionTrait;
 use Del\Exception\UserException;
@@ -20,10 +21,14 @@ class SessionAuth implements MiddlewareInterface, SessionAwareInterface
     /** @var UserService $userService */
     private $userService;
 
-    public function __construct(SessionManager $sessionManager, UserService $userService)
+    /** @var PasetoService $pasetoService */
+    private $pasetoService;
+
+    public function __construct(SessionManager $sessionManager, UserService $userService, PasetoService $pasetoService)
     {
         $this->setSession($sessionManager);
         $this->userService = $userService;
+        $this->pasetoService = $pasetoService;
     }
 
     /**
@@ -36,9 +41,11 @@ class SessionAuth implements MiddlewareInterface, SessionAwareInterface
         $cookies = $request->getCookieParams();
         $id = $this->getSession()->get('user');
 
-        if (!$id && isset($cookies['user'])) {
-            /** @todo  This needs to be a secure token */
-//            $id = $cookies['user'];
+        if (!$id && isset($cookies['resu'])) {
+            $string = $cookies['resu'];
+            $token = $this->pasetoService->decryptToken($string);
+            $id = $token->getClaims()['user'];
+            $this->getSession()->set('user', $id);
         }
 
         if ($id) {
