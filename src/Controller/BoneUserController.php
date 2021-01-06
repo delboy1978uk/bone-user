@@ -363,7 +363,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
     public function logoutAction(ServerRequestInterface $request): ResponseInterface
     {
         SessionManager::destroySession();
-        \setcookie('resu', false, 1, '/');
+        \setcookie('resu', '', 1, '/');
 
         return new RedirectResponse(new Uri('/'));
     }
