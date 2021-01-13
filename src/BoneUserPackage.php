@@ -98,8 +98,10 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
             $session = $c->get(SessionManager::class);
             /** @var UserService $userService */
             $userService = $c->get(UserService::class);
+            /** @var PasetoService $pasetoService */
+            $pasetoService = $c->get(PasetoService::class);
 
-            return new SessionAuthRedirect($session, $userService);
+            return new SessionAuthRedirect($session, $userService, $pasetoService);
         });
     }
 
