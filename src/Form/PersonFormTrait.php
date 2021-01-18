@@ -3,6 +3,7 @@
 namespace Bone\User\Form;
 
 use Bone\User\Form\Transformer\CountryTransformer;
+use Del\Form\Field\FieldInterface;
 use Del\Form\Field\Hidden;
 use Del\Form\Field\Select;
 use Del\Form\Field\Text;
@@ -57,13 +58,18 @@ trait PersonFormTrait
         $image = new Hidden('image');
         $image->setId('image');
 
-        in_array('firstname', $this->disabledFields) ? null : $form->addField($firstName);
-        in_array('middlename', $this->disabledFields) ? null : $form->addField($middleName);
-        in_array('lastname', $this->disabledFields) ? null : $form->addField($lastName);
-        in_array('aka', $this->disabledFields) ? null : $form->addField($aka);
-        in_array('dob', $this->disabledFields) ? null : $form->addField($dob);
-        in_array('birthplace', $this->disabledFields) ? null : $form->addField($birthPlace);
-        in_array('country', $this->disabledFields) ? null : $form->addField($country);
-        in_array('image', $this->disabledFields) ? null : $form->addField($image);
+        $this->addFieldIfEnabled('firstname', $firstName, $form);
+        $this->addFieldIfEnabled('middlename', $firstName, $form);
+        $this->addFieldIfEnabled('lastname', $firstName, $form);
+        $this->addFieldIfEnabled('aka', $firstName, $form);
+        $this->addFieldIfEnabled('dob', $firstName, $form);
+        $this->addFieldIfEnabled('birthplace', $firstName, $form);
+        $this->addFieldIfEnabled('country', $firstName, $form);
+        $this->addFieldIfEnabled('image', $firstName, $form);
+    }
+
+    private function addFieldIfEnabled(string $name, FieldInterface $field, FormInterface $form)
+    {
+        in_array($name, $this->disabledFields) ? null : $form->addField($field);
     }
 }

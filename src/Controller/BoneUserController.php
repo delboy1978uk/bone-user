@@ -502,7 +502,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
                         $this->userService->deleteEmailLink($link);
                         $message = [$translator->translate('email.resetpass.success', 'user'), 'success'];
                         $success = true;
-                        SessionManager::set('user', $user->getId());
+                        $this->getSession()->set('user', $user->getId());
                     } else {
                         $message = [$translator->translate('email.resetpass.nomatch', 'user'), 'danger'];
                         $form = new ResetPasswordForm('resetpass');
@@ -518,7 +518,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
         if (isset($message)) {
             $params['message'] = $message;
         }
-        
+
         $params['success'] = $success;
         $params['form'] = $form;
         $params['logo'] = $this->getLogo();
@@ -592,8 +592,9 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
 
             $data = $request->getParsedBody();
             $form->populate($data);
+            $message = null;
 
-            if ($form->isValid($data)) {
+            if ($form->isValid()) {
 
                 $newEmail = $form->getField('email')->getValue();
                 $password = $form->getField('password')->getValue();
@@ -604,8 +605,6 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
                     $message = [$translator->translate('email.changeemail.registered', 'user') . $this->getSiteConfig()->getTitle() . '.', 'danger'];
                 } else {
                     if ($this->userService->checkPassword($user, $password)) {
-
-                        $link = $this->userService->generateEmailLink($user);
 
                         try {
 
@@ -628,7 +627,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
                             unset ($params['form']);
 
                         } catch (Exception $e) {
-                            $message = [$translator->translate('email.changeemail.notsent', 'user') . $this->config->email->support . '.', 'danger'];
+                            $message = [$translator->translate('email.changeemail.notsent', 'user') . $this->getSiteConfig()->getContactEmail() . '.', 'danger'];
                         }
 
                     } else {
