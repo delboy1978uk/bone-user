@@ -467,16 +467,16 @@
         },
         {
             "name": "delboy1978uk/bone-http",
-            "version": "v2.2.2",
+            "version": "v2.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/delboy1978uk/bone-http.git",
-                "reference": "10fbd0cd77bdcc54744bf40ee696cfbf13d808ec"
+                "reference": "3cfb1c475135777ebc83f2ecd7028bfa572df661"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/delboy1978uk/bone-http/zipball/10fbd0cd77bdcc54744bf40ee696cfbf13d808ec",
-                "reference": "10fbd0cd77bdcc54744bf40ee696cfbf13d808ec",
+                "url": "https://api.github.com/repos/delboy1978uk/bone-http/zipball/3cfb1c475135777ebc83f2ecd7028bfa572df661",
+                "reference": "3cfb1c475135777ebc83f2ecd7028bfa572df661",
                 "shasum": ""
             },
             "require": {
@@ -511,9 +511,9 @@
             "description": "Http package for Bone MVC Framework",
             "support": {
                 "issues": "https://github.com/delboy1978uk/bone-http/issues",
-                "source": "https://github.com/delboy1978uk/bone-http/tree/v2.2.2"
+                "source": "https://github.com/delboy1978uk/bone-http/tree/v2.2.3"
             },
-            "time": "2020-12-13T15:35:54+00:00"
+            "time": "2021-01-18T01:02:43+00:00"
         },
         {
             "name": "delboy1978uk/bone-i18n",
