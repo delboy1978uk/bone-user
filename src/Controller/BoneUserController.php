@@ -246,7 +246,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
         $translator = $this->getTranslator();
         $form = new LoginForm('userlogin', $translator);
         $this->initForm($form);
-        $post = $request->getParsedBody();
+        $post = $request->getParsedBody() ?: [];
         $form->populate($post);
         $params = ['form' => $form];
 
@@ -261,11 +261,11 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
                 $session = $this->getSession();
                 $session->set('user', $userId);
                 $session->set('locale', $locale);
-                $this->rememberMeCookie && isset($data['remember']) ? $this->setCookie((int) $data['remember'], $userId) : null;
+                $this->rememberMeCookie && isset($data['remember']) ? $this->setCookie((int)$data['remember'], $userId) : null;
 
                 if ($route = $session->get('loginRedirectRoute')) {
                     $this->loginRedirectRoute = $route;
-                    $session->destroy('loginRedirectRoute');
+                    $session->unset('loginRedirectRoute');
                 }
 
                 $user = $this->userService->findUserById($userId);
@@ -417,6 +417,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
             'message' => null,
             'logo' => $this->getLogo(),
         ]);
+
         return new HtmlResponse($body);
     }
 
@@ -428,7 +429,6 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
     public function forgotPasswordAction(ServerRequestInterface $request): ResponseInterface
     {
         $email = $request->getAttribute('email');
-
         $user = $this->userService->findUserByEmail($email);
 
         if (!$user) {
@@ -436,7 +436,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
         }
 
         if ($user->getState()->getValue() == State::STATE_UNACTIVATED) {
-            $this->forward('resend-activation-mail');
+            return new RedirectResponse('/user/resend-activation-mail/' . $email);
         }
 
         try {
@@ -480,8 +480,8 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
         $translator = $this->getTranslator();
         $params = [];
         $success = false;
-
         $user = $this->userService->findUserByEmail($email);
+
         if (!$user) {
             throw new Exception(UserException::USER_NOT_FOUND, 404);
         }
@@ -496,6 +496,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
 
                 if ($form->isValid()) {
                     $data = $form->getValues();
+
                     if ($data['password'] === $data['confirm']) {
                         $this->userService->changePassword($user, $data['password']);
                         $this->userService->deleteEmailLink($link);
@@ -517,6 +518,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
         if (isset($message)) {
             $params['message'] = $message;
         }
+        
         $params['success'] = $success;
         $params['form'] = $form;
         $params['logo'] = $this->getLogo();
@@ -546,14 +548,14 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
                 $data = $form->getValues();
                 if ($data['password'] === $data['confirm']) {
                     $this->userService->changePassword($user, $data['password']);
-                    $message = [Icon::CHECK_CIRCLE . ' ' .$translator->translate('email.resetpass.success', 'user'), 'success'];
+                    $message = [Icon::CHECK_CIRCLE . ' ' . $translator->translate('email.resetpass.success', 'user'), 'success'];
                     $success = true;
                 } else {
-                    $message = [Icon::WARNING . ' ' . $translator->translate('email.resetpass.nomatch', 'user') , 'danger'];
+                    $message = [Icon::WARNING . ' ' . $translator->translate('email.resetpass.nomatch', 'user'), 'danger'];
                     $form = new ResetPasswordForm('resetpass');
                 }
-            }  else {
-                $message = [Icon::WARNING . ' There was a problem with your form.' , 'danger'];
+            } else {
+                $message = [Icon::WARNING . ' There was a problem with your form.', 'danger'];
             }
         }
 
