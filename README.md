@@ -1,5 +1,6 @@
 # bone-user
 [![Latest Stable Version](https://poser.pugx.org/delboy1978uk/bone-user/v/stable)](https://packagist.org/packages/delboy1978uk/bone-user) [![Build Status](https://travis-ci.com/delboy1978uk/bone-user.png?branch=master)](https://travis-ci.com/delboy1978uk/bone-user) [![Code Coverage](https://scrutinizer-ci.com/g/delboy1978uk/bone-user/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/delboy1978uk/bone-user/?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/delboy1978uk/bone-user/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/delboy1978uk/bone-user/?branch=master) [![License](https://poser.pugx.org/delboy1978uk/bone-user/license)](https://packagist.org/packages/delboy1978uk/bone-user)
+
 User registration and login package for Bone Framework
 ## setup
 Simply add the Package to Bone's module config
