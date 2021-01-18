@@ -41,11 +41,6 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
      */
     public function addToContainer(Container $c)
     {
-        if (!$c->has(UserService::class)) {
-            $package = new UserPackage();
-            $package->addToContainer($c);
-        }
-
         $c[BoneUserController::class] = $c->factory(function (Container $c) {
             /** @var MailService $mailService */
             $mailService = $c->get(MailService::class);
@@ -148,15 +143,6 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
         $loginWidget = new LoginWidget($userService, $mailService, $sessionManager, $uploadFolder);
 
         return [$loginWidget];
-    }
-
-    /**
-     * @param Stack $stack
-     * @param Container $container
-     */
-    public function addMiddleware(Stack $stack, Container $container): void
-    {
-        // TODO: Implement addMiddleware() method.
     }
 
 
