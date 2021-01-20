@@ -217,9 +217,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
 
     private function initForm(LoginForm $form)
     {
-        if ($this->rememberMeCookie === false) {
-            $form->getFields()->removeByName('remember');
-        }
+        $this->rememberMeCookie === false ? $form->getFields()->removeByName('remember') : null;
     }
 
 
@@ -246,7 +244,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
         $translator = $this->getTranslator();
         $form = new LoginForm('userlogin', $translator);
         $this->initForm($form);
-        $post = $request->getParsedBody() ?: [];
+        $post = $request->getParsedBody();
         $form->populate($post);
         $params = ['form' => $form];
 
@@ -315,21 +313,14 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
      */
     private function setCookie(int $length, int $userId): void
     {
-        switch ($length) {
-            case 1:
-                $time = 60 * 60 * 24 * 7;
-                break;
-            case 1:
-                $time = 60 * 60 * 24 * 30;
-                break;
-            case 1:
-                $time = 60 * 60 * 24 * 365;
-                break;
-            default:
-                $time = 0;
-                break;
-        }
-        $time = time() + $time;
+        $times = [
+            1 => 60 * 60 * 24 * 7,
+            2 => 60 * 60 * 24 * 30,
+            3 => 60 * 60 * 24 * 365,
+        ];
+
+        $time = array_key_exists($length, $times) ? $times[$length] : 0;
+        $time += \time();
         $token = $this->pasetoService->encryptToken([
             'user' => $userId,
         ]);
@@ -661,7 +652,6 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
         if ($request->getMethod() === 'POST') {
             $post = $request->getParsedBody();
             $form->populate($post);
-
             if ($form->isValid()) {
                 $data = $form->getValues();
                 $data['image'] = $image;
@@ -705,8 +695,6 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
 
         } catch (EmailLinkException $e) {
             $message = [$e->getMessage(), 'danger'];
-        } catch (Exception $e) {
-            throw $e;
         }
 
         $body = $this->getView()->render('boneuser::reset-email', ['message' => $message, 'logo' => $this->getLogo()]);

@@ -10,9 +10,11 @@ use Bone\Server\SiteConfig;
 use Bone\User\Controller\BoneUserController;
 use Bone\View\ViewEngine;
 use Codeception\TestCase\Test;
+use Del\Entity\EmailLink;
 use Del\Entity\User;
 use Del\Exception\EmailLinkException;
 use Del\Exception\UserException;
+use Del\Person\Entity\Person;
 use Del\Service\UserService;
 use Del\SessionManager;
 use Del\Value\User\State;
@@ -41,6 +43,9 @@ class BoneUserControllerTest extends Test
         $container[SessionManager::class] = SessionManager::getInstance();
         $config->method('getLogo')->willReturn('/img/logo.png');
         $config->method('getTitle')->willReturn('Test Site - Danger');
+        $config->method('getAttribute')->willReturn([
+            'date_format' => 'd/m/Y',
+        ]);
         $view->method('render')->willReturn('content!');
         $translator->method('translate')->willReturn('lorem ipsum');
 
@@ -49,11 +54,12 @@ class BoneUserControllerTest extends Test
         $mailService = $this->createMock(MailService::class);
         $pasetoService = $this->createMock(PasetoService::class);
         $user->method('getEmail')->willReturn('man@work.com');
+        $pasetoService->method('encryptToken')->willReturn('laeikwfdbfgvjkhwebhiq');
         $userService->method('registerUser')->willReturn($user);
         $mailService->method('getSiteConfig')->willReturn($config);
 
         $controller = new BoneUserController($userService, $mailService, '/user/home',
-            'layouts::admin', $pasetoService, true, true, false);
+            'layouts::admin', $pasetoService, true, true, true);
         $controller = Init::controller($controller, $container);
         $this->controller = $controller;
     }
@@ -150,13 +156,6 @@ class BoneUserControllerTest extends Test
         $this->assertInstanceOf(ResponseInterface::class, $response);
     }
 
-    public function testLoginForm()
-    {
-        $request = new ServerRequest();
-        $response = $this->controller->loginFormAction($request);
-        $this->assertInstanceOf(ResponseInterface::class, $response);
-    }
-
     public function testLoginFormWithValidData()
     {
         $this->userServiceMock->method('findUserById')->willReturn(new User());
@@ -165,6 +164,7 @@ class BoneUserControllerTest extends Test
         $request = $request->withParsedBody([
             'email' => 'man@work.com',
             'password' => 'xxxxxx',
+            'remember' => '1',
         ]);
         $response = $this->controller->loginFormAction($request);
         $this->assertInstanceOf(ResponseInterface::class, $response);
@@ -335,6 +335,224 @@ class BoneUserControllerTest extends Test
         $request = new ServerRequest();
         $request = $request->withAttribute('email', 'man@work.com');
         $response = $this->controller->forgotPasswordAction($request);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+    }
+
+    public function testResetPasswordNoUserFound()
+    {
+        $request = new ServerRequest();
+        $request = $request->withAttribute('email', 'man@work.com');
+        $request = $request->withAttribute('token', '3L4FAB');
+        $this->expectException(Exception::class);
+        $this->controller->resetPasswordAction($request);
+    }
+
+    public function testResetPasswordWrongConfirm()
+    {
+        $user = new User();
+        $this->userServiceMock->method('findUserByEmail')->willReturn($user);
+        $request = new ServerRequest();
+        $request = $request->withAttribute('email', 'man@work.com');
+        $request = $request->withAttribute('token', '3L4FAB');
+        $request = $request->withParsedBody([
+            'password' => 'l0r3m1p5um',
+            'confirm' => 'oops',
+        ]);
+        $request = $request->withMethod('POST');
+        $response = $this->controller->resetPasswordAction($request);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+    }
+
+    public function testResetPassword()
+    {
+        $user = new User();
+        $this->userServiceMock->method('findUserByEmail')->willReturn($user);
+        $request = new ServerRequest();
+        $request = $request->withAttribute('email', 'man@work.com');
+        $request = $request->withAttribute('token', '3L4FAB');
+        $request = $request->withParsedBody([
+            'password' => 'l0r3m1p5um',
+            'confirm' => 'l0r3m1p5um',
+        ]);
+        $request = $request->withMethod('POST');
+        $response = $this->controller->resetPasswordAction($request);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+    }
+
+    public function testResetPasswordEmailLinkException()
+    {
+        $user = new User();
+        $this->userServiceMock->method('findUserByEmail')->willReturn($user);
+        $this->userServiceMock->method('findEmailLink')->willThrowException(new EmailLinkException());
+        $request = new ServerRequest();
+        $request = $request->withAttribute('email', 'man@work.com');
+        $request = $request->withAttribute('token', '3L4FAB');
+        $response = $this->controller->resetPasswordAction($request);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+    }
+
+    public function testResetPasswordException()
+    {
+        $user = new User();
+        $this->userServiceMock->method('findUserByEmail')->willReturn($user);
+        $this->userServiceMock->method('findEmailLink')->willThrowException(new Exception());
+        $request = new ServerRequest();
+        $request = $request->withAttribute('email', 'man@work.com');
+        $request = $request->withAttribute('token', '3L4FAB');
+        $this->expectException(Exception::class);
+        $response = $this->controller->resetPasswordAction($request);
+    }
+
+    public function testchangePassword()
+    {
+        $user = new User();
+        $request = new ServerRequest();
+        $request = $request->withParsedBody([
+            'password' => 'l0r3m1p5um',
+            'confirm' => 'l0r3m1p5um',
+        ]);
+        $request = $request->withMethod('POST');
+        $request = $request->withAttribute('user', $user);
+        $response = $this->controller->changePasswordAction($request);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+    }
+
+    public function testchangePasswordWrongConfirm()
+    {
+        $user = new User();
+        $request = new ServerRequest();
+        $request = $request->withParsedBody([
+            'password' => 'l0r3m1p5um',
+            'confirm' => 'oops',
+        ]);
+        $request = $request->withMethod('POST');
+        $request = $request->withAttribute('user', $user);
+        $response = $this->controller->changePasswordAction($request);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+    }
+
+    public function testchangePasswordInvalidForm()
+    {
+        $user = new User();
+        $request = new ServerRequest();
+        $request = $request->withParsedBody([
+            'password' => 'l0r3m1p5um',
+        ]);
+        $request = $request->withMethod('POST');
+        $request = $request->withAttribute('user', $user);
+        $response = $this->controller->changePasswordAction($request);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+    }
+
+    public function testChangeEmailWrongPassword()
+    {
+        $user = new User();
+        $request = new ServerRequest();
+        $request = $request->withParsedBody([
+            'email' => 'man@work.com',
+            'password' => 'l0r3m1p5um',
+        ]);
+        $request = $request->withMethod('POST');
+        $request = $request->withAttribute('user', $user);
+        $response = $this->controller->changeEmailAction($request);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+    }
+
+    public function testChangeEmail()
+    {
+        $link = new EmailLink();
+        $link->setToken('asdfghjkl');
+        $this->userServiceMock->method('generateEmailLink')->willReturn($link);
+        $this->userServiceMock->method('checkPassword')->willReturn(true);
+        $user = new User();
+        $user->setEmail('man@work.com');
+        $request = new ServerRequest();
+        $request = $request->withParsedBody([
+            'email' => 'man@work.com',
+            'password' => 'l0r3m1p5um',
+        ]);
+        $request = $request->withMethod('POST');
+        $request = $request->withAttribute('user', $user);
+        $response = $this->controller->changeEmailAction($request);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+    }
+
+    public function testChangeEmailExistingUser()
+    {
+        $this->userServiceMock->method('findUserByEmail')->willReturn(new User());
+        $user = new User();
+        $user->setEmail('man@work.com');
+        $request = new ServerRequest();
+        $request = $request->withParsedBody([
+            'email' => 'man@work.com',
+            'password' => 'l0r3m1p5um',
+        ]);
+        $request = $request->withMethod('POST');
+        $request = $request->withAttribute('user', $user);
+        $response = $this->controller->changeEmailAction($request);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+    }
+
+    public function testChangeEmailException()
+    {
+        $link = new EmailLink();
+        $link->setToken('asdfghjkl');
+        $this->userServiceMock->method('generateEmailLink')->willThrowException(new Exception());
+        $this->userServiceMock->method('checkPassword')->willReturn(true);
+        $user = new User();
+        $user->setEmail('man@work.com');
+        $request = new ServerRequest();
+        $request = $request->withParsedBody([
+            'email' => 'man@work.com',
+            'password' => 'l0r3m1p5um',
+        ]);
+        $request = $request->withMethod('POST');
+        $request = $request->withAttribute('user', $user);
+        $response = $this->controller->changeEmailAction($request);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+    }
+
+    public function testEditProfile()
+    {
+        $user = new User();
+        $person = new Person();
+        $person->setFirstname('Derek');
+        $person->setLastname('McLean');
+        $person->setDob(new \DateTime('1970-01-01 00:00:00'));
+        $user->setPerson($person);
+        $request = new ServerRequest();
+        $request = $request->withParsedBody([
+            'firstname' => 'Derek',
+            'middlename' => 'Stephen',
+            'lastname' => 'McLean',
+            'dob' => '01/01/1970',
+            'image' => 'blah.jpg',
+            'country' => 'ES',
+        ]);
+        $request = $request->withAttribute('user', $user);
+        $request = $request->withMethod('POST');
+        $response = $this->controller->editProfileAction($request);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+    }
+
+    public function testResetEmail()
+    {
+        $request = new ServerRequest();
+        $request = $request->withAttribute('email', 'boy@work.com');
+        $request = $request->withAttribute('new-email', 'man@work.com');
+        $request = $request->withAttribute('token', 'ABC1234');
+        $response = $this->controller->resetEmailAction($request);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+    }
+
+    public function testResetEmailLinkException()
+    {
+        $this->userServiceMock->method('findEmailLink')->willThrowException(new EmailLinkException());
+        $request = new ServerRequest();
+        $request = $request->withAttribute('email', 'boy@work.com');
+        $request = $request->withAttribute('new-email', 'man@work.com');
+        $request = $request->withAttribute('token', 'ABC1234');
+        $response = $this->controller->resetEmailAction($request);
         $this->assertInstanceOf(ResponseInterface::class, $response);
     }
 }

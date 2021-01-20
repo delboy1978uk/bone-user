@@ -59,13 +59,13 @@ trait PersonFormTrait
         $image->setId('image');
 
         $this->addFieldIfEnabled('firstname', $firstName, $form);
-        $this->addFieldIfEnabled('middlename', $firstName, $form);
-        $this->addFieldIfEnabled('lastname', $firstName, $form);
-        $this->addFieldIfEnabled('aka', $firstName, $form);
-        $this->addFieldIfEnabled('dob', $firstName, $form);
-        $this->addFieldIfEnabled('birthplace', $firstName, $form);
-        $this->addFieldIfEnabled('country', $firstName, $form);
-        $this->addFieldIfEnabled('image', $firstName, $form);
+        $this->addFieldIfEnabled('middlename', $middleName, $form);
+        $this->addFieldIfEnabled('lastname', $lastName, $form);
+        $this->addFieldIfEnabled('aka', $aka, $form);
+        $this->addFieldIfEnabled('dob', $dob, $form);
+        $this->addFieldIfEnabled('birthplace', $birthPlace, $form);
+        $this->addFieldIfEnabled('country', $country, $form);
+        $this->addFieldIfEnabled('image', $image, $form);
     }
 
     private function addFieldIfEnabled(string $name, FieldInterface $field, FormInterface $form)
