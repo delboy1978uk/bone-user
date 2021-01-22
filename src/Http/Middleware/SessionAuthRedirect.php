@@ -52,7 +52,6 @@ class SessionAuthRedirect implements MiddlewareInterface, SessionAwareInterface
         if ($id) {
             $user = $this->userService->findUserById($id);
             $request = $request->withAttribute('user', $user);
-
             $response = $handler->handle($request);
 
             if ($response instanceof Response) {

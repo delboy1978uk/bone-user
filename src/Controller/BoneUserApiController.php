@@ -16,6 +16,7 @@ use Del\Entity\Country;
 use Del\Exception\UserException;
 use Del\Factory\CountryFactory;
 use Del\Form\Form;
+use Exception;
 use Bone\Controller\Controller;
 use Bone\Mail\Service\MailService;
 use Bone\User\Form\PersonForm;
@@ -94,6 +95,7 @@ class BoneUserApiController extends Controller
         $form = new Form('upload');
         $file = new FileUpload('avatar');
         $file->setUploadDirectory($this->tempDirectory);
+        $file->setRequired(true);
         $form->addField($file);
 
         if ($form->isValid($data)) {

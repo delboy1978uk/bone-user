@@ -15,6 +15,7 @@ use Del\Entity\EmailLink;
 use Del\Entity\User;
 use Del\Exception\EmailLinkException;
 use Del\Exception\UserException;
+use Del\Image;
 use Del\Person\Entity\Person;
 use Del\Service\UserService;
 use Del\SessionManager;
@@ -111,6 +112,54 @@ class ApiControllerTest extends Test
         $this->assertInstanceOf(ResponseInterface::class, $response);
     }
 
+    public function testUploadAvatarPortrait()
+    {
+        $image = new Image('data/assets/img/avatars/gorilla.png');
+        $image->crop(round($image->getWidth() / 2), $image->getHeight());
+        $image->save('tests/_data/img/gorilla.png');
+        $user = new User();
+        $person = new Person();
+        $user->setPerson($person);
+        $_FILES = [
+            'avatar' => [
+                'name' => 'gorilla.png',
+                'type' => 'image/png',
+                'tmp_name' => 'gorilla.png',
+                'error' => 0,
+                'size' => 12345,
+            ],
+        ];
+        $request = new ServerRequest();
+        $request = $request->withParsedBody(['image' => 'whatever.png']);
+        $request = $request->withAttribute('user', $user);
+        $response = $this->controller->uploadAvatarAction($request);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+    }
+
+    public function testUploadAvatarLandscape()
+    {
+        $image = new Image('data/assets/img/avatars/gorilla.png');
+        $image->crop($image->getWidth(), round($image->getHeight() / 2));
+        $image->save('tests/_data/img/gorilla.png');
+        $user = new User();
+        $person = new Person();
+        $user->setPerson($person);
+        $_FILES = [
+            'avatar' => [
+                'name' => 'gorilla.png',
+                'type' => 'image/png',
+                'tmp_name' => 'gorilla.png',
+                'error' => 0,
+                'size' => 12345,
+            ],
+        ];
+        $request = new ServerRequest();
+        $request = $request->withParsedBody(['image' => 'whatever.png']);
+        $request = $request->withAttribute('user', $user);
+        $response = $this->controller->uploadAvatarAction($request);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+    }
+
     public function testUploadAvatarInvalidForm()
     {
         copy('data/assets/img/avatars/gorilla.png', 'tests/_data/img/gorilla.png');
@@ -129,7 +178,9 @@ class ApiControllerTest extends Test
     {
         copy('data/assets/img/avatars/gorilla.png', 'tests/_data/img/gorilla.png');
         $user = $this->createMock(User::class);
-//        $user->expects($this->once())->method('getPerson')->willThrowException(new Exception('what'));
+        $person = $this->createMock(Person::class);
+        $person->method('setImage')->willThrowException(new Exception('what'));
+        $user->method('getPerson')->willReturn($person);
         $_FILES = [
             'avatar' => [
                 'name' => 'gorilla.png',
@@ -143,6 +194,21 @@ class ApiControllerTest extends Test
         $request = $request->withParsedBody(['image' => 'whatever.png']);
         $request = $request->withAttribute('user', $user);
         $response = $this->controller->uploadAvatarAction($request);
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+    }
+
+
+
+    public function testAvatar()
+    {
+        copy('data/assets/img/avatars/gorilla.png', 'tests/_data/img/gorilla.png');
+        $user = new User();
+        $person = new Person();
+        $person->setImage('img/gorilla.png');
+        $user->setPerson($person);
+        $request = new ServerRequest();
+        $request = $request->withAttribute('user', $user);
+        $response = $this->controller->avatar($request);
         $this->assertInstanceOf(ResponseInterface::class, $response);
     }
 }
