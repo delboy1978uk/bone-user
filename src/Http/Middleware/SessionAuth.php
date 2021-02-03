@@ -9,6 +9,8 @@ use Bone\Server\Traits\HasSessionTrait;
 use Del\Exception\UserException;
 use Del\Service\UserService;
 use Del\SessionManager;
+use Exception;
+use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -24,11 +26,15 @@ class SessionAuth implements MiddlewareInterface, SessionAwareInterface
     /** @var PasetoService $pasetoService */
     private $pasetoService;
 
-    public function __construct(SessionManager $sessionManager, UserService $userService, PasetoService $pasetoService)
+    /** @var string $redirectUrl */
+    private $redirectUrl;
+
+    public function __construct(SessionManager $sessionManager, UserService $userService, PasetoService $pasetoService, $redirectUrl = '/user/home')
     {
         $this->setSession($sessionManager);
         $this->userService = $userService;
         $this->pasetoService = $pasetoService;
+        $this->redirectUrl = $redirectUrl;
     }
 
     /**
@@ -43,9 +49,14 @@ class SessionAuth implements MiddlewareInterface, SessionAwareInterface
 
         if (!$id && isset($cookies['resu'])) {
             $string = $cookies['resu'];
-            $token = $this->pasetoService->decryptToken($string);
-            $id = $token->getClaims()['user'];
-            $this->getSession()->set('user', $id);
+
+            try {
+                $token = $this->pasetoService->decryptToken($string);
+                $id = $token->getClaims()['user'];
+                $this->getSession()->set('user', $id);
+            } catch (Exception $e) {
+                return new RedirectResponse($this->redirectUrl);
+            }
         }
 
         if ($id) {
