@@ -52,7 +52,6 @@ class SessionAuthRedirectTest extends Test
 
     public function testProcessWithCookie()
     {
-//        SessionManager::getInstance()->set('user', 1);
         $request = new ServerRequest();
         $request = $request->withCookieParams(['resu' => 1]);
         $handler = new class implements RequestHandlerInterface {
@@ -67,7 +66,6 @@ class SessionAuthRedirectTest extends Test
 
     public function testProcessNotLoggedIn()
     {
-//        SessionManager::getInstance()->set('user', 1);
         $request = new ServerRequest();
         $handler = new class implements RequestHandlerInterface {
             public function handle(ServerRequestInterface $request): ResponseInterface

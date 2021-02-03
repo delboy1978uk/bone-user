@@ -319,12 +319,20 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
             3 => 60 * 60 * 24 * 365,
         ];
 
+        $intervals = [
+            1 => 'P07D',
+            2 => 'P30D',
+            3 => 'P365D',
+        ];
+
         $time = array_key_exists($length, $times) ? $times[$length] : 0;
         $time += \time();
+        $expiry = \time() + $time;
+        $interval = array_key_exists($length, $intervals) ? $intervals[$length] : 'P0D';
         $token = $this->pasetoService->encryptToken([
             'user' => $userId,
-        ]);
-        \setcookie('resu', $token, \time() * 2, '/');
+        ], $interval);
+        \setcookie('resu', $token, $expiry, '/');
     }
 
     /**
