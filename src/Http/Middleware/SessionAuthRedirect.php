@@ -9,6 +9,7 @@ use Bone\Server\Traits\HasSessionTrait;
 use Del\Exception\UserException;
 use Del\Service\UserService;
 use Del\SessionManager;
+use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -44,9 +45,13 @@ class SessionAuthRedirect implements MiddlewareInterface, SessionAwareInterface
         $id = $this->getSession()->get('user');
 
         if (!$id && isset($cookies['resu'])) {
-            $string = $cookies['resu'];
-            $token = $this->pasetoService->decryptToken($string);
-            $id = $token->getClaims()['user'];
+            try {
+                $string = $cookies['resu'];
+                $token = $this->pasetoService->decryptToken($string);
+                $id = $token->getClaims()['user'];
+            } catch (Exception $e) {
+                return new RedirectResponse(new Uri('/user/login'));
+            }
         }
 
         if ($id) {
