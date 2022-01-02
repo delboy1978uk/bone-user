@@ -34,7 +34,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\Uri;
 
-class BoneUserController extends Controller implements SessionAwareInterface, SiteConfigAwareInterface
+class BoneUserController extends Controller implements SessionAwareInterface
 {
     use HasSessionTrait;
     use HasSiteConfigTrait;
@@ -71,7 +71,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
      * @param UserService $userService
      * @param MailService $mailService
      */
-    public function __construct(UserService $userService, MailService $mailService, string $loginRedirectRoute = '/user/home',
+    public function __construct(UserService $userService, MailService $mailService, string $loginRedirectRoute,
                                 string $adminLayout, PasetoService $pasetoService, bool $registrationEnabled = true, $profileRequired = false,
                                 bool $rememberMeCookie = true)
     {
@@ -124,7 +124,7 @@ class BoneUserController extends Controller implements SessionAwareInterface, Si
         $form = new RegistrationForm('register', $this->getTranslator());
         $message = null;
 
-        if ($request->getMethod() == 'POST') {
+        if ($request->getMethod() === 'POST') {
 
             $formData = $request->getParsedBody();
             $form->populate($formData);
