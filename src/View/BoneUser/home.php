@@ -1,9 +1,13 @@
+<?php
+/** @var \Del\Entity\UserInterface $user */
+$name = $user->getPerson()->getFirstname() ?: $user->getEmail()
+?>
 <div class="container-fluid">
     <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0 text-dark"><?= \Del\Icon::HOME ?>&nbsp;&nbsp;<?= $this->t('home.welcome', 'user') . $user->getEmail() ?></h1>
+                    <h1 class="m-0 text-dark"><?= \Del\Icon::HOME ?>&nbsp;&nbsp;<?= $this->t('home.welcome', 'user') . $name ?></h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">

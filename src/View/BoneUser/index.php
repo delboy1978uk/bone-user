@@ -1,3 +1,4 @@
+<?php /** @var bool $canRegister */ ?>
 <div class="container">
     <div class="content-header">
         <div class="container-fluid">
@@ -25,8 +26,10 @@
                     <p class="lead"><?= $this->t('user.welcome', 'user') ?></p>
                     <a href="<?= $this->l() ?>/user/login"
                     class="btn btn-success"><?= \Del\Icon::FORWARD; ?> <?= $this->t('user.login', 'user') ?></a>
-                    <a href="<?= $this->l() ?>/user/register"
-                    class="btn btn-primary"><?= \Del\Icon::EDIT; ?> <?= $this->t('user.register', 'user') ?></a>
+                    <?php if ($canRegister) { ?>
+                        <a href="<?= $this->l() ?>/user/register"
+                           class="btn btn-primary"><?= \Del\Icon::EDIT; ?> <?= $this->t('user.register', 'user') ?></a>
+                    <?php } ?>
                 </div>
             </div>
         </div>

@@ -64,7 +64,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
     private $rememberMeCookie;
 
     /** @var PasetoService $pasetoService */
-    private $pasetoService = null;
+    private $pasetoService;
 
     /**
      * BoneUserController constructor.
@@ -109,7 +109,11 @@ class BoneUserController extends Controller implements SessionAwareInterface
             return new RedirectResponse('/user/home');
         }
 
-        $body = $this->getView()->render('boneuser::index', ['logo' => $this->getLogo()]);
+        $body = $this->getView()->render('boneuser::index', [
+            'logo' => $this->getLogo(),
+            'canRegister' => $this->registrationEnabled
+        ]
+    );
 
         return new HtmlResponse($body);
     }
@@ -131,6 +135,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
 
             if ($form->isValid()) {
                 $data = $form->getValues();
+
                 try {
                     $user = $this->userService->registerUser($data);
                     $link = $this->userService->generateEmailLink($user);
@@ -184,7 +189,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
         $message = null;
 
         try {
-
             $link = $userService->findEmailLink($email, $token);
             $user = $link->getUser();
             $user->setState(new State(State::STATE_ACTIVATED));
@@ -192,7 +196,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
             $userService->saveUser($user);
             $userService->deleteEmailLink($link);
             $this->getSession()->set('user', $user->getId());
-
         } catch (EmailLinkException $e) {
             switch ($e->getMessage()) {
                 case EmailLinkException::LINK_EXPIRED:
@@ -204,6 +207,12 @@ class BoneUserController extends Controller implements SessionAwareInterface
                     $message = [$e->getMessage(), 'danger'];
                     break;
             }
+        }
+
+        if ($this->profileRequired && !$this->userService->hasProfile($user)) {
+            $this->loginRedirectRoute = '/user/edit-profile';
+
+            return new RedirectResponse($this->loginRedirectRoute);
         }
 
         $body = $this->getView()->render('boneuser::activate-user-account', [
@@ -249,7 +258,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
         $params = ['form' => $form];
 
         try {
-
             if ($form->isValid()) {
                 $data = $form->getValues();
                 $email = $data['email'];
@@ -346,6 +354,13 @@ class BoneUserController extends Controller implements SessionAwareInterface
         }
 
         $user = $request->getAttribute('user');
+
+        if ($this->profileRequired && !$this->userService->hasProfile($user)) {
+            $this->loginRedirectRoute = '/user/edit-profile';
+
+            return new RedirectResponse($this->loginRedirectRoute);
+        }
+
         $body = $this->getView()->render('boneuser::home', [
             'message' => [$this->getTranslator()->translate('home.loggedin', 'user'), 'success'],
             'user' => $user,
@@ -373,7 +388,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
      */
     public function resendActivationEmailAction(ServerRequestInterface $request): ResponseInterface
     {
-        $success = false;
         $email = $request->getAttribute('email');
         $user = $this->userService->findUserByEmail($email);
         $message = [];
@@ -413,7 +427,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
         }
 
         $body = $this->getView()->render('boneuser::resend-activation', [
-            'message' => null,
+            'message' => $message,
             'logo' => $this->getLogo(),
         ]);
 
@@ -439,7 +453,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
         }
 
         try {
-
             $link = $this->userService->generateEmailLink($user);
             $email = $user->getEmail();
             $token = $link->getToken();
@@ -455,8 +468,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
                 'resetLink' => '/user/reset-password/' . $email . '/' . $token,
             ]);
             $this->mailService->sendEmail($mail);
-
-
         } catch (Exception $e) {
             $this->view->message = [$e->getMessage(), 'danger'];
         }
@@ -489,7 +500,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
             $link = $this->userService->findEmailLink($email, $token);
 
             if ($request->getMethod() === 'POST') {
-
                 $data = $request->getParsedBody();
                 $form->populate($data);
 
@@ -539,12 +549,12 @@ class BoneUserController extends Controller implements SessionAwareInterface
         $success = false;
 
         if ($request->getMethod() === 'POST') {
-
             $data = $request->getParsedBody();
             $form->populate($data);
 
             if ($form->isValid()) {
                 $data = $form->getValues();
+
                 if ($data['password'] === $data['confirm']) {
                     $this->userService->changePassword($user, $data['password']);
                     $message = [Icon::CHECK_CIRCLE . ' ' . $translator->translate('email.resetpass.success', 'user'), 'success'];
@@ -588,7 +598,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
         ];
 
         if ($request->getMethod() === 'POST') {
-
             $data = $request->getParsedBody();
             $form->populate($data);
             $message = null;
@@ -597,7 +606,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
 
                 $newEmail = $form->getField('email')->getValue();
                 $password = $form->getField('password')->getValue();
-
                 $existing = $this->userService->findUserByEmail($newEmail);
 
                 if ($existing) {
@@ -634,10 +642,11 @@ class BoneUserController extends Controller implements SessionAwareInterface
                     }
                 }
             }
+
             $params['message'] = $message;
         }
-        $params['logo'] = $this->getLogo();
 
+        $params['logo'] = $this->getLogo();
         $body = $this->getView()->render('boneuser::change-email', $params);
 
         return new LayoutResponse($body, 'layouts::admin');
@@ -654,12 +663,12 @@ class BoneUserController extends Controller implements SessionAwareInterface
         $image = $person->getImage();
         $form = new PersonForm('profile', $this->getTranslator());
         $array = $this->userService->getPersonSvc()->toArray($person);
-
         $form->populate($array);
 
         if ($request->getMethod() === 'POST') {
             $post = $request->getParsedBody();
             $form->populate($post);
+
             if ($form->isValid()) {
                 $data = $form->getValues();
                 $data['image'] = $image;
@@ -688,19 +697,16 @@ class BoneUserController extends Controller implements SessionAwareInterface
         $email = $request->getAttribute('email');
         $newEmail = $request->getAttribute('new-email');
         $token = $request->getAttribute('token');
-        $message = null;
         $translator = $this->getTranslator();
 
         try {
-
             $link = $this->userService->findEmailLink($email, $token);
             $user = $link->getUser();
             $user->setEmail($newEmail);
             $this->userService->saveUser($user);
             $this->userService->deleteEmailLink($link);
             $message = [$translator->translate('email.changeemail.success', 'user') . $newEmail . $translator->translate('email.changeemail.success2', 'user'), 'success'];
-            SessionManager::set('user', $user->getId());
-
+            SessionManager::getInstance()->set('user', $user->getId());
         } catch (EmailLinkException $e) {
             $message = [$e->getMessage(), 'danger'];
         }

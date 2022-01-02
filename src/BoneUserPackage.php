@@ -6,6 +6,7 @@ namespace Bone\User;
 
 use Barnacle\Container;
 use Barnacle\RegistrationInterface;
+use Bone\Console\CommandRegistrationInterface;
 use Bone\Http\Middleware\HalEntity;
 use Bone\Http\Middleware\JsonParse;
 use Bone\Http\Middleware\Stack;
@@ -26,6 +27,7 @@ use Bone\User\Http\Middleware\SessionAuthRedirect;
 use Bone\User\View\Helper\LoginWidget;
 use Bone\View\ViewRegistrationInterface;
 use Del\Booty\AssetRegistrationInterface;
+use Del\Console\UserCommand;
 use Del\Service\UserService;
 use Del\SessionManager;
 use Del\UserPackage;
@@ -34,7 +36,7 @@ use League\Route\Strategy\JsonStrategy;
 use Laminas\Diactoros\ResponseFactory;
 use Laminas\I18n\Translator\Translator;
 
-class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I18nRegistrationInterface, AssetRegistrationInterface, ViewRegistrationInterface
+class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I18nRegistrationInterface, AssetRegistrationInterface, ViewRegistrationInterface, CommandRegistrationInterface
 {
     /**
      * @param Container $c
@@ -47,19 +49,18 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
             /** @var UserService $userService */
             $userService = $c->get(UserService::class);
             $pasetoService = $c->get(PasetoService::class);
-            $loginRedirectRoute = '/user/home';
             $defaultLayout = $c->get('default_layout');
             $adminLayout = $c->has('admin_layout') ? $c->get('admin_layout') : $defaultLayout;
-            $rememberMeCookie = false;
+            $options = [];
 
             if ($c->has('bone-user')) {
                 $options = $c->get('bone-user');
-                $loginRedirectRoute = $options['loginRedirectRoute'] ?? '/user/home';
-                $registrationEnabled = $options['enableRegistration'] ?: true;
-                $profileRequired = $options['requireProfile'] ?: false;
-                $rememberMeCookie = $options['rememberMeCookie'] ?? false;
             }
 
+            $loginRedirectRoute = $options['loginRedirectRoute'] ?? '/user/home';
+            $registrationEnabled = $options['enableRegistration'] ?? true;
+            $profileRequired = $options['requireProfile'] ?? false;
+            $rememberMeCookie = $options['rememberMeCookie'] ?? false;
             $controller = new BoneUserController($userService, $mailService, $loginRedirectRoute, $adminLayout, $pasetoService, $registrationEnabled, $profileRequired, $rememberMeCookie);
 
             return  Init::controller($controller, $c);
@@ -170,7 +171,7 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
 
         if ($c->has('bone-user')) {
             $config = $c->get('bone-user');
-            $canRegister = isset($config['enableRegistration']) ? $config['enableRegistration'] : null;
+            $canRegister = $config['enableRegistration'] ?? true;
         }
 
         if ($canRegister) {
@@ -186,8 +187,6 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
         $router->map('GET', '/user/edit-profile', [BoneUserController::class, 'editProfileAction'])->middleware($auth);
         $router->map('POST', '/user/edit-profile', [BoneUserController::class, 'editProfileAction'])->middleware($auth);
         $router->map('GET', '/user/home', [BoneUserController::class, 'homePageAction'])->middleware($auth);
-
-
         $factory = new ResponseFactory();
         $strategy = new JsonStrategy($factory);
         $strategy->setContainer($c);
@@ -200,5 +199,12 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
         ->setStrategy($strategy);
 
         return $router;
+    }
+
+    public function registerConsoleCommands(Container $container): array
+    {
+        return [
+            new UserCommand($container->get(UserService::class))
+        ];
     }
 }
