@@ -171,31 +171,31 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
         if ($c->has('bone-user')) {
             $config = $c->get('bone-user');
             $canRegister = isset($config['enableRegistration']) ? $config['enableRegistration'] : null;
+        }
 
-            if ($canRegister) {
-                $router->map('GET', '/user/register', [BoneUserController::class, 'registerAction']);
-                $router->map('POST', '/user/register', [BoneUserController::class, 'registerAction']);
-            }
+        if ($canRegister) {
+            $router->map('GET', '/user/register', [BoneUserController::class, 'registerAction']);
+            $router->map('POST', '/user/register', [BoneUserController::class, 'registerAction']);
         }
 
         $auth = $c->get(SessionAuth::class);
-        $router->map('GET', '/user/change-password', [BoneUserController::class, 'changePasswordAction'])->middleware($c->get(SessionAuth::class));
-        $router->map('POST', '/user/change-password', [BoneUserController::class, 'changePasswordAction'])->middleware($c->get(SessionAuth::class));
-        $router->map('GET', '/user/change-email', [BoneUserController::class, 'changeEmailAction'])->middleware($c->get(SessionAuth::class));
-        $router->map('POST', '/user/change-email', [BoneUserController::class, 'changeEmailAction'])->middleware($c->get(SessionAuth::class));
-        $router->map('GET', '/user/edit-profile', [BoneUserController::class, 'editProfileAction'])->middleware($c->get(SessionAuth::class));
-        $router->map('POST', '/user/edit-profile', [BoneUserController::class, 'editProfileAction'])->middleware($c->get(SessionAuth::class));
-        $router->map('GET', '/user/home', [BoneUserController::class, 'homePageAction'])->middleware($c->get(SessionAuth::class));
+        $router->map('GET', '/user/change-password', [BoneUserController::class, 'changePasswordAction'])->middleware($auth);
+        $router->map('POST', '/user/change-password', [BoneUserController::class, 'changePasswordAction'])->middleware($auth);
+        $router->map('GET', '/user/change-email', [BoneUserController::class, 'changeEmailAction'])->middleware($auth);
+        $router->map('POST', '/user/change-email', [BoneUserController::class, 'changeEmailAction'])->middleware($auth);
+        $router->map('GET', '/user/edit-profile', [BoneUserController::class, 'editProfileAction'])->middleware($auth);
+        $router->map('POST', '/user/edit-profile', [BoneUserController::class, 'editProfileAction'])->middleware($auth);
+        $router->map('GET', '/user/home', [BoneUserController::class, 'homePageAction'])->middleware($auth);
 
 
         $factory = new ResponseFactory();
         $strategy = new JsonStrategy($factory);
         $strategy->setContainer($c);
 
-        $router->group('/api/user', function (RouteGroup $route) use ($c) {
-            $route->map('POST', '/choose-avatar', [BoneUserApiController::class, 'chooseAvatarAction'])->middleware($c->get(SessionAuth::class));
-            $route->map('POST', '/upload-avatar', [BoneUserApiController::class, 'uploadAvatarAction'])->middleware($c->get(SessionAuth::class));
-            $route->map('GET', '/avatar', [BoneUserApiController::class, 'avatar'])->middleware($c->get(SessionAuth::class));
+        $router->group('/api/user', function (RouteGroup $route) use ($auth) {
+            $route->map('POST', '/choose-avatar', [BoneUserApiController::class, 'chooseAvatarAction'])->middleware($auth);
+            $route->map('POST', '/upload-avatar', [BoneUserApiController::class, 'uploadAvatarAction'])->middleware($auth);
+            $route->map('GET', '/avatar', [BoneUserApiController::class, 'avatar'])->middleware($auth);
         })
         ->setStrategy($strategy);
 
