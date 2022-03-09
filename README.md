@@ -1,5 +1,5 @@
 # bone-user
-[![Latest Stable Version](https://poser.pugx.org/delboy1978uk/bone-user/v/stable)](https://packagist.org/packages/delboy1978uk/bone-user) [![Total Downloads](https://poser.pugx.org/delboy1978uk/bone/downloads)](https://packagist.org/packages/delboy1978uk/bone) [![License](https://poser.pugx.org/delboy1978uk/bone-user/license)](https://packagist.org/packages/delboy1978uk/bone-user)
+[![Latest Stable Version](https://poser.pugx.org/delboy1978uk/bone-user/v/stable)](https://packagist.org/packages/delboy1978uk/bone-user) [![Total Downloads](https://poser.pugx.org/delboy1978uk/bone-user/downloads)](https://packagist.org/packages/delboy1978uk/bone-user) [![License](https://poser.pugx.org/delboy1978uk/bone-user/license)](https://packagist.org/packages/delboy1978uk/bone-user)
 ![build status](https://github.com/delboy1978uk/bone-user/actions/workflows/master.yml/badge.svg) [![Code Coverage](https://scrutinizer-ci.com/g/delboy1978uk/bone-user/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/delboy1978uk/bone-user/?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/delboy1978uk/bone-user/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/delboy1978uk/bone-user/?branch=master) 
 
 User registration and login package for Bone Framework
