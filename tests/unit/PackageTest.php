@@ -70,6 +70,8 @@ class PackageTest extends Test
         $this->assertInstanceOf(BoneUserApiController::class, $this->container->get(BoneUserApiController::class));
         $this->assertInstanceOf(SessionAuth::class, $this->container->get(SessionAuth::class));
         $this->assertInstanceOf(SessionAuthRedirect::class, $this->container->get(SessionAuthRedirect::class));
+        $this->assertIsArray($this->package->registerConsoleCommands($this->container));
+        $this->assertCount(1, $this->package->registerConsoleCommands($this->container));
     }
 
     public function testGetters()
