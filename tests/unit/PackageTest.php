@@ -1,6 +1,6 @@
 <?php
 
-namespace BoneTest\User;
+namespace Bone\Test\User;
 
 use Barnacle\Container;
 use Bone\Mail\Service\MailService;

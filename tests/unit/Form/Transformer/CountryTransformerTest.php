@@ -1,6 +1,6 @@
 <?php
 
-namespace BoneTest\User\Form\Transformer;
+namespace Bone\Test\User\Form\Transformer;
 
 use Bone\User\Form\PersonForm;
 use Bone\User\Form\Transformer\CountryTransformer;

@@ -196,6 +196,12 @@ class BoneUserController extends Controller implements SessionAwareInterface
             $userService->saveUser($user);
             $userService->deleteEmailLink($link);
             $this->getSession()->set('user', $user->getId());
+
+            if ($this->profileRequired && !$this->userService->hasProfile($user)) {
+                $this->loginRedirectRoute = '/user/edit-profile';
+
+                return new RedirectResponse($this->loginRedirectRoute);
+            }
         } catch (EmailLinkException $e) {
             switch ($e->getMessage()) {
                 case EmailLinkException::LINK_EXPIRED:
@@ -207,12 +213,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
                     $message = [$e->getMessage(), 'danger'];
                     break;
             }
-        }
-
-        if ($this->profileRequired && !$this->userService->hasProfile($user)) {
-            $this->loginRedirectRoute = '/user/edit-profile';
-
-            return new RedirectResponse($this->loginRedirectRoute);
         }
 
         $body = $this->getView()->render('boneuser::activate-user-account', [

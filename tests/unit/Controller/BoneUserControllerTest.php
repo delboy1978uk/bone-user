@@ -1,6 +1,6 @@
 <?php
 
-namespace BoneTest\User\Controller;
+namespace Bone\Test\User\Controller;
 
 use Barnacle\Container;
 use Bone\Controller\Init;
@@ -229,6 +229,7 @@ class BoneUserControllerTest extends Test
     public function testHomePage()
     {
         $request = new ServerRequest();
+        $request = $request->withAttribute('user', new User());
         $response = $this->controller->homePageAction($request);
         $this->assertInstanceOf(ResponseInterface::class, $response);
     }

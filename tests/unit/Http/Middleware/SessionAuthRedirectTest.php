@@ -1,6 +1,6 @@
 <?php
 
-namespace BoneTest\User\Http\Middleware;
+namespace Bone\Test\User\Http\Middleware;
 
 use Bone\Http\Response;
 use Bone\Paseto\PasetoService;

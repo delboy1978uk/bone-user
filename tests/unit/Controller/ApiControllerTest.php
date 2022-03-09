@@ -1,6 +1,6 @@
 <?php
 
-namespace BoneTest\User\Controller;
+namespace Bone\Test\User\Controller;
 
 use Barnacle\Container;
 use Bone\Controller\Init;
