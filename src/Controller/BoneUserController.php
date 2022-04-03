@@ -390,7 +390,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
     {
         $email = $request->getAttribute('email');
         $user = $this->userService->findUserByEmail($email);
-        $message = [];
+        $message = null;
         $translator = $this->getTranslator();
 
         if (!$user) {
