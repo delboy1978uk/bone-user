@@ -39,6 +39,7 @@ class LoginForm extends Form
         $password->setCustomErrorMessage($translator->translate('form.password.error', 'user'));
 
         $checkbox = new Radio('remember');
+        $checkbox->setId('remember');
         $checkbox->setLabel('Remember me');
         $checkbox->setOptions([
             self::REMEMBER_WEEK => '1 week',
