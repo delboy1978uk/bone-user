@@ -9,7 +9,7 @@ use Bone\Paseto\PasetoService;
 use Bone\Server\SiteConfig;
 use Bone\User\Controller\BoneUserController;
 use Bone\View\ViewEngine;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Del\Entity\EmailLink;
 use Del\Entity\User;
 use Del\Exception\EmailLinkException;
@@ -26,7 +26,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionClass;
 
-class BoneUserControllerTest extends Test
+class BoneUserControllerTest extends Unit
 {
     /** @var BoneUserController $controller */
     private $controller;
