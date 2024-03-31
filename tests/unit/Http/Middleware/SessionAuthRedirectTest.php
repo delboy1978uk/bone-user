@@ -5,7 +5,7 @@ namespace Bone\Test\User\Http\Middleware;
 use Bone\Http\Response;
 use Bone\Paseto\PasetoService;
 use Bone\User\Http\Middleware\SessionAuthRedirect;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Del\Entity\User;
 use Del\Exception\UserException;
 use Del\Person\Entity\Person;
@@ -19,7 +19,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class SessionAuthRedirectTest extends Test
+class SessionAuthRedirectTest extends Unit
 {
     /** @var SessionAuth $middleware */
     private $middleware;

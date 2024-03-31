@@ -14,14 +14,14 @@ use Bone\User\Http\Middleware\SessionAuth;
 use Bone\User\Http\Middleware\SessionAuthRedirect;
 use Bone\User\View\Helper\LoginWidget;
 use Bone\View\ViewEngine;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Del\Service\UserService;
 use Del\SessionManager;
 use Laminas\I18n\Translator\Translator;
 use League\Route\RouteGroup;
 use ReflectionClass;
 
-class PackageTest extends Test
+class PackageTest extends Unit
 {
     /** @var BoneUserPackage $package */
     private $package;

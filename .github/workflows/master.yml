@@ -17,11 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-version:
-          - 7.3
-          - 7.4
-          - 8.0
-          - 8.1
+        php: ['8.2', '8.3']
     steps:
       - uses: actions/checkout@v2
         with:
@@ -32,6 +28,11 @@ jobs:
 
       - name: Create DB
         run: mysql -e 'CREATE DATABASE ${{ env.DB_DATABASE }};' -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
 
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
@@ -52,7 +53,7 @@ jobs:
         run: XDEBUG_MODE=coverage vendor/bin/codecept run unit --coverage-xml
 
       - name: Download Scrutinizer ocular.phar
-        run: composer require scrutinizer/ocular
+        run: composer require scrutinizer/ocular -W
 
       - name: Upload coverage
         run: vendor/bin/ocular code-coverage:upload --format=php-clover tests/_output/coverage.xml
