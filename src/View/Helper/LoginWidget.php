@@ -8,32 +8,18 @@ use Del\SessionManager;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
 use Laminas\I18n\Translator\Translator;
+use League\Plates\Template\Template;
 
 class LoginWidget implements ExtensionInterface
 {
-    /** @var UserService  $userService */
-    private $userService;
+    public ?Template $template = null;
 
-    /** @var Translator $translator */
-    private $translator;
-
-    /** @var SessionManager $sessionManager */
-    private $sessionManager;
-
-    /** @var string $uploadFolder */
-    private $uploadFolder;
-
-    /**
-     * LoginWidget constructor.
-     * @param UserService $userService
-     * @param Translator $translator
-     */
-    public function __construct(UserService $userService, Translator $translator, SessionManager $sessionManager, string $uploadFolder)
-    {
-        $this->userService = $userService;
-        $this->translator = $translator;
-        $this->sessionManager = $sessionManager;
-        $this->uploadFolder = $uploadFolder;
+    public function __construct(
+        private UserService $userService,
+        private Translator $translator,
+        private SessionManager $sessionManager,
+        private string $uploadFolder
+    ) {
     }
 
     /**
@@ -81,6 +67,6 @@ class LoginWidget implements ExtensionInterface
         return '<li class="nav-item"><a class="nav-link" href="/' . $locale . '/user/login">Login</a></li>';
 
     }
-    
+
 
 }
