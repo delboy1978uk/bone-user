@@ -29,10 +29,10 @@ use Del\Service\UserService;
 use Del\SessionManager;
 use Del\Value\User\State;
 use Exception;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\Uri;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 class BoneUserController extends Controller implements SessionAwareInterface
 {
@@ -58,7 +58,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
      */
     public function getLogo(): string
     {
-        if (!$this->logo) {
+        if ($this->logo === '') {
             $this->logo = $this->getSiteConfig()->getLogo();
         }
 

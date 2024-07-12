@@ -10,6 +10,7 @@
     ],
     "require": {
         "delboy1978uk/bone-mail": "^v1.2",
+        "delboy1978uk/bone-http": "^2.4",
         "delboy1978uk/bone-doctrine": "^2.0",
         "delboy1978uk/bone-paseto": "^1.0",
         "delboy1978uk/form": "^v2.5",
