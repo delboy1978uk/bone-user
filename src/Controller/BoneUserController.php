@@ -39,51 +39,18 @@ class BoneUserController extends Controller implements SessionAwareInterface
     use HasSessionTrait;
     use HasSiteConfigTrait;
 
-    /** @var UserService $userService */
-    private $userService;
+    private string $logo = '';
 
-    /** @var MailService $mailService */
-    private $mailService;
-
-    /** @var string $loginRedirectRoute */
-    private $loginRedirectRoute;
-
-    /** @var string $logo */
-    private $logo;
-
-    /** @var string $adminLayout */
-    private $adminLayout;
-
-    /** @var bool $registrationEnabled */
-    private $registrationEnabled;
-
-    /** @var bool $profileRequired */
-    private $profileRequired;
-
-    /** @var bool $rememberMeCookie */
-    private $rememberMeCookie;
-
-    /** @var PasetoService $pasetoService */
-    private $pasetoService;
-
-    /**
-     * BoneUserController constructor.
-     * @param UserService $userService
-     * @param MailService $mailService
-     */
-    public function __construct(UserService $userService, MailService $mailService, string $loginRedirectRoute,
-                                string $adminLayout, PasetoService $pasetoService, bool $registrationEnabled = true, $profileRequired = false,
-                                bool $rememberMeCookie = true)
-    {
-        $this->userService = $userService;
-        $this->mailService = $mailService;
-        $this->loginRedirectRoute = $loginRedirectRoute;
-        $this->adminLayout = $adminLayout;
-        $this->registrationEnabled = $registrationEnabled;
-        $this->profileRequired = $profileRequired;
-        $this->rememberMeCookie = $rememberMeCookie;
-        $this->profileRequired = $profileRequired;
-        $this->pasetoService = $pasetoService;
+    public function __construct(
+        private UserService $userService,
+        private MailService $mailService,
+        private string $loginRedirectRoute,
+        private string $adminLayout,
+        private PasetoService $pasetoService,
+        private bool $registrationEnabled = true,
+        private $profileRequired = false,
+        private bool $rememberMeCookie = true
+    ) {
     }
 
     /**
@@ -590,6 +557,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
     {
         $user = $request->getAttribute('user');
         $form = new LoginForm('changeemail', $this->getTranslator());
+        $form->
         $form->getField('email')->setLabel('New email');
         $form->getField('submit')->setValue('Submit');
         $translator = $this->getTranslator();
