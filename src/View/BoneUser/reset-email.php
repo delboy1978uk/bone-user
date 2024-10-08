@@ -26,7 +26,7 @@
                         <?= Icon::custom(Icon::ENVELOPE, 'fa-2x'); ?>
                     </div>
                     <br>&nbsp;
-                    <?php if (!$message) { ?>
+                    <?php if ($message) { ?>
                         <p class="lead"><?= $this->t('changeemail.success', 'user') ?></p>
                         <a href="/user/home" class="btn btn-success"><?= $this->t('continue', 'user') ?></a>
                     <?php } else {?>
