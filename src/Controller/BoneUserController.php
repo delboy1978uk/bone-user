@@ -557,6 +557,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
     {
         $user = $request->getAttribute('user');
         $form = new LoginForm('changeemail', $this->getTranslator());
+        $form->getFields()->removeByName('remember');
         $form->getField('email')->setLabel('New email');
         $form->getField('submit')->setValue('Submit');
         $translator = $this->getTranslator();
