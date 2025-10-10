@@ -29,7 +29,7 @@ class PersonForm extends Form
         parent::__construct($name, $translator);
     }
 
-    public function init()
+    public function init(): void
     {
         $this->addPersonFormFields($this);
         $submit = new Submit('submit');

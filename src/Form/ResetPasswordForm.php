@@ -12,7 +12,7 @@ use Laminas\Filter\StringToLower;
 
 class ResetPasswordForm extends AbstractForm
 {
-    public function init()
+    public function init(): void
     {
         $password = new Password('password');
         $password->setRequired(true);
@@ -40,5 +40,4 @@ class ResetPasswordForm extends AbstractForm
         $renderer = new HorizontalFormRenderer();
         $this->setFormRenderer($renderer);
     }
-
 }

@@ -18,7 +18,7 @@ class LoginForm extends Form
     const REMEMBER_MONTH = 2;
     const REMEMBER_YEAR = 3;
 
-    public function init()
+    public function init(): void
     {
         $translator= $this->getTranslator();
 

@@ -12,7 +12,7 @@ use Laminas\Filter\StringToLower;
 
 class RegistrationForm extends Form
 {
-    public function init()
+    public function init(): void
     {
         $label = $this->getTranslator()->translate('form.email.label', 'user');
         $error = $this->getTranslator()->translate('form.email.error', 'user');
