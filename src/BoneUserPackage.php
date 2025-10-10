@@ -21,13 +21,16 @@ use Bone\User\Controller\BoneUserApiController;
 use Bone\User\Controller\BoneUserController;
 use Bone\Router\Router;
 use Bone\Router\RouterConfigInterface;
+use Bone\User\Http\Controller\Admin\PersonAdminController;
+use Bone\User\Http\Controller\Api\PersonApiController;
 use Bone\View\ViewEngine;
 use Bone\User\Http\Middleware\SessionAuth;
 use Bone\User\Http\Middleware\SessionAuthRedirect;
 use Bone\User\View\Helper\LoginWidget;
 use Bone\View\ViewRegistrationInterface;
 use Del\Booty\AssetRegistrationInterface;
-use Del\Console\UserCommand;
+use Del\Console\CreateUserCommand;
+use Del\Console\ResetPasswordCommand;
 use Del\Service\UserService;
 use Del\SessionManager;
 use Del\UserPackage;
@@ -38,9 +41,6 @@ use Laminas\I18n\Translator\Translator;
 
 class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I18nRegistrationInterface, AssetRegistrationInterface, ViewRegistrationInterface, CommandRegistrationInterface
 {
-    /**
-     * @param Container $c
-     */
     public function addToContainer(Container $c)
     {
         $c[BoneUserController::class] = $c->factory(function (Container $c) {
@@ -101,9 +101,6 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
         });
     }
 
-    /**
-     * @return array
-     */
     public function getAssetFolders(): array
     {
         return [
@@ -111,18 +108,11 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
         ];
     }
 
-
-    /**
-     * @return string
-     */
     public function getTranslationsDirectory(): string
     {
         return dirname(__DIR__) . '/data/translations';
     }
 
-    /**
-     * @return array
-     */
     public function addViews(): array
     {
         return [
@@ -131,27 +121,17 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
         ];
     }
 
-    /**
-     * @param Container $c
-     * @return array
-     */
     public function addViewExtensions(Container $c): array
     {
         $userService = $c->get(UserService::class);
-        $mailService = $c->get(Translator::class);
+        $translator = $c->get(Translator::class);
         $sessionManager = $c->get(SessionManager::class);
         $uploadFolder = $c->get('uploads_dir');
-        $loginWidget = new LoginWidget($userService, $mailService, $sessionManager, $uploadFolder);
+        $loginWidget = new LoginWidget($userService, $translator, $sessionManager, $uploadFolder);
 
         return [$loginWidget];
     }
 
-
-    /**
-     * @param Container $c
-     * @param Router $router
-     * @return Router
-     */
     public function addRoutes(Container $c, Router $router): Router
     {
         $router->group('/user', function (RouteGroup $route) {
@@ -198,13 +178,17 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
         })
         ->setStrategy($strategy);
 
+        $router->apiResource('people', PersonApiController::class, $c);
+        $router->adminResource('people', PersonAdminController::class, $c);
+
         return $router;
     }
 
     public function registerConsoleCommands(Container $container): array
     {
         return [
-            new UserCommand($container->get(UserService::class))
+            new ResetPasswordCommand($container->get(UserService::class)),
+            new CreateUserCommand($container->get(UserService::class)),
         ];
     }
 }
