@@ -2,13 +2,13 @@
 
 namespace Bone\User\Form;
 
-use Bone\User\Form\Transformer\CountryTransformer;
 use Del\Form\Field\FieldInterface;
 use Del\Form\Field\Hidden;
 use Del\Form\Field\Select;
 use Del\Form\Field\Text;
 use Del\Form\Field\Transformer\DateTimeTransformer;
 use Del\Form\FormInterface;
+use Del\Form\Transformer\CountryTransformer;
 use Del\Repository\CountryRepository;
 
 trait PersonFormTrait

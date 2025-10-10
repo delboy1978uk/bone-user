@@ -3,7 +3,7 @@
 namespace Bone\Test\User\Form\Transformer;
 
 use Bone\User\Form\PersonForm;
-use Bone\User\Form\Transformer\CountryTransformer;
+use Del\Form\Transformer\CountryTransformer;
 use Codeception\Test\Unit;
 use Del\Entity\Country;
 use Del\Factory\CountryFactory;
