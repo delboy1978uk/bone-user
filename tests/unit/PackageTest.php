@@ -71,7 +71,7 @@ class PackageTest extends Unit
         $this->assertInstanceOf(SessionAuth::class, $this->container->get(SessionAuth::class));
         $this->assertInstanceOf(SessionAuthRedirect::class, $this->container->get(SessionAuthRedirect::class));
         $this->assertIsArray($this->package->registerConsoleCommands($this->container));
-        $this->assertCount(1, $this->package->registerConsoleCommands($this->container));
+        $this->assertCount(2, $this->package->registerConsoleCommands($this->container));
     }
 
     public function testGetters()
@@ -100,7 +100,7 @@ class PackageTest extends Unit
         $prop = $mirror->getProperty('groups');
         $prop->setAccessible(true);
         $groups = $prop->getValue($router);
-        $this->assertCount(2, $groups);
+        $this->assertCount(4, $groups);
 
         /** @var RouteGroup $group */
         foreach ($groups as $group) {
