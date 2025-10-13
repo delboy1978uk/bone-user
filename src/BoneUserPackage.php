@@ -7,6 +7,7 @@ namespace Bone\User;
 use Barnacle\Container;
 use Barnacle\RegistrationInterface;
 use Bone\Console\CommandRegistrationInterface;
+use Bone\Contracts\Container\FixtureProviderInterface;
 use Bone\Http\Middleware\HalEntity;
 use Bone\Http\Middleware\JsonParse;
 use Bone\Http\Middleware\Stack;
@@ -21,6 +22,7 @@ use Bone\User\Controller\BoneUserApiController;
 use Bone\User\Controller\BoneUserController;
 use Bone\Router\Router;
 use Bone\Router\RouterConfigInterface;
+use Bone\User\Fixtures\LoadUsers;
 use Bone\User\Http\Controller\Admin\PersonAdminController;
 use Bone\User\Http\Controller\Api\PersonApiController;
 use Bone\View\ViewEngine;
@@ -39,7 +41,9 @@ use League\Route\Strategy\JsonStrategy;
 use Laminas\Diactoros\ResponseFactory;
 use Laminas\I18n\Translator\Translator;
 
-class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I18nRegistrationInterface, AssetRegistrationInterface, ViewRegistrationInterface, CommandRegistrationInterface
+class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I18nRegistrationInterface,
+                                 AssetRegistrationInterface, ViewRegistrationInterface, CommandRegistrationInterface,
+                                 FixtureProviderInterface
 {
     public function addToContainer(Container $c)
     {
@@ -189,6 +193,13 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
         return [
             new ResetPasswordCommand($container->get(UserService::class)),
             new CreateUserCommand($container->get(UserService::class)),
+        ];
+    }
+
+    public function getFixtures(): array
+    {
+        return [
+            LoadUsers::class
         ];
     }
 }
