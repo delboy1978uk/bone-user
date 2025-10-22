@@ -24,7 +24,9 @@ use Bone\User\Controller\BoneUserApiController;
 use Bone\User\Controller\BoneUserController;
 use Bone\User\Fixtures\LoadUsers;
 use Bone\User\Http\Controller\Admin\PersonAdminController;
+use Bone\User\Http\Controller\Admin\UserAdminController;
 use Bone\User\Http\Controller\Api\PersonApiController;
+use Bone\User\Http\Controller\Api\UserApiController;
 use Bone\User\Http\Middleware\SessionAuth;
 use Bone\User\Http\Middleware\SessionAuthRedirect;
 use Bone\User\View\Helper\LoginWidget;
@@ -152,10 +154,14 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
         });
 
         $canRegister = true;
+        $admin = false;
+        $api = false;
 
         if ($c->has('bone-user')) {
             $config = $c->get('bone-user');
             $canRegister = $config['enableRegistration'] ?? true;
+            $admin = $config['admin'] ?? false;
+            $api = $config['api'] ?? false;
         }
 
         if ($canRegister) {
@@ -182,9 +188,16 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
         })
         ->setStrategy($strategy);
 
-        $router->apiResource('people', PersonApiController::class, $c);
-        $router->adminResource('people', PersonAdminController::class, $c);
+        if ($api === true) {
+            $router->apiResource('people', PersonApiController::class, $c);
+            $router->apiResource('users', UserApiController::class, $c);
+        }
 
+        if ($admin === true) {
+            $router->adminResource('people', PersonAdminController::class, $c);
+            $router->adminResource('users', UserAdminController::class, $c);
+        }
+        
         return $router;
     }
 

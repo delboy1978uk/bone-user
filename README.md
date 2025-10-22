@@ -55,7 +55,7 @@ MailHog server at `https://awesome.scot:8025` to see any outgoing mails in a con
 etc! You can see all of the available endpoints in `src/BoneUserPackage.php` in the `addRoutes()` section.
 ### authorization middleware
 You can lock down a route to make it available to a logged in user by adding the session authorization middleware
-`Bone\User\Http\Middleware\SessionAuth` like so:
+`Bone\User\Http\Middleware\SessionAuth` or `Bone\User\Http\Middleware\SessionAuthRedirect` like so:
 ```php
 $sessionAuth = $c->get(SessionAuth::class); // of course there's a use statement above, right? With the full name?
 $router->map('GET', '/my/route', [MyController::class, 'whateverAction'])->middleware($sessionAuth);
@@ -94,6 +94,10 @@ return [
     ],
 ];
 ````
+### admin pages and api routes
+If enabled, admin pages will be available on `/admin/users` and `/admin/people`.
+API REST routes can also be enabled. Admin routes require `delboy1978uk/bone-passport`installed. API routes require
+`delboy1978uk/bone-oauth2`.
 ### config settings
 If you'd like to go to your own controller upon login, create a config with the key `bone-user`, and add the URL you 
 wish to redirect to. You can also disable the `/user/register` end point, and you can make filling in a profile a 
@@ -106,7 +110,9 @@ return [
         'loginRedirectRoute' => '/admin',
         'enableRegistration' => true,
         'requireProfile' => false,
-        'rememberMeCookie' => true
+        'rememberMeCookie' => true,
+        'admin' => true,
+        'api' => true
     ],
 ];
 ````
