@@ -50,6 +50,8 @@ class PackageTest extends Unit
             'enableRegistration' => true,
             'requireProfile' => false,
             'rememberMeCookie' => true,
+            'admin' => true,
+            'api' => true,
         ];
         $this->package->addToContainer($this->container);
     }

@@ -197,7 +197,7 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
             $router->adminResource('people', PersonAdminController::class, $c);
             $router->adminResource('users', UserAdminController::class, $c);
         }
-        
+
         return $router;
     }
 
