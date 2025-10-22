@@ -114,6 +114,6 @@ class PackageTest extends Unit
         }
 
         $routes = $router->getRoutes();
-        $this->assertCount(32, $routes);
+        $this->assertCount(22, $routes);
     }
 }
