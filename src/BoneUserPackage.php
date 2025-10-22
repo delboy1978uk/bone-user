@@ -188,11 +188,6 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
         })
         ->setStrategy($strategy);
 
-        if ($api === true) {
-            $router->apiResource('people', PersonApiController::class, $c);
-            $router->apiResource('users', UserApiController::class, $c);
-        }
-
         if ($admin === true) {
             $router->adminResource('people', PersonAdminController::class, $c);
             $router->adminResource('users', UserAdminController::class, $c);
