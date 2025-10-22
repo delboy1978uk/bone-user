@@ -102,7 +102,7 @@ class PackageTest extends Unit
         $prop = $mirror->getProperty('groups');
         $prop->setAccessible(true);
         $groups = $prop->getValue($router);
-        $this->assertCount(4, $groups);
+        $this->assertCount(2, $groups);
 
         /** @var RouteGroup $group */
         foreach ($groups as $group) {
@@ -114,6 +114,6 @@ class PackageTest extends Unit
         }
 
         $routes = $router->getRoutes();
-        $this->assertCount(35, $routes);
+        $this->assertCount(32, $routes);
     }
 }
