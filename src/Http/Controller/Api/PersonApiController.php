@@ -3,8 +3,9 @@
 declare(strict_types=1);
 
 namespace Bone\User\Http\Controller\Api;
-use Bone\App\Service\PersonService;
+
 use Bone\Http\Controller\ApiController;
+use Del\Person\Service\PersonService;
 
 class PersonApiController extends ApiController
 {
