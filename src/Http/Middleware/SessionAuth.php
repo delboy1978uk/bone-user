@@ -69,7 +69,7 @@ class SessionAuth implements MiddlewareInterface, SessionAwareInterface
             }
 
             $person = $user->getPerson();
-            $person = $this->userService->getPersonSvc()->toArray($person);
+            $person = $this->userService->getPersonService()->toArray($person);
             $userArray = $this->userService->toArray($user);
             $userArray['person'] = $person;
 

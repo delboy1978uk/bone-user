@@ -37,7 +37,7 @@ class SessionAuthRedirectTest extends Unit
         $personService = $this->createMock(PersonService::class);
         $this->userService = $this->createMock(UserService::class);
         $this->middleware = new SessionAuthRedirect(SessionManager::getInstance(), $this->userService, $pasetoService);
-        $this->userService->method('getPersonSvc')->willReturn($personService);
+        $this->userService->method('getPersonService')->willReturn($personService);
         $this->userService->method('findUserById')->willReturn($user);
         $personService->method('toArray')->willReturn([]);
         $pasetoService->method('decryptToken')->willReturn($token);

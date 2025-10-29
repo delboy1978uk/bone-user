@@ -630,7 +630,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
         $person = $user->getPerson();
         $image = $person->getImage();
         $form = new PersonForm('profile', $this->getTranslator());
-        $array = $this->userService->getPersonSvc()->toArray($person);
+        $array = $this->userService->getPersonService()->toArray($person);
         $form->populate($array);
 
         if ($request->getMethod() === 'POST') {
@@ -643,7 +643,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
                 $dateFormat = $this->getSiteConfig()->getAttribute('i18n')['date_format'];
                 $data['dob'] = DateTime::createFromFormat($dateFormat, $data['dob']);
                 $data['country'] = CountryFactory::generate($data['country']);
-                $this->userService->getPersonSvc()->populateFromArray($person, $data);
+                $this->userService->getPersonService()->populateFromArray($person, $data);
                 $this->userService->saveUser($user);
             }
         }

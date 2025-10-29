@@ -75,7 +75,7 @@ class BoneUserApiController extends Controller
         $file = $this->imgDirectory . $this->getFilename($avatar);
         $image->save($this->uploadsDirectory . $file);
         $person->setImage($file);
-        $this->userService->getPersonSvc()->savePerson($person);
+        $this->userService->getPersonService()->savePerson($person);
 
         return new JsonResponse([
             'result' => 'success',
@@ -130,7 +130,7 @@ class BoneUserApiController extends Controller
                 $user = $request->getAttribute('user');
                 $person = $user->getPerson();
                 $person->setImage($newFileName);
-                $this->userService->getPersonSvc()->savePerson($person);
+                $this->userService->getPersonService()->savePerson($person);
 
                 return new JsonResponse([
                     'result' => 'success',

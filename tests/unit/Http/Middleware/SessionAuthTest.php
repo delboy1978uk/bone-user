@@ -41,7 +41,7 @@ class SessionAuthTest extends Unit
         $personService = $this->createMock(PersonService::class);
         $this->userService = $this->createMock(UserService::class);
         $this->middleware = new SessionAuth(SessionManager::getInstance(), $this->userService, $this->pasetoService);
-        $this->userService->method('getPersonSvc')->willReturn($personService);
+        $this->userService->method('getPersonService')->willReturn($personService);
         $this->userService->method('findUserById')->willReturn($user);
         $personService->method('toArray')->willReturn([]);
         $this->pasetoService->method('decryptToken')->willReturn($token);
