@@ -6,7 +6,9 @@ namespace Bone\User;
 
 use Barnacle\Container;
 use Barnacle\RegistrationInterface;
+use Bone\Application;
 use Bone\Console\CommandRegistrationInterface;
+use Bone\Contracts\Container\AdminPanelProviderInterface;
 use Bone\Contracts\Container\FixtureProviderInterface;
 use Bone\Controller\Init;
 use Bone\Http\Middleware\HalEntity;
@@ -30,6 +32,7 @@ use Bone\User\Http\Controller\Api\UserApiController;
 use Bone\User\Http\Middleware\SessionAuth;
 use Bone\User\Http\Middleware\SessionAuthRedirect;
 use Bone\User\View\Helper\LoginWidget;
+use Bone\View\Util\AdminLink;
 use Bone\View\ViewEngine;
 use Bone\View\ViewRegistrationInterface;
 use Del\Booty\AssetRegistrationInterface;
@@ -45,7 +48,7 @@ use Laminas\I18n\Translator\Translator;
 
 class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I18nRegistrationInterface,
                                  AssetRegistrationInterface, ViewRegistrationInterface, CommandRegistrationInterface,
-                                 FixtureProviderInterface
+                                 FixtureProviderInterface, AdminPanelProviderInterface
 {
     public function addToContainer(Container $c)
     {
@@ -209,5 +212,25 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
         return [
             LoadUsers::class
         ];
+    }
+
+    public function getAdminLinks(): array
+    {
+        $c = Application::ahoy()->getContainer();
+        $admin = false;
+
+        if ($c->has('bone-user')) {
+            $config = $c->get('bone-user');
+            $admin = $config['admin'] ?? false;
+        }
+
+        if ($admin === true) {
+            return [
+                new AdminLink('People', '/admin/people', 'nav-icon fa fa-address-book'),
+                new AdminLink('Users', '/admin/users', 'nav-icon fa fa-users'),
+            ];
+        }
+
+        return [];
     }
 }
