@@ -9,17 +9,12 @@ use Barnacle\RegistrationInterface;
 use Bone\Application;
 use Bone\Console\CommandRegistrationInterface;
 use Bone\Contracts\Container\AdminPanelProviderInterface;
+use Bone\Contracts\Container\DefaultSettingsProviderInterface;
 use Bone\Contracts\Container\FixtureProviderInterface;
 use Bone\Controller\Init;
-use Bone\Http\Middleware\HalEntity;
-use Bone\Http\Middleware\JsonParse;
-use Bone\Http\Middleware\Stack;
 use Bone\I18n\I18nRegistrationInterface;
 use Bone\Mail\Service\MailService;
-use Bone\OAuth2\Http\Middleware\ResourceServerMiddleware;
-use Bone\OAuth2\Http\Middleware\ScopeCheck;
 use Bone\Paseto\PasetoService;
-use Bone\Server\SiteConfig;
 use Bone\Router\Router;
 use Bone\Router\RouterConfigInterface;
 use Bone\User\Controller\BoneUserApiController;
@@ -27,20 +22,16 @@ use Bone\User\Controller\BoneUserController;
 use Bone\User\Fixtures\LoadUsers;
 use Bone\User\Http\Controller\Admin\PersonAdminController;
 use Bone\User\Http\Controller\Admin\UserAdminController;
-use Bone\User\Http\Controller\Api\PersonApiController;
-use Bone\User\Http\Controller\Api\UserApiController;
 use Bone\User\Http\Middleware\SessionAuth;
 use Bone\User\Http\Middleware\SessionAuthRedirect;
 use Bone\User\View\Helper\LoginWidget;
 use Bone\View\Util\AdminLink;
-use Bone\View\ViewEngine;
 use Bone\View\ViewRegistrationInterface;
 use Del\Booty\AssetRegistrationInterface;
 use Del\Console\CreateUserCommand;
 use Del\Console\ResetPasswordCommand;
 use Del\Service\UserService;
 use Del\SessionManager;
-use Del\UserPackage;
 use League\Route\RouteGroup;
 use League\Route\Strategy\JsonStrategy;
 use Laminas\Diactoros\ResponseFactory;
@@ -48,7 +39,7 @@ use Laminas\I18n\Translator\Translator;
 
 class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I18nRegistrationInterface,
                                  AssetRegistrationInterface, ViewRegistrationInterface, CommandRegistrationInterface,
-                                 FixtureProviderInterface, AdminPanelProviderInterface
+                                 FixtureProviderInterface, AdminPanelProviderInterface, DefaultSettingsProviderInterface
 {
     public function addToContainer(Container $c)
     {
@@ -158,13 +149,11 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
 
         $canRegister = true;
         $admin = false;
-        $api = false;
 
         if ($c->has('bone-user')) {
             $config = $c->get('bone-user');
             $canRegister = $config['enableRegistration'] ?? true;
             $admin = $config['admin'] ?? false;
-            $api = $config['api'] ?? false;
         }
 
         if ($canRegister) {
@@ -233,4 +222,23 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
 
         return [];
     }
+
+    public function getRequiredPackages(): array
+    {
+        return [
+            'Bone\Mail\MailPackage',
+            'Bone\BoneDoctrine\BoneDoctrinePackage',
+            'Bone\Paseto\PasetoPackage',
+            'Del\Person\PersonPackage',
+            'Del\User\UserPackage',
+            'BoneUserPackage',
+        ];
+    }
+
+    public function getSettingsFileName(): string
+    {
+        return __DIR__ . '/../data/config/bone-user.php';
+    }
+
+
 }
