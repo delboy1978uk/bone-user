@@ -231,7 +231,7 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
             'Bone\Paseto\PasetoPackage',
             'Del\Person\PersonPackage',
             'Del\User\UserPackage',
-            'BoneUserPackage',
+            'Bone\User\BoneUserPackage',
         ];
     }
 
