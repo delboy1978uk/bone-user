@@ -11,6 +11,7 @@ use Bone\Console\Command;
 use Bone\Console\CommandRegistrationInterface;
 use Bone\Contracts\Container\AdminPanelProviderInterface;
 use Bone\Contracts\Container\DefaultSettingsProviderInterface;
+use Bone\Contracts\Container\DependentPackagesProviderInterface;
 use Bone\Contracts\Container\FixtureProviderInterface;
 use Bone\Controller\Init;
 use Bone\I18n\I18nRegistrationInterface;
@@ -41,7 +42,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I18nRegistrationInterface,
                                  AssetRegistrationInterface, ViewRegistrationInterface, CommandRegistrationInterface,
-                                 FixtureProviderInterface, AdminPanelProviderInterface, DefaultSettingsProviderInterface
+                                 FixtureProviderInterface, AdminPanelProviderInterface, DefaultSettingsProviderInterface,
+                                 DependentPackagesProviderInterface
 {
     public function addToContainer(Container $c)
     {
@@ -241,6 +243,4 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
     {
         return __DIR__ . '/../data/config/bone-user.php';
     }
-
-    public function postInstall(Command $command, SymfonyStyle $io): void  {}
 }
