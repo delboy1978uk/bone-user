@@ -11,7 +11,7 @@ return [
         'enableRegistration' => true,
         'requireProfile' => false,
         'rememberMeCookie' => true,
-        'admin' => true,
+        'admin' => false,
         'api' => false,
     ],
 ];
