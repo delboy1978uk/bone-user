@@ -7,6 +7,7 @@ namespace Bone\User;
 use Barnacle\Container;
 use Barnacle\RegistrationInterface;
 use Bone\Application;
+use Bone\Console\Command;
 use Bone\Console\CommandRegistrationInterface;
 use Bone\Contracts\Container\AdminPanelProviderInterface;
 use Bone\Contracts\Container\DefaultSettingsProviderInterface;
@@ -36,6 +37,7 @@ use League\Route\RouteGroup;
 use League\Route\Strategy\JsonStrategy;
 use Laminas\Diactoros\ResponseFactory;
 use Laminas\I18n\Translator\Translator;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I18nRegistrationInterface,
                                  AssetRegistrationInterface, ViewRegistrationInterface, CommandRegistrationInterface,
@@ -240,5 +242,5 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
         return __DIR__ . '/../data/config/bone-user.php';
     }
 
-
+    public function postInstall(Command $command, SymfonyStyle $io): void  {}
 }
