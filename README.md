@@ -12,7 +12,9 @@ Simply add the Package to Bone's module config
 use Bone\BoneDoctrine\BoneDoctrinePackage;
 use Bone\Mail\MailPackage;
 use Bone\Paseto\PasetoPackage;
+use Bone\Passport\PassportPackage as BonePassportPackage;
 use Bone\User\BoneUserPackage;
+use Del\Passport\PassportPackage;
 use Del\Person\PersonPackage;
 use Del\UserPackage;
 
@@ -24,6 +26,7 @@ return [
         PasetoPackage::class,
         PersonPackage::class,
         UserPackage::class,
+        BonePassportPackage::class
         BoneUserPackage::class,
     ],
     // ...
