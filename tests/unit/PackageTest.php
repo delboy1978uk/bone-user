@@ -37,7 +37,7 @@ class PackageTest extends Unit
         $this->container[UserService::class] = $this->createStub(UserService::class);
         $this->container[PasetoService::class] = $this->createStub(PasetoService::class);
         $this->container[Translator::class] = $this->createStub(Translator::class);
-        $this->container[ViewEngine::class] = $this->createStub(ViewEngine::class);
+        $this->container[ViewEngineInterface::class] = $this->createStub(ViewEngine::class);
         $this->container[SiteConfig::class] = $this->createStub(SiteConfig::class);
         $this->container[SessionManager::class] = SessionManager::getInstance();
         $this->container['default_layout'] = 'layouts::bone';
