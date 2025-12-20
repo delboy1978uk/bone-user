@@ -35,7 +35,7 @@ trait PersonFormTrait
         $aka = new Text('aka');
         $aka->setLabel('A.K.A.');
 
-        $dob = new Text('dob');
+        $dob = new Text\Date('dob');
         $dob->setLabel('Date of Birth');
         $dob->setClass('form-control datepicker');
         $dob->setTransformer(new DateTimeTransformer('d/m/Y'));
