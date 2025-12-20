@@ -9,6 +9,7 @@ use Bone\Paseto\PasetoService;
 use Bone\Server\SiteConfig;
 use Bone\User\Controller\BoneUserController;
 use Bone\View\ViewEngine;
+use Bone\View\ViewEngineInterface;
 use Codeception\Test\Unit;
 use Del\Entity\EmailLink;
 use Del\Entity\User;
@@ -38,7 +39,7 @@ class BoneUserControllerTest extends Unit
     {
         $container = new Container();
         $container[Translator::class] = $translator = $this->createMock(Translator::class);
-        $container[ViewEngine::class] = $view = $this->createMock(ViewEngine::class);
+        $container[ViewEngineInterface::class] = $view = $this->createMock(ViewEngine::class);
         $container[SiteConfig::class] = $config = $this->createMock(SiteConfig::class);
         $container[SessionManager::class] = SessionManager::getInstance();
         $config->method('getLogo')->willReturn('/img/logo.png');
