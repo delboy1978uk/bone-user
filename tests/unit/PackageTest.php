@@ -14,6 +14,7 @@ use Bone\User\Http\Middleware\SessionAuth;
 use Bone\User\Http\Middleware\SessionAuthRedirect;
 use Bone\User\View\Helper\LoginWidget;
 use Bone\View\ViewEngine;
+use Bone\View\ViewEngineInterface;
 use Codeception\Test\Unit;
 use Del\Service\UserService;
 use Del\SessionManager;
