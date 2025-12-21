@@ -19,6 +19,7 @@ use Bone\User\Form\PersonForm;
 use Bone\User\Form\RegistrationForm;
 use Bone\User\Form\ResetPasswordForm;
 use DateTime;
+use DateTimeZone;
 use Del\Entity\User;
 use Del\Exception\EmailLinkException;
 use Del\Exception\UserException;
@@ -640,8 +641,7 @@ class BoneUserController extends Controller implements SessionAwareInterface
             if ($form->isValid()) {
                 $data = $form->getValues();
                 $data['image'] = $image;
-                $dateFormat = $this->getSiteConfig()->getAttribute('i18n')['date_format'];
-                $data['dob'] = DateTime::createFromFormat($dateFormat, $data['dob']);
+                $data['dob'] = new DateTime($data['dob'], new DateTimeZone('UTC'));
                 $data['country'] = CountryFactory::generate($data['country']);
                 $this->userService->getPersonService()->populateFromArray($person, $data);
                 $this->userService->saveUser($user);
