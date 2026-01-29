@@ -24,7 +24,7 @@ use Del\Value\User\State;
 use Exception;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Laminas\Diactoros\ServerRequest;
-use Laminas\I18n\Translator\Translator;
+use Bone\Contracts\Service\TranslatorInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use Psr\Http\Message\ResponseInterface;
 use ReflectionClass;
@@ -40,7 +40,7 @@ class ApiControllerTest extends Unit
     public function _before()
     {
         $container = new Container();
-        $container[Translator::class] = $translator = $this->createMock(Translator::class);
+        $container[TranslatorInterface::class] = $translator = $this->createMock(TranslatorInterface::class);
         $container[ViewEngineInterface::class] = $view = $this->createMock(ViewEngine::class);
         $container[SiteConfig::class] = $config = $this->createMock(SiteConfig::class);
         $container[SessionManager::class] = SessionManager::getInstance();

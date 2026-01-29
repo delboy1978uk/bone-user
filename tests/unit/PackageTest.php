@@ -15,10 +15,9 @@ use Bone\User\Http\Middleware\SessionAuthRedirect;
 use Bone\User\View\Helper\LoginWidget;
 use Bone\View\ViewEngine;
 use Bone\View\ViewEngineInterface;
+use Bone\Contracts\Service\TranslatorInterface;
 use Codeception\Test\Unit;
 use Del\Service\UserService;
-use Del\SessionManager;
-use Laminas\I18n\Translator\Translator;
 use League\Route\RouteGroup;
 use ReflectionClass;
 
@@ -37,7 +36,7 @@ class PackageTest extends Unit
         $this->container[MailService::class] = $this->createStub(MailService::class);
         $this->container[UserService::class] = $this->createStub(UserService::class);
         $this->container[PasetoService::class] = $this->createStub(PasetoService::class);
-        $this->container[Translator::class] = $this->createStub(Translator::class);
+        $this->container[TranslatorInterface::class] = $this->createStub(TranslatorInterface::class);
         $this->container[ViewEngineInterface::class] = $this->createStub(ViewEngine::class);
         $this->container[SiteConfig::class] = $this->createStub(SiteConfig::class);
         $this->container[SessionManager::class] = SessionManager::getInstance();
