@@ -54,9 +54,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
     ) {
     }
 
-    /**
-     * @return string
-     */
     public function getLogo(): string
     {
         if ($this->logo === '') {
@@ -66,11 +63,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
         return $this->logo;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface $response
-     * @throws \Exception
-     */
     public function indexAction(ServerRequestInterface $request): ResponseInterface
     {
         if ($this->getSession()->get('user')) {
@@ -86,11 +78,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
         return new HtmlResponse($body);
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
-     * @throws UserException
-     */
     public function registerAction(ServerRequestInterface $request): ResponseInterface
     {
         $form = new RegistrationForm('register', $this->getTranslator());
@@ -141,12 +128,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
         return new HtmlResponse($body);
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Doctrine\ORM\OptimisticLockException
-     */
     public function activateAction(ServerRequestInterface $request): ResponseInterface
     {
         $email = $request->getAttribute('email');
@@ -197,11 +178,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
         $this->rememberMeCookie === false ? $form->getFields()->removeByName('remember') : null;
     }
 
-
-    /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
-     */
     public function loginAction(ServerRequestInterface $request): ResponseInterface
     {
         $form = new LoginForm('userlogin', $this->getTranslator());
@@ -211,11 +187,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
         return new HtmlResponse($body);
     }
 
-
-    /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
-     */
     public function loginFormAction(ServerRequestInterface $request): ResponseInterface
     {
         $translator = $this->getTranslator();
@@ -280,13 +251,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
 
     }
 
-    /**
-     * @param int $length
-     * @param int $userId
-     * @throws \ParagonIE\Paseto\Exception\InvalidKeyException
-     * @throws \ParagonIE\Paseto\Exception\InvalidPurposeException
-     * @throws \ParagonIE\Paseto\Exception\PasetoException
-     */
     private function setCookie(int $length, int $userId): void
     {
         $times = [
@@ -311,10 +275,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
         \setcookie('resu', $token, $expiry, '/');
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
-     */
     public function homePageAction(ServerRequestInterface $request): ResponseInterface
     {
         if ($this->loginRedirectRoute !== '/user/home') {
@@ -338,10 +298,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
         return new LayoutResponse($body, $this->adminLayout);
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
-     */
     public function logoutAction(ServerRequestInterface $request): ResponseInterface
     {
         SessionManager::destroySession();
@@ -350,10 +306,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
         return new RedirectResponse(new Uri('/'));
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
-     */
     public function resendActivationEmailAction(ServerRequestInterface $request): ResponseInterface
     {
         $email = $request->getAttribute('email');
@@ -402,11 +354,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
         return new HtmlResponse($body);
     }
 
-
-    /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
-     */
     public function forgotPasswordAction(ServerRequestInterface $request): ResponseInterface
     {
         $email = $request->getAttribute('email');
@@ -445,11 +392,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
         return new HtmlResponse($body);
     }
 
-
-    /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
-     */
     public function resetPasswordAction(ServerRequestInterface $request): ResponseInterface
     {
         $email = $request->getAttribute('email');
@@ -504,10 +446,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
         return new HtmlResponse($body);
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
-     */
     public function changePasswordAction(ServerRequestInterface $request): ResponseInterface
     {
         $user = $request->getAttribute('user');
@@ -550,10 +488,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
         return new HtmlResponse($body);
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
-     */
     public function changeEmailAction(ServerRequestInterface $request): ResponseInterface
     {
         $user = $request->getAttribute('user');
@@ -621,10 +555,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
         return new LayoutResponse($body, 'layouts::admin');
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
-     */
     public function editProfileAction(ServerRequestInterface $request): ResponseInterface
     {
         $user = $request->getAttribute('user');
@@ -656,10 +586,6 @@ class BoneUserController extends Controller implements SessionAwareInterface
         return new LayoutResponse($body, $this->adminLayout);
     }
 
-    /**
-     * @param ServerRequestInterface $requestApiController
-     * @return ResponseInterface
-     */
     public function resetEmailAction(ServerRequestInterface $request): ResponseInterface
     {
         $email = $request->getAttribute('email');

@@ -14,7 +14,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class LoadUsers implements FixtureInterface
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $password = password_hash('123456', PASSWORD_BCRYPT, ['cost' => 14]);
         $registrationDate = new DateTime('now', new DateTimeZone('UTC'));

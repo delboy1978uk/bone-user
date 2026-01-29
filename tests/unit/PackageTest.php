@@ -18,6 +18,7 @@ use Bone\View\ViewEngineInterface;
 use Bone\Contracts\Service\TranslatorInterface;
 use Codeception\Test\Unit;
 use Del\Service\UserService;
+use Del\SessionManager;
 use League\Route\RouteGroup;
 use ReflectionClass;
 

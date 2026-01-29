@@ -2,6 +2,7 @@
 
 namespace Bone\User\Form;
 
+use Bone\Contracts\Service\TranslatorInterface;
 use Bone\I18n\Form;
 use Del\Form\Field\Hidden;
 use Del\Form\Field\Select;
@@ -11,19 +12,12 @@ use Del\Form\Field\Transformer\DateTimeTransformer;
 use Del\Form\Renderer\HorizontalFormRenderer;
 use Del\Form\Transformer\CountryTransformer;
 use Del\Repository\CountryRepository;
-use Laminas\I18n\Translator\Translator;
 
 class PersonForm extends Form
 {
     use PersonFormTrait;
 
-    /**
-     * PersonForm constructor.
-     * @param $name
-     * @param Translator $translator
-     * @param array $disabledFields
-     */
-    public function __construct($name, Translator $translator, $disabledFields = [])
+    public function __construct($name, TranslatorInterface $translator, $disabledFields = [])
     {
         $this->disabledFields = $disabledFields;
         parent::__construct($name, $translator);

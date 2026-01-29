@@ -20,14 +20,9 @@ class SessionAuth implements MiddlewareInterface, SessionAwareInterface
 {
     use HasSessionTrait;
 
-    /** @var UserService $userService */
-    private $userService;
-
-    /** @var PasetoService $pasetoService */
-    private $pasetoService;
-
-    /** @var string $redirectUrl */
-    private $redirectUrl;
+    private UserService $userService;
+    private PasetoService $pasetoService;
+    private string $redirectUrl;
 
     public function __construct(SessionManager $sessionManager, UserService $userService, PasetoService $pasetoService, $redirectUrl = '/user/home')
     {
@@ -37,11 +32,6 @@ class SessionAuth implements MiddlewareInterface, SessionAwareInterface
         $this->redirectUrl = $redirectUrl;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @param RequestHandlerInterface $handler
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $cookies = $request->getCookieParams();

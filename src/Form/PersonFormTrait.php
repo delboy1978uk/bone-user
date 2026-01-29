@@ -12,12 +12,8 @@ use Del\Repository\CountryRepository;
 
 trait PersonFormTrait
 {
-    /** @var array $disabledFields */
-    protected $disabledFields = [];
+    protected array $disabledFields = [];
 
-    /**
-     * @param FormInterface $form
-     */
     public function addPersonFormFields(FormInterface $form): void
     {
         $firstName = new Text('firstname');
@@ -66,7 +62,7 @@ trait PersonFormTrait
         $this->addFieldIfEnabled('image', $image, $form);
     }
 
-    private function addFieldIfEnabled(string $name, FieldInterface $field, FormInterface $form)
+    private function addFieldIfEnabled(string $name, FieldInterface $field, FormInterface $form): void
     {
         in_array($name, $this->disabledFields) ? null : $form->addField($field);
     }

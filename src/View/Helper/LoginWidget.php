@@ -2,12 +2,12 @@
 
 namespace Bone\User\View\Helper;
 
+use Bone\Contracts\Service\TranslatorInterface;
 use Del\Image;
 use Del\Service\UserService;
 use Del\SessionManager;
 use League\Plates\Engine;
 use League\Plates\Extension\ExtensionInterface;
-use Laminas\I18n\Translator\Translator;
 use League\Plates\Template\Template;
 
 class LoginWidget implements ExtensionInterface
@@ -16,24 +16,17 @@ class LoginWidget implements ExtensionInterface
 
     public function __construct(
         private UserService $userService,
-        private Translator $translator,
+        private TranslatorInterface $translator,
         private SessionManager $sessionManager,
         private string $uploadFolder
     ) {
     }
 
-    /**
-     * @param Engine $engine
-     */
-    public function register(Engine $engine)
+    public function register(Engine $engine): void
     {
         $engine->registerFunction('loginWidget', [$this, 'loginWidget']);
     }
 
-    /**
-     * @return string
-     * @throws Image\Exception\NothingLoadedException
-     */
     public function loginWidget(): string
     {
         $locale = $this->translator->getLocale();

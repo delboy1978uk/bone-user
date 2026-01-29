@@ -31,39 +31,14 @@ use Laminas\Diactoros\Response\JsonResponse;
 
 class BoneUserApiController extends Controller
 {
-    /** @var UserService $userService */
-    private $userService;
+    public function __construct(
+        private UserService $userService, 
+        private string $uploadsDirectory, 
+        private string $imgSubDirectory, 
+        private string $tempDirectory, 
+        private MailService $mailService
+    ) {}
 
-    /** @var string $uploadsDirectory */
-    private $uploadsDirectory;
-
-    /** @var string $tempDirectory */
-    private $tempDirectory;
-
-    /** @var string $imgDirectory */
-    private $imgDirectory;
-
-    /** @var MailService $mailService */
-    private $mailService;
-
-    /**
-     * BoneUserController constructor.
-     * @param UserService $userService
-     */
-    public function __construct(UserService $userService, string $uploadsDirectory, string $imgSubDir, string $tempDirectory, MailService $mailService)
-    {
-        $this->userService = $userService;
-        $this->uploadsDirectory = $uploadsDirectory;
-        $this->tempDirectory = $tempDirectory;
-        $this->imgDirectory = $imgSubDir;
-        $this->mailService = $mailService;
-    }
-
-    /**
-     * @param ServerRequestInterface $request
-     * @param array $args
-     * @return ResponseInterface
-     */
     public function chooseAvatarAction(ServerRequestInterface $request): ResponseInterface
     {
         $avatar = $request->getParsedBody()['avatar'];
@@ -72,7 +47,7 @@ class BoneUserApiController extends Controller
         $person = $user->getPerson();
         $image = new Image('public' . $avatar);
         $avatar = str_replace('/bone-user/img/avatars/', '', $avatar);
-        $file = $this->imgDirectory . $this->getFilename($avatar);
+        $file = $this->imgSubDirectory . $this->getFilename($avatar);
         $image->save($this->uploadsDirectory . $file);
         $person->setImage($file);
         $this->userService->getPersonService()->savePerson($person);
@@ -84,11 +59,6 @@ class BoneUserApiController extends Controller
         ]);
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @param array $args
-     * @return ResponseInterface
-     */
     public function uploadAvatarAction(ServerRequestInterface $request): ResponseInterface
     {
         $data = $request->getParsedBody();
@@ -104,7 +74,7 @@ class BoneUserApiController extends Controller
                 $data = $form->getValues();
                 $file = $data['avatar'];
                 $sourceFileName = $this->tempDirectory . $file;
-                $newFileName = $this->imgDirectory . $this->getFilename($file);
+                $newFileName = $this->imgSubDirectory . $this->getFilename($file);
                 $destinationFileName = $this->uploadsDirectory . $newFileName;
                 $image = new Image($sourceFileName);
 
@@ -151,11 +121,7 @@ class BoneUserApiController extends Controller
         ]);
     }
 
-    /**
-     * @param string $fileNameAsUploaded
-     * @return string
-     */
-    private function getFilename(string $fileNameAsUploaded)
+    private function getFilename(string $fileNameAsUploaded): string
     {
         // break the filename up on dots
         $filenameParts = explode('.', $fileNameAsUploaded);
@@ -187,11 +153,6 @@ class BoneUserApiController extends Controller
         return $filenameOnDisk;
     }
 
-    /**
-     * @param ServerRequestInterface $request
-     * @return ResponseInterface
-     * @throws ControllerException
-     */
     public function avatar(ServerRequestInterface $request): ResponseInterface
     {
         $response = new Response();
@@ -213,10 +174,6 @@ class BoneUserApiController extends Controller
         return $response;
     }
 
-    /**
-     * @param string $path
-     * @return string
-     */
     private function getMimeType(string $path): string
     {
         $finfo = finfo_open(FILEINFO_MIME); // return mime type
@@ -225,5 +182,4 @@ class BoneUserApiController extends Controller
 
         return $mimeType;
     }
-
 }
