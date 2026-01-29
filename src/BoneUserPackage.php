@@ -13,6 +13,7 @@ use Bone\Contracts\Container\AdminPanelProviderInterface;
 use Bone\Contracts\Container\DefaultSettingsProviderInterface;
 use Bone\Contracts\Container\DependentPackagesProviderInterface;
 use Bone\Contracts\Container\FixtureProviderInterface;
+use Bone\Contracts\Service\TranslatorInterface;
 use Bone\Controller\Init;
 use Bone\I18n\I18nRegistrationInterface;
 use Bone\Mail\Service\MailService;
@@ -37,7 +38,6 @@ use Del\SessionManager;
 use League\Route\RouteGroup;
 use League\Route\Strategy\JsonStrategy;
 use Laminas\Diactoros\ResponseFactory;
-use Laminas\I18n\Translator\Translator;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I18nRegistrationInterface,
@@ -128,7 +128,7 @@ class BoneUserPackage implements RegistrationInterface, RouterConfigInterface, I
     public function addViewExtensions(Container $c): array
     {
         $userService = $c->get(UserService::class);
-        $translator = $c->get(Translator::class);
+        $translator = $c->get(TranslatorInterface::class);
         $sessionManager = $c->get(SessionManager::class);
         $uploadFolder = $c->get('uploads_dir');
         $loginWidget = new LoginWidget($userService, $translator, $sessionManager, $uploadFolder);
